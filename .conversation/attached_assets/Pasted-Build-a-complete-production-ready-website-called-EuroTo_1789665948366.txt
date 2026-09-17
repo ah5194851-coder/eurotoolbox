@@ -1,0 +1,567 @@
+Build a complete, production-ready website called **EuroToolBox**.
+
+## 1. Website Concept
+
+EuroToolBox is a free online tools website targeting users in Europe and worldwide.
+
+Tagline:
+
+**Free Online Tools for Everyday Life**
+
+The website must be fast, modern, mobile-friendly, accessible, SEO-friendly, and suitable for deployment on **Cloudflare Pages** through GitHub.
+
+Do NOT build a fake/demo website. Every tool that is implemented must actually work in the browser.
+
+---
+
+# 2. Technology Requirements
+
+Prefer a lightweight architecture that can be deployed easily on Cloudflare Pages.
+
+Use:
+
+* HTML5
+* CSS3
+* JavaScript
+* Modern responsive design
+* No unnecessary backend
+* Browser-side processing wherever technically possible
+* No paid APIs
+* No API keys required for the initial version
+
+If using a framework, make sure the final project can be deployed to Cloudflare Pages and provide the exact build command and output directory in the README.
+
+The website must NOT depend on Replit being online after deployment.
+
+---
+
+# 3. Brand
+
+Website name:
+
+**EuroToolBox**
+
+Tagline:
+
+**Free Online Tools for Everyday Life**
+
+Brand style:
+
+* Clean
+* Professional
+* European/global feel
+* Minimal
+* Trustworthy
+* Fast
+* Modern
+* Mobile-first
+
+Do not use copyrighted logos, images, or content.
+
+Use simple icons where necessary.
+
+---
+
+# 4. Homepage
+
+Create a beautiful homepage with:
+
+### Header
+
+Logo:
+
+**EuroToolBox**
+
+Navigation:
+
+* Tools
+* PDF Tools
+* Image Tools
+* Calculators
+* Career Tools
+* Blog
+* About
+
+Include a prominent search button/input:
+
+**Search for a tool...**
+
+Header must become mobile responsive with a hamburger menu.
+
+---
+
+## Hero Section
+
+Headline:
+
+**Free Online Tools for Everyday Life**
+
+Subheading:
+
+**Fast, simple and easy-to-use online tools for PDFs, images, text, calculations, careers and everyday tasks.**
+
+Buttons:
+
+**Explore Tools**
+
+**Popular Tools**
+
+---
+
+# 5. Tool Categories
+
+Create attractive category cards for:
+
+### PDF Tools
+
+* PDF to Word
+* Word to PDF
+* Merge PDF
+* Split PDF
+* Compress PDF
+* JPG to PDF
+* PDF to JPG
+
+### Image Tools
+
+* Image Compressor
+* Image Resizer
+* JPG to PNG
+* PNG to JPG
+* WebP Converter
+* Image Cropper
+
+### Text Tools
+
+* Word Counter
+* Character Counter
+* Case Converter
+* Remove Duplicate Lines
+* Text Cleaner
+
+### Calculators
+
+* Percentage Calculator
+* Age Calculator
+* Discount Calculator
+* BMI Calculator
+* Loan Calculator
+* VAT Calculator
+
+### Career Tools
+
+* CV Builder
+* Resume Builder
+* Cover Letter Generator
+* Salary Calculator
+
+### Europe Tools
+
+* Currency Converter
+* Time Zone Converter
+* Date Calculator
+* Unit Converter
+* Distance Converter
+
+---
+
+# 6. Implement Real Working Tools
+
+Implement these tools as functional browser-based tools.
+
+## PDF Tools
+
+### PDF to Word
+
+Allow the user to upload a PDF and convert/extract its text into a downloadable DOCX or editable document where technically possible.
+
+Clearly explain limitations for scanned/image-only PDFs.
+
+### Word to PDF
+
+Allow users to create/download a PDF from supported text/document content.
+
+### Merge PDF
+
+Allow multiple PDF files to be uploaded and merged into one PDF.
+
+### Split PDF
+
+Allow users to select pages/ranges and create a new PDF.
+
+### Compress PDF
+
+Implement client-side compression where technically possible.
+
+### JPG to PDF
+
+Allow multiple images to be converted into a PDF.
+
+### PDF to JPG
+
+Convert PDF pages to downloadable images where technically possible.
+
+Use reliable open-source browser libraries if needed. Do not use paid APIs.
+
+---
+
+# 7. Image Tools
+
+Implement:
+
+* Image Compressor
+* Image Resizer
+* JPG to PNG
+* PNG to JPG
+* WebP Converter
+* Image Cropper
+
+Features:
+
+* Drag and drop upload
+* File picker
+* Preview
+* File size information
+* Quality controls where applicable
+* Download button
+* Reset button
+* Mobile support
+
+Prefer browser-side processing so user files do not need to be uploaded to a server.
+
+Display a privacy message:
+
+**Your files are processed locally in your browser whenever supported.**
+
+Do not falsely claim that every tool is 100% local if it is not.
+
+---
+
+# 8. Text Tools
+
+Implement:
+
+### Word Counter
+
+Show:
+
+* Words
+* Characters
+* Characters excluding spaces
+* Sentences
+* Paragraphs
+
+### Character Counter
+
+### Case Converter
+
+Options:
+
+* UPPERCASE
+* lowercase
+* Title Case
+* Sentence case
+
+### Remove Duplicate Lines
+
+### Text Cleaner
+
+Include:
+
+* Remove extra spaces
+* Remove empty lines
+* Trim text
+
+---
+
+# 9. Calculators
+
+Implement functional calculators:
+
+### Percentage Calculator
+
+### Age Calculator
+
+### Discount Calculator
+
+### BMI Calculator
+
+### Loan Calculator
+
+Show clear results and calculation formulas.
+
+### VAT Calculator
+
+Allow user to enter:
+
+* Amount
+* VAT percentage
+
+Provide:
+
+* Net amount
+* VAT amount
+* Gross amount
+
+Default VAT can be 20%, but users must be able to change it.
+
+Do not present tax calculations as professional financial/legal advice.
+
+---
+
+# 10. Career Tools
+
+Create:
+
+### CV Builder
+
+Sections:
+
+* Personal information
+* Professional summary
+* Work experience
+* Education
+* Skills
+* Languages
+* Certifications
+
+Allow users to preview their CV and print/download it as PDF using browser print functionality or a suitable client-side library.
+
+Create clean professional templates.
+
+---
+
+### Cover Letter Generator
+
+Inputs:
+
+* Name
+* Job title
+* Company
+* Experience
+* Skills
+* Country
+* Additional information
+
+Generate a structured cover-letter draft.
+
+Do not require an external AI API for the basic version.
+
+---
+
+### Salary Calculator
+
+Allow:
+
+* Gross salary
+* Tax/percentage deduction
+* Monthly/yearly selection
+
+Clearly label this as an estimate.
+
+---
+
+# 11. Europe Tools
+
+Create:
+
+### Currency Converter
+
+Design it so a current exchange-rate API can be added later.
+
+For the initial version, do not hard-code misleading "live" exchange rates.
+
+If no live API is available, clearly label rates as unavailable rather than pretending they are live.
+
+Support common currencies:
+
+EUR
+GBP
+USD
+CHF
+PLN
+SEK
+NOK
+DKK
+CZK
+HUF
+RON
+
+---
+
+### Time Zone Converter
+
+Allow users to select:
+
+* London
+* Berlin
+* Paris
+* Rome
+* Madrid
+* Warsaw
+* Lisbon
+* Helsinki
+* New York
+* Dubai
+* Lahore
+
+Show converted times.
+
+Use the browser's Intl/time-zone APIs where possible.
+
+---
+
+### Date Calculator
+
+Support:
+
+* Days between dates
+* Add days
+* Subtract days
+
+---
+
+### Unit Converter
+
+Support:
+
+* Length
+* Weight
+* Temperature
+* Area
+* Volume
+
+---
+
+# 12. Search System
+
+Create a client-side tool search.
+
+When the user types:
+
+"PDF"
+
+show relevant PDF tools.
+
+When the user types:
+
+"image"
+
+show image tools.
+
+Search should work on:
+
+* Tool name
+* Category
+* Description
+* Keywords
+
+---
+
+# 13. Individual SEO Pages
+
+Every major tool must have its own URL.
+
+Examples:
+
+/pdf-to-word
+/word-to-pdf
+/merge-pdf
+/split-pdf
+/compress-pdf
+/jpg-to-pdf
+/pdf-to-jpg
+
+/image-compressor
+/image-resizer
+/jpg-to-png
+/png-to-jpg
+/webp-converter
+
+/word-counter
+/character-counter
+/case-converter
+
+/percentage-calculator
+/age-calculator
+/discount-calculator
+/bmi-calculator
+/vat-calculator
+
+/cv-builder
+/cover-letter-generator
+/salary-calculator
+
+/currency-converter
+/time-zone-converter
+/date-calculator
+/unit-converter
+
+Each page must have:
+
+* Unique title
+* Unique meta description
+* One H1
+* Introductory SEO content
+* Tool interface
+* How to use section
+* Features
+* FAQ section
+* Related tools
+* Internal links
+
+Do NOT generate duplicate text across pages.
+
+---
+
+# 14. SEO
+
+Build the website with strong technical SEO.
+
+Include:
+
+### Title tags
+
+Every page must have a unique title.
+
+Example:
+
+**PDF to Word Converter Online – Free | EuroToolBox**
+
+### Meta descriptions
+
+Unique descriptions for every page.
+
+### Canonical URLs
+
+Use canonical tags correctly.
+
+### Open Graph
+
+Include:
+
+* og:title
+* og:description
+* og:type
+* og:url
+* og:image
+
+### Twitter/X metadata
+
+Include appropriate social metadata.
+
+### Robots.txt
+
+Create:
+
+/robots.txt
+
+Allow search engines to crawl useful public pages.
+
+Do not block important pages.
+
+### Sitemap
+
+Create:
+
+/sitemap.xml

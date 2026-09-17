@@ -1,6 +1,6 @@
-# [Project name]
+# EuroToolBox
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+EuroToolBox is a browser-first collection of free tools for text, calculations, images, dates, careers and everyday tasks.
 
 ## Run & Operate
 
@@ -22,15 +22,21 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/eurotoolbox/src/App.tsx` — the product shell, tool catalog, routes and browser-side tool logic
+- `artifacts/eurotoolbox/src/index.css` — EuroToolBox theme tokens, typography, motion and print rules
+- `artifacts/eurotoolbox/public/robots.txt` and `sitemap.xml` — crawler support
+- `artifacts/eurotoolbox/README.md` — Cloudflare Pages build and publish notes
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Utilities are client-side by default so text and image inputs do not need to leave the browser.
+- The currency converter uses clearly labelled static reference values until a live rate provider is intentionally added.
+- PDF image export uses the native browser print flow rather than pretending to provide a universal PDF writer.
+- Tool routes support both `/tools/<slug>` and short SEO-friendly `/<slug>` URLs.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+The app includes searchable text tools, everyday calculators, image resizing and format conversion, date and time utilities, a printable CV builder, and a local cover-letter draft generator. Tool pages include route-level metadata, related links, instructions and FAQs.
 
 ## User preferences
 

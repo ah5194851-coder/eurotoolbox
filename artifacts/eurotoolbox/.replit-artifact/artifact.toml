@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "EuroToolBox"
+description = "A fast, privacy-conscious collection of browser-based tools for PDFs, images, text, calculations, careers, and everyday life."
+version = "1.0.0"
+id = "artifacts/eurotoolbox"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21075
+
+[services.development]
+run = "pnpm --filter @workspace/eurotoolbox run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/eurotoolbox", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/eurotoolbox/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21075"
+BASE_PATH = "/"

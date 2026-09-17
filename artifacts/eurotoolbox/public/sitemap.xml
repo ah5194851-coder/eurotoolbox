@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>/</loc></url>
+  <url><loc>/tools/word-counter</loc></url>
+  <url><loc>/tools/character-counter</loc></url>
+  <url><loc>/tools/case-converter</loc></url>
+  <url><loc>/tools/text-cleaner</loc></url>
+  <url><loc>/tools/duplicate-line-remover</loc></url>
+  <url><loc>/tools/percentage-calculator</loc></url>
+  <url><loc>/tools/discount-calculator</loc></url>
+  <url><loc>/tools/bmi-calculator</loc></url>
+  <url><loc>/tools/loan-calculator</loc></url>
+  <url><loc>/tools/vat-calculator</loc></url>
+  <url><loc>/tools/age-calculator</loc></url>
+  <url><loc>/tools/image-tools</loc></url>
+  <url><loc>/image-compressor</loc></url>
+  <url><loc>/image-resizer</loc></url>
+  <url><loc>/jpg-to-png</loc></url>
+  <url><loc>/png-to-jpg</loc></url>
+  <url><loc>/webp-converter</loc></url>
+  <url><loc>/image-cropper</loc></url>
+  <url><loc>/tools/jpg-to-pdf</loc></url>
+  <url><loc>/pdf-to-word</loc></url>
+  <url><loc>/word-to-pdf</loc></url>
+  <url><loc>/merge-pdf</loc></url>
+  <url><loc>/split-pdf</loc></url>
+  <url><loc>/compress-pdf</loc></url>
+  <url><loc>/pdf-to-jpg</loc></url>
+  <url><loc>/tools/date-calculator</loc></url>
+  <url><loc>/tools/unit-converter</loc></url>
+  <url><loc>/tools/time-zone-converter</loc></url>
+  <url><loc>/tools/currency-converter</loc></url>
+  <url><loc>/tools/cv-builder</loc></url>
+  <url><loc>/tools/cover-letter-generator</loc></url>
+  <url><loc>/salary-calculator</loc></url>
+</urlset>
