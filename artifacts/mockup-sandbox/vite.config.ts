@@ -5,6 +5,9 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { mockupPreviewPlugin } from "./mockupPreviewPlugin";
 
+const BUILD_PORT = "4173";
+const BUILD_BASE_PATH = "/";
+
 const conditionalPlugins =
   process.env.NODE_ENV !== "production" && process.env.REPL_ID !== undefined
     ? [
@@ -18,7 +21,7 @@ const conditionalPlugins =
 
 export default defineConfig(({ command }) => {
   const isBuild = command === "build";
-  const rawPort = process.env.PORT ?? (isBuild ? "4173" : undefined);
+  const rawPort = process.env.PORT ?? (isBuild ? BUILD_PORT : undefined);
 
   if (!rawPort) {
     throw new Error(
@@ -32,7 +35,8 @@ export default defineConfig(({ command }) => {
     throw new Error(`Invalid PORT value: "${rawPort}"`);
   }
 
-  const basePath = process.env.BASE_PATH ?? (isBuild ? "/" : undefined);
+  const basePath =
+    process.env.BASE_PATH ?? (isBuild ? BUILD_BASE_PATH : undefined);
 
   if (!basePath) {
     throw new Error(
