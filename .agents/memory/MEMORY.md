@@ -1,0 +1,1 @@
+- [Workflow pnpm version alignment](pnpm-workflow-version.md) — Managed artifact workflows can loop when packageManager differs from the installed Replit pnpm.

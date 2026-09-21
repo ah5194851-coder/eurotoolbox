@@ -67,6 +67,7 @@ catalog:
   zod: ^3.25.76
 
 autoInstallPeers: false
+strictPeerDependencies: false
 
 onlyBuiltDependencies:
   - '@swc/core'

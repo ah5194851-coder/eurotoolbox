@@ -1,0 +1,23 @@
+My monorepo has a Vite + React app at artifacts/eurotoolbox, plus artifacts/api-server. It builds and deploys fine to Cloudflare Workers (npm run build, then npx wrangler deploy), but the build log shows warnings I want fixed. Do NOT break the build or change any tool's behavior or UI.
+
+1. Chunk size warning (main priority)
+   - dist/public/assets/index-*.js is ~1.26 MB (435 KB gzipped) and pdf.worker is ~2.2 MB.
+   - Implement code-splitting in artifacts/eurotoolbox:
+     a) Convert route/page/tool components to React.lazy() with dynamic import(), wrapped in <Suspense> with a lightweight loading fallback.
+     b) Lazy-load PDF libraries (pdfjs-dist, pdf-lib, etc.) with dynamic import() only when a PDF tool is opened, so they are not in the initial bundle.
+     c) Add build.rollupOptions.output.manualChunks in vite.config.ts to split vendor code (react/react-dom, radix-ui, icons, pdf libs) into separate chunks.
+   - Goal: initial JS load under 500 kB minified, and no "chunks larger than 500 kB" warning (the pdf worker may stay large since it loads on demand).
+
+2. Sourcemap error
+   - Fix or suppress "src/components/ui/tooltip.tsx (2:0): Error when using sourcemap for reporting an error". Check for a bad import, a "use client" directive, or a sourcemap config issue in that file, and fix the root cause if there is one.
+
+3. npm warnings
+   - The build prints: Unknown project config "auto-install-peers" and "strict-peer-dependencies". Remove them from .npmrc, or move them to the right place (pnpm-workspace.yaml or package.json pnpm settings) if pnpm needs them, without breaking installs.
+
+4. Cloudflare Workers deploy
+   - Keep wrangler.toml/wrangler.jsonc working. Static assets must still be served from artifacts/eurotoolbox/dist/public.
+
+After the changes:
+- Run npm run build and show me the new bundle sizes.
+- Confirm there are no new errors or warnings.
+- Test that every tool page still loads (especially the PDF tools) and list what you changed.
