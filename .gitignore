@@ -2,6 +2,7 @@
 
 # compiled output
 dist
+/artifacts/eurotoolbox/.prerender
 tmp
 out-tsc
 *.tsbuildinfo

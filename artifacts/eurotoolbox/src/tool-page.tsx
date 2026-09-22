@@ -6,7 +6,9 @@ import {
   ShieldCheck, Sparkles, Timer, Upload
 } from 'lucide-react';
 import NotFound from '@/pages/not-found';
-import { Shell, tools, toolSeo } from './App';
+import { Shell, tools } from './App';
+import { toolSeo } from './data/seo';
+import { updateDocumentHead } from './seo';
 
 function Button({ children, onClick, variant = 'primary', type = 'button', disabled, className = '', testId }: { children: ReactNode; onClick?: () => void; variant?: 'primary' | 'quiet' | 'outline' | 'yellow'; type?: 'button' | 'submit'; disabled?: boolean; className?: string; testId?: string }) {
   const styles = { primary: 'bg-primary text-primary-foreground hover:-translate-y-0.5 shadow-sm', quiet: 'bg-muted text-foreground hover:bg-secondary', outline: 'border border-border bg-card hover:border-primary hover:text-primary', yellow: 'bg-secondary text-secondary-foreground hover:-translate-y-0.5' };
@@ -60,7 +62,7 @@ function ToolSeoContent({ tool, seo }: { tool: typeof tools[number]; seo: typeof
         <p className="mt-4 leading-7 text-muted-foreground">{seo.intro}</p>
       </div>
       <div>
-        <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">How to use it</p>
+        <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">How to use</p>
         <ol className="mt-4 grid gap-3">
           {seo.steps.map((step, index) => <li key={step} className="flex gap-3 text-sm leading-6"><span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-secondary font-mono-ui text-xs font-bold text-secondary-foreground">{index + 1}</span><span>{step}</span></li>)}
         </ol>
@@ -81,38 +83,13 @@ function ToolSeoContent({ tool, seo }: { tool: typeof tools[number]; seo: typeof
   </section>;
 }
 
-function ToolPage() {
+export function ToolPage() {
   const { tool: slug } = useParams<{ tool: string }>();
   const tool = tools.find(t => t.slug === slug);
   const seo = toolSeo[slug || ''] ?? { title: 'Tool not found · EuroToolBox', description: 'The requested EuroToolBox tool could not be found.', intro: '', steps: [], features: [], faq: [] };
-  useEffect(() => {
-    document.title = tool ? seo.title : 'Tool not found · EuroToolBox';
-    updateMeta('meta[name="description"]', { name: 'description' }, seo.description);
-    updateMeta('meta[property="og:title"]', { property: 'og:title' }, document.title);
-    updateMeta('meta[property="og:description"]', { property: 'og:description' }, seo.description);
-    updateMeta('meta[property="og:url"]', { property: 'og:url' }, window.location.href);
-    updateMeta('meta[name="twitter:title"]', { name: 'twitter:title' }, document.title);
-    updateMeta('meta[name="twitter:description"]', { name: 'twitter:description' }, seo.description);
-    let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
-    canonical.href = window.location.href.split('#')[0];
-    return () => {
-      document.title = 'EuroToolBox · Free Online Tools for Everyday Life';
-      updateMeta('meta[name="description"]', { name: 'description' }, 'Fast, free browser tools for text, calculations, images, dates, careers and everyday tasks. Your files stay on your device whenever supported.');
-    };
-  }, [seo, tool]);
+  useEffect(() => { updateDocumentHead(tool ? `/tools/${slug}` : '/404'); }, [slug, tool]);
   if (!tool) return <NotFound />;
-  return <Shell><main className="mx-auto max-w-[1160px] px-5 py-10 lg:px-10 lg:py-16"><div className="mb-9 flex items-center gap-2 text-sm text-muted-foreground"><Link href="/" className="hover:text-foreground">Toolbox</Link><span>/</span><span>{tool.category}</span><span>/</span><span className="text-foreground">{tool.name}</span></div><div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:items-start"><div className="lg:sticky lg:top-28"><span className="grid h-12 w-12 place-items-center rounded-xl bg-secondary text-secondary-foreground">{tool.icon}</span><p className="mt-6 font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">{tool.category} utility</p><h1 className="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">{tool.name}</h1><p className="mt-4 max-w-sm leading-7 text-muted-foreground">{tool.description} Built for quick answers, with your inputs staying in your browser.</p><div className="mt-7 flex items-center gap-2 text-xs text-muted-foreground"><ShieldCheck size={16} className="text-accent" />Private by default · No account needed</div></div><div><div className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-8">{renderTool(slug)}</div><RelatedTools current={slug} /></div></div><ToolSeoContent tool={tool} seo={seo} /></main></Shell>;
-}
-
-function updateMeta(selector: string, attributes: Record<string, string>, content: string) {
-  let element = document.head.querySelector<HTMLMetaElement>(selector);
-  if (!element) {
-    element = document.createElement('meta');
-    Object.entries(attributes).forEach(([key, value]) => element?.setAttribute(key, value));
-    document.head.appendChild(element);
-  }
-  element.setAttribute('content', content);
+  return <Shell><main className="mx-auto max-w-[1160px] px-5 py-10 lg:px-10 lg:py-16"><div className="mb-9 flex items-center gap-2 text-sm text-muted-foreground"><Link href="/" className="hover:text-foreground">Toolbox</Link><span>/</span><span>{tool.category}</span><span>/</span><span className="text-foreground">{tool.name}</span></div><div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:items-start"><div className="lg:sticky lg:top-28"><span className="grid h-12 w-12 place-items-center rounded-xl bg-secondary text-secondary-foreground">{tool.icon}</span><p className="mt-6 font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">{tool.category} utility</p><h1 className="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">{slug === 'cv-builder' ? 'Free CV Builder' : tool.name}</h1><p className="mt-4 max-w-sm leading-7 text-muted-foreground">{tool.description} Built for quick answers, with your inputs staying in your browser.</p><div className="mt-7 flex items-center gap-2 text-xs text-muted-foreground"><ShieldCheck size={16} className="text-accent" />Private by default · No account needed</div></div><div><div className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-8">{renderTool(slug)}</div><RelatedTools current={slug} /></div></div><ToolSeoContent tool={tool} seo={seo} /></main></Shell>;
 }
 
 function TextTool({ kind }: { kind: 'counter' | 'case' | 'cleaner' | 'duplicates' }) {
@@ -259,7 +236,7 @@ function Currency() { const [amount, setAmount] = useState('100'); const [from, 
 function CVBuilder() { const [name, setName] = useState('Alex Morgan'); const [role, setRole] = useState('Product designer'); const [email, setEmail] = useState('alex@example.com'); const [summary, setSummary] = useState('Thoughtful product designer who turns complex workflows into clear, useful experiences.'); const [skills, setSkills] = useState('Research, Figma, Prototyping, Accessibility'); return <div className="grid gap-6"><div className="grid gap-4 sm:grid-cols-2"><Field label="Full name" value={name} onChange={setName} /><Field label="Target role" value={role} onChange={setRole} /><Field label="Email" value={email} onChange={setEmail} /><Field label="Key skills" value={skills} onChange={setSkills} /></div><label className="grid gap-1.5 text-sm font-medium"><span>Profile summary</span><textarea data-testid="textarea-cv-summary" value={summary} onChange={e => setSummary(e.target.value)} className="min-h-24 rounded-lg border border-input bg-background p-3 outline-none focus:border-primary" /></label><div className="rounded-xl border border-border bg-background p-7 print-area"><div className="flex flex-col justify-between gap-4 border-b-2 border-primary pb-5 sm:flex-row"><div><h2 className="font-display text-4xl font-bold">{name || 'Your name'}</h2><p className="mt-1 text-primary">{role || 'Your role'}</p></div><p className="text-sm text-muted-foreground">{email}</p></div><div className="mt-6"><p className="font-mono-ui text-[10px] uppercase tracking-wider text-muted-foreground">Profile</p><p className="mt-2 max-w-xl leading-7">{summary}</p></div><div className="mt-6"><p className="font-mono-ui text-[10px] uppercase tracking-wider text-muted-foreground">Skills</p><div className="mt-2 flex flex-wrap gap-2">{skills.split(',').map(s => <span key={s} className="rounded-full bg-muted px-3 py-1 text-sm">{s.trim()}</span>)}</div></div></div><Button onClick={() => window.print()}><Printer size={16} />Print CV</Button><p className="text-xs text-muted-foreground">Tip: choose “Save as PDF” in your print dialog.</p></div>; }
 function CoverLetter() { const [name, setName] = useState('Alex Morgan'); const [company, setCompany] = useState('Northline Studio'); const [role, setRole] = useState('Product Designer'); const [tone, setTone] = useState('Warm and direct'); const [generated, setGenerated] = useState(''); const generate = () => setGenerated(`Dear ${company} team,\n\nI am writing to apply for the ${role} position. The way your team makes useful, considered products is exactly the kind of work I want to contribute to.\n\nI bring a practical, collaborative approach: I ask good questions, make the complex visible, and care about the small details that help people move forward. I would welcome the chance to talk about how that approach could support ${company}.\n\nThank you for your time,\n${name}`); return <div className="grid gap-5"><div className="grid gap-4 sm:grid-cols-2"><Field label="Your name" value={name} onChange={setName} /><Field label="Company" value={company} onChange={setCompany} /><Field label="Role" value={role} onChange={setRole} /><SelectField label="Tone" value={tone} onChange={setTone} options={['Warm and direct', 'Formal', 'Confident']} /></div><Button onClick={generate}><Sparkles size={16} />Generate a first draft</Button>{generated && <div className="animate-fade"><textarea data-testid="textarea-cover-letter" value={generated} onChange={e => setGenerated(e.target.value)} className="min-h-[300px] w-full rounded-xl border border-input bg-background p-5 text-[15px] leading-7 outline-none" /><div className="mt-3 flex gap-2"><Button variant="outline" onClick={() => navigator.clipboard?.writeText(generated)}><Copy size={15} />Copy draft</Button><Button variant="quiet" onClick={() => { const a = document.createElement('a'); a.href = `data:text/plain;charset=utf-8,${encodeURIComponent(generated)}`; a.download = 'cover-letter.txt'; a.click(); }}><Download size={16} />Download</Button></div></div>}<p className="text-xs text-muted-foreground">This creates a starting point, not a promise. Add a specific achievement and check every detail before sending.</p></div>; }
 
-function RelatedTools({ current }: { current: string }) { const currentTool = tools.find(t => t.slug === current); const related = tools.filter(t => t.category === currentTool?.category && t.slug !== current).slice(0, 3); return related.length ? <div className="mt-10"><p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-muted-foreground">Keep exploring</p><div className="mt-3 flex flex-wrap gap-2">{related.map(t => <Link href={`/tools/${t.slug}`} data-testid={`link-related-${t.slug}`} key={t.slug} className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-2 text-sm font-medium transition hover:border-primary hover:text-primary">{t.name}<ArrowRight size={14} /></Link>)}</div></div> : null; }
+function RelatedTools({ current }: { current: string }) { const currentTool = tools.find(t => t.slug === current); const related = tools.filter(t => t.category === currentTool?.category && t.slug !== current).slice(0, 3); return related.length ? <div className="mt-10"><p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-muted-foreground">Related tools</p><div className="mt-3 flex flex-wrap gap-2">{related.map(t => <Link href={`/tools/${t.slug}`} data-testid={`link-related-${t.slug}`} key={t.slug} className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-2 text-sm font-medium transition hover:border-primary hover:text-primary">{t.name}<ArrowRight size={14} /></Link>)}</div></div> : null; }
 
 function renderTool(slug?: string) {
   if (slug === 'word-counter') return <TextTool kind="counter" />;

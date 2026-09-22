@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { ArrowRight, Search, ShieldCheck, Zap } from 'lucide-react';
 import { Link } from 'wouter';
 import { categories, Shell, tools } from './App';
+import { updateDocumentHead } from './seo';
 
 export default function Home() {
   const [active, setActive] = useState('All tools');
   const [search, setSearch] = useState('');
   const filtered = tools.filter(t => (active === 'All tools' || t.category === active) && t.name.toLowerCase().includes(search.toLowerCase()));
-  useEffect(() => { document.title = 'EuroToolBox · Free Online Tools for Everyday Life'; }, []);
+  useEffect(() => { updateDocumentHead('/'); }, []);
   return <Shell><main>
     <section className="paper-grid overflow-hidden border-b border-border"><div className="mx-auto grid max-w-[1360px] gap-10 px-5 pb-20 pt-16 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:px-10 lg:pb-28 lg:pt-24">
       <div className="animate-rise"><p className="mb-5 flex items-center gap-2 font-mono-ui text-[11px] font-bold uppercase tracking-[.2em] text-accent"><span className="h-2 w-2 rounded-full bg-accent" />Open toolbox · no sign-up</p><h1 className="max-w-3xl font-display text-5xl font-semibold leading-[.98] tracking-[-.045em] text-foreground sm:text-6xl lg:text-[78px]">Small tools.<br /><span className="text-primary">Clearer days.</span></h1><p className="mt-7 max-w-xl text-lg leading-8 text-muted-foreground">EuroToolBox is the calm corner of the internet for everyday conversions, calculations and documents. Do the thing, keep your data.</p><div className="mt-8 flex flex-wrap gap-3"><a href="#tools" data-testid="link-explore-tools" className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5">Explore the toolbox <ArrowRight size={17} /></a><a href="#privacy" data-testid="link-privacy-promise" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-3 font-semibold hover:border-primary"><ShieldCheck size={17} className="text-accent" />Privacy first</a></div></div>

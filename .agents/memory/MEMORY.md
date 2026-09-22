@@ -1,1 +1,2 @@
 - [Workflow pnpm version alignment](pnpm-workflow-version.md) — Managed artifact workflows can loop when packageManager differs from the installed Replit pnpm.
+- [Static SEO prerendering](static-seo-prerendering.md) — Static assets need explicit 404 handling; Vite preview fallback is not production status verification.

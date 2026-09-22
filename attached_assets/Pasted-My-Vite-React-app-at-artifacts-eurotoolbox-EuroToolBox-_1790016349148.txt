@@ -1,0 +1,56 @@
+My Vite + React app at artifacts/eurotoolbox (EuroToolBox, deployed to Cloudflare Workers, static assets served from dist/public) needs full SEO. Do NOT change any tool's behavior or the visual design. Do NOT break the build. Use pnpm.
+
+SITE URL
+- Create a single SITE_URL config value (env var with a default of https://eurotoolbox.ah5194851.workers.dev). Use it for canonical URLs, sitemap, Open Graph URLs and JSON-LD, so I can switch to a custom domain later by changing one value.
+
+1. PRERENDERING
+- Add build-time prerendering (vite-react-ssg or an equivalent that works with my router) so every route outputs real static HTML: home, category pages, every tool page, CV builder, privacy page.
+- Each tool must have its own clean URL, e.g. /tools/<slug>.
+- Verify with curl or view-source that the built HTML contains the h1 and page text without JavaScript.
+
+2. PER-PAGE METADATA
+- Add react-helmet-async (or the SSG's built-in head support). Every page gets a unique <title> (max ~60 chars), meta description (max ~155 chars), canonical URL, Open Graph tags (og:title, og:description, og:type, og:url, og:image), and Twitter card tags.
+- Create a default og:image (1200x630) for the site.
+- Set <html lang="en">, favicon and apple-touch-icon.
+
+3. COPY
+Read the list of tools from the code and write SEO copy for EVERY tool in the same format as the examples below. Store it in one data file (e.g. src/data/seo.ts) keyed by tool slug, so it is easy to edit. For each tool: URL slug, title ("<Tool Name>: Free Online, No Upload | EuroToolBox" style, matching what people search), meta description, one H1, a 2-3 sentence intro, 3-4 "How to use" steps, and a 3-4 question FAQ. Only describe features the tool really has. Emphasize that files/data are processed locally in the browser and never uploaded. Keep it genuinely useful, no keyword stuffing.
+
+Home page:
+- Title: EuroToolBox: Free Online Tools, No Sign-Up, Files Stay Private
+- Description: Free everyday tools for text, numbers, PDFs, files and time. No accounts, no uploads: your files are processed in your browser and stay on your device.
+- H1: Small tools. Clearer days.
+
+CV builder (/tools/cv-builder):
+- Title: Free CV Builder: Create a Professional CV Online | EuroToolBox
+- Description: Build a clean, professional CV in minutes and download it as a PDF. No sign-up, and your details never leave your browser.
+- H1: Free CV Builder
+- Intro: Create a clear, professional CV without registering or paying. Fill in your details, choose a layout and download the result as a PDF. Everything is processed in your browser, so your personal information is never uploaded to a server.
+- How to use: 1) Enter personal details, work experience, education and skills. 2) Preview as you type and reorder sections. 3) Download as PDF.
+- FAQ: Is it really free? (Yes, no sign-up, watermark or payment.) Is my data safe? (Stays in the browser, not uploaded or stored.) Can I use it for jobs in Europe? (Yes; keep to 1-2 pages, most recent experience first, check local conventions such as photos.) What format can I download? (PDF.)
+Adjust any statement here that does not match what the CV builder actually does.
+
+4. PAGE CONTENT
+- On each tool page, show the intro, "How to use" steps and FAQ below the tool (visible HTML, not hidden), plus a "Related tools" section with internal links to 3-4 similar tools. Match the existing design system and keep it compact.
+- Exactly one h1 per page, and logical h2/h3 headings.
+
+5. STRUCTURED DATA (JSON-LD)
+- Home: WebSite with SearchAction (if the site search uses a URL parameter; otherwise WebSite only).
+- Each tool page: WebApplication (name, description, url, applicationCategory UtilitiesApplication, operatingSystem Any, offers price 0), FAQPage from the FAQ data, and BreadcrumbList.
+
+6. CRAWL FILES
+- Generate public/sitemap.xml at build time from the route/tool list, using SITE_URL, with lastmod dates.
+- Add public/robots.txt: allow all, with a Sitemap: line pointing to the sitemap URL.
+
+7. ROUTING AND STATUS CODES
+- Make sure the Worker/assets config serves the prerendered HTML for direct visits and refreshes on every route.
+- Unknown URLs must return a real 404 status with a 404 page, not the home page. Update wrangler config (not_found_handling) accordingly and keep assets served from dist/public.
+
+8. PERFORMANCE AND ACCESSIBILITY BASICS
+- font-display: swap on web fonts, width/height on images, descriptive alt text, and keep the code-splitting already in place.
+
+AFTER CHANGES
+- Run pnpm run build with no errors.
+- Show me: the list of prerendered routes, the generated sitemap.xml and robots.txt, and the rendered <head> and JSON-LD of the home page, CV builder and one PDF tool.
+- Confirm that a direct visit to a tool URL works and an unknown URL returns 404.
+- List every file you changed.
