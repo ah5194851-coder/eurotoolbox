@@ -207,4 +207,6 @@ export function updateDocumentHead(path: string) {
   link.href = canonical;
 }
 
-
+function escapeHtml(value: string) {
+  return value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character] ?? character);
+}
