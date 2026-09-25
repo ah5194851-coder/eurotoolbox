@@ -1,212 +1,46 @@
-import { SITE_URL, OG_IMAGE_URL } from './site-config';
-import { tools } from './App';
-import { toolSeo } from './data/seo';
+import { Link } from 'wouter';
+import { useEffect } from 'react';
+import { BookOpen } from 'lucide-react';
+import { Shell } from './App';
+import { updateDocumentHead } from './seo';
 
-export type PageSeo = {
-  title: string;
-  description: string;
-  canonicalPath: string;
-  type: 'website' | 'article';
-  noindex?: boolean;
-};
+const books = [
+  { title: "The Beginner's Guide to Cybersecurity for Everyday People", description: 'A clear, non-technical guide to passwords, phishing, GDPR rights, and staying safe online in Europe.', url: 'https://www.lulu.com/shop/ali-hassan/the-beginners-guide-to-cybersecurity-for-everyday-people/paperback/product-v8nyyzm.html' },
+  { title: 'The Daily Mindfulness & Habit Reset Journal', description: 'A guided 30-day program combining mindfulness practices with realistic, gentle habit-building.', url: 'https://www.lulu.com/shop/ali-hassan/the-daily-mindfulness-habit-reset-journal/hardcover/product-q67jn7q.html' },
+  { title: 'The Small Business Social Media Content Kit', description: 'A practical system for planning, creating, and scheduling content that grows a small business.', url: 'https://www.lulu.com/shop/ali-hassan/the-small-business-social-media-content-kit/paperback/product-e72dzr5.html' },
+  { title: "The Beginner's Guide to Remote Work and the Digital Economy", description: 'A practical guide to finding remote jobs, freelancing, time zones, and staying productive without an office.', url: 'https://www.lulu.com/shop/ali-hassan/the-beginners-guide-to-remote-work-and-the-digital-economy/paperback/product-zmvyvz6.html' },
+  { title: "The Beginner's Guide to Productivity and Habit Building", description: 'Practical systems for building habits, prioritizing tasks, and getting things done without burning out.', url: 'https://www.lulu.com/shop/ali-hassan/the-beginners-guide-to-productivity-and-habit-building/paperback/product-57n846m.html' },
+  { title: "The Beginner's Guide to Personal Finance", description: 'Simple strategies to build a budget, save, manage debt, and build better money habits.', url: 'https://www.lulu.com/shop/ali-hassan/the-beginners-guide-to-personal-finance/paperback/product-nv5zzpm.html' },
+  { title: "The Beginner's Guide to Freelancing", description: 'A practical introduction to starting and growing a freelance career, from your first client to a sustainable business.', url: 'https://www.lulu.com/shop/ali-hassan/the-beginners-guide-to-freelancing/paperback/product-57nvqj7.html' },
+  { title: 'Finding Freelance Clients', description: 'A practical guide to getting your first clients, writing proposals, and building long-term client relationships.', url: 'https://www.lulu.com/shop/ali-hassan/finding-freelance-clients/paperback/product-m2vmwry.html' },
+  { title: 'Starting an Online Business', description: "A practical beginner's guide to choosing an idea, finding customers, and making your first sales online.", url: 'https://www.lulu.com/shop/ali-hassan/starting-an-online-business/paperback/product-7k56wwe.html' },
+  { title: "The Beginner's Guide to Artificial Intelligence", description: 'A clear, beginner-friendly introduction to how AI works and what it means for everyday life and work.', url: 'https://www.lulu.com/shop/ali-hassan/the-beginners-guide-to-artificial-intelligence/paperback/product-q67d6yw.html' },
+  { title: 'Ultimate Job Application Toolkit', description: 'A practical toolkit to help job seekers put together strong applications and stand out to employers.', url: 'https://www.lulu.com/shop/ali-hassan/ultimate-job-application-toolkit/paperback/product-7k5q7n2.html' },
+  { title: 'Large Print Word Search Puzzles for Seniors', description: 'A relaxing large-print word search puzzle book designed for easy reading and enjoyment.', url: 'https://www.lulu.com/shop/ali-hassan/large-print-word-search-puzzles-for-seniors/paperback/product-v8n4pjn.html' },
+  { title: 'Monthly Expense Tracker', description: 'A simple, practical monthly expense tracker to help build a clear picture of spending habits.', url: 'https://www.lulu.com/shop/ali-hassan/monthly-expense-tracker/paperback/product-v8n46pd.html' },
+];
 
-export const HOME_SEO: PageSeo = {
-  title: 'EuroToolBox: Free Online Tools, No Sign-Up, Files Stay Private',
-  description: 'Free everyday tools for text, numbers, PDFs, files and time. No accounts, no uploads: your files are processed in your browser and stay on your device.',
-  canonicalPath: '/',
-  type: 'website',
-};
-
-export const BOOKS_SEO: PageSeo = {
-  title: 'Books by Ali Hassan | EuroToolBox',
-  description: "Practical beginner's guides on AI, cybersecurity, remote work, freelancing, productivity, personal finance and more, by the creator of EuroToolBox.",
-  canonicalPath: '/books',
-  type: 'website',
-};
-
-const CATEGORY_COPY: Record<string, { name: string; description: string }> = {
-  text: { name: 'Text tools', description: 'Free browser tools for counting, cleaning and transforming text without uploading your content.' },
-  numbers: { name: 'Number tools', description: 'Straightforward browser calculators for percentages, discounts, BMI, loans, VAT and age.' },
-  files: { name: 'File tools', description: 'Local image and file utilities for resizing, converting, cropping and preparing downloads.' },
-  pdf: { name: 'PDF tools', description: 'Private browser-based PDF tools for extracting, combining, splitting, compressing and rendering documents.' },
-  time: { name: 'Time tools', description: 'Simple date and time utilities for dates, time zones and everyday planning.' },
-  everyday: { name: 'Everyday tools', description: 'Useful everyday converters for measurements, time zones and currency reference checks.' },
-  work: { name: 'Work tools', description: 'Practical browser tools for CVs, cover letters and salary estimates.' },
-};
-
-export const categorySlugs = Object.keys(CATEGORY_COPY);
-
-export function categoryPath(category: string) {
-  return `/category/${category.toLowerCase()}`;
-}
-
-export function getCategorySeo(slug: string): PageSeo | undefined {
-  const copy = CATEGORY_COPY[slug];
-  if (!copy) return undefined;
-  return {
-    title: `${copy.name} – Free Online Tools | EuroToolBox`,
-    description: copy.description,
-    canonicalPath: `/category/${slug}`,
-    type: 'website',
-  };
-}
-
-export function getToolPath(slug: string) {
-  return `/tools/${slug}`;
-}
-
-export function getPageSeo(path: string): PageSeo {
-  const cleanPath = path.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
-  if (cleanPath === '/') return HOME_SEO;
-  if (cleanPath === '/books') return BOOKS_SEO;
-  if (cleanPath === '/privacy') {
-    return {
-      title: 'Privacy – Your Files Stay in Your Browser | EuroToolBox',
-      description: 'Read how EuroToolBox keeps browser-processed text, files and personal details on your device by default.',
-      canonicalPath: '/privacy',
-      type: 'article',
-    };
-  }
-  const category = cleanPath.match(/^\/category\/([^/]+)$/)?.[1];
-  if (category) return getCategorySeo(category) ?? notFoundSeo(cleanPath);
-  const slug = cleanPath.match(/^(?:\/tools|)\/([^/]+)$/)?.[1];
-  if (slug && toolSeo[slug]) {
-    return { ...toolSeo[slug], canonicalPath: getToolPath(slug), type: 'website' };
-  }
-  return notFoundSeo(cleanPath);
-}
-
-export function notFoundSeo(path = '/404'): PageSeo {
-  return {
-    title: 'Page not found | EuroToolBox',
-    description: 'The EuroToolBox page you requested could not be found.',
-    canonicalPath: path,
-    type: 'website',
-    noindex: true,
-  };
-}
-
-export function absoluteUrl(path: string) {
-  return `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`;
-}
-
-function jsonLd(value: unknown) {
-  return JSON.stringify(value).replace(/</g, '\\u003c');
-}
-
-export function getJsonLd(path: string): unknown[] {
-  const page = getPageSeo(path);
-  const cleanPath = path.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
-  const base = { '@context': 'https://schema.org', url: absoluteUrl(page.canonicalPath) };
-  if (cleanPath === '/') {
-    return [{
-      ...base,
-      '@type': 'WebSite',
-      name: 'EuroToolBox',
-      description: page.description,
-      potentialAction: undefined,
-    }];
-  }
-  const slug = cleanPath.match(/^(?:\/tools|)\/([^/]+)$/)?.[1];
-  if (slug && toolSeo[slug]) {
-    const tool = tools.find(item => item.slug === slug);
-    const seo = toolSeo[slug];
-    return [
-      {
-        ...base,
-        '@type': 'WebApplication',
-        name: tool?.name ?? slug,
-        description: seo.description,
-        url: absoluteUrl(getToolPath(slug)),
-        applicationCategory: 'UtilitiesApplication',
-        operatingSystem: 'Any',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
-      },
-      {
-        ...base,
-        '@type': 'FAQPage',
-        mainEntity: seo.faq.map(([question, answer]) => ({
-          '@type': 'Question',
-          name: question,
-          acceptedAnswer: { '@type': 'Answer', text: answer },
-        })),
-      },
-      {
-        ...base,
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'EuroToolBox', item: absoluteUrl('/') },
-          { '@type': 'ListItem', position: 2, name: tool?.category ?? 'Tools', item: absoluteUrl(`/category/${tool?.category.toLowerCase() ?? 'tools'}`) },
-          { '@type': 'ListItem', position: 3, name: tool?.name ?? slug, item: absoluteUrl(getToolPath(slug)) },
-        ],
-      },
-    ];
-  }
-  return [{ ...base, '@type': page.type === 'article' ? 'Article' : 'CollectionPage', name: page.title, description: page.description }];
-}
-
-export function renderHead(path: string) {
-  const page = getPageSeo(path);
-  const canonical = absoluteUrl(page.canonicalPath);
-  const robots = page.noindex ? 'noindex, follow' : 'index, follow';
-  const jsonScripts = getJsonLd(path).map(value => `<script type="application/ld+json">${jsonLd(value)}</script>`).join('');
-  return [
-    `<title>${escapeHtml(page.title)}</title>`,
-    `<meta name="description" content="${escapeHtml(page.description)}" />`,
-    `<meta name="robots" content="${robots}" />`,
-    `<link rel="canonical" href="${canonical}" />`,
-    `<meta property="og:title" content="${escapeHtml(page.title)}" />`,
-    `<meta property="og:description" content="${escapeHtml(page.description)}" />`,
-    `<meta property="og:type" content="${page.type}" />`,
-    `<meta property="og:url" content="${canonical}" />`,
-    `<meta property="og:image" content="${OG_IMAGE_URL}" />`,
-    '<meta property="og:site_name" content="EuroToolBox" />',
-    '<meta name="twitter:card" content="summary_large_image" />',
-    `<meta name="twitter:title" content="${escapeHtml(page.title)}" />`,
-    `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`,
-    `<meta name="twitter:image" content="${OG_IMAGE_URL}" />`,
-    jsonScripts,
-  ].join('\n    ');
-}
-
-export function updateDocumentHead(path: string) {
-  if (typeof document === 'undefined') return;
-  const page = getPageSeo(path);
-  document.title = page.title;
-  const canonical = absoluteUrl(page.canonicalPath);
-  const tags: Record<string, string> = {
-    'meta[name="description"]': page.description,
-    'meta[name="robots"]': page.noindex ? 'noindex, follow' : 'index, follow',
-    'meta[property="og:title"]': page.title,
-    'meta[property="og:description"]': page.description,
-    'meta[property="og:type"]': page.type,
-    'meta[property="og:url"]': canonical,
-    'meta[property="og:image"]': OG_IMAGE_URL,
-    'meta[name="twitter:title"]': page.title,
-    'meta[name="twitter:description"]': page.description,
-    'meta[name="twitter:image"]': OG_IMAGE_URL,
-  };
-  Object.entries(tags).forEach(([selector, content]) => {
-    const attribute = selector.includes('property=') ? 'property' : 'name';
-    const value = selector.match(/["']([^"']+)["']/)?.[1];
-    if (!value) return;
-    let element = document.head.querySelector<HTMLMetaElement>(selector);
-    if (!element) {
-      element = document.createElement('meta');
-      element.setAttribute(attribute, value);
-      document.head.appendChild(element);
-    }
-    element.content = content;
-  });
-  let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-  if (!link) {
-    link = document.createElement('link');
-    link.rel = 'canonical';
-    document.head.appendChild(link);
-  }
-  link.href = canonical;
-}
-
-function escapeHtml(value: string) {
-  return value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character] ?? character);
+export default function BooksPage() {
+  useEffect(() => {
+    updateDocumentHead('/books');
+  }, []);
+  return <Shell><main className="mx-auto max-w-[1360px] px-5 py-12 lg:px-10 lg:py-20">
+    <div className="max-w-2xl">
+      <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">Toolbox / Books</Link>
+      <p className="mt-10 font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">By Ali Hassan</p>
+      <h1 className="mt-3 font-display text-5xl font-semibold tracking-tight sm:text-6xl">Books</h1>
+      <p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">Practical beginner's guides on AI, cybersecurity, remote work, freelancing, productivity, personal finance and more.</p>
+    </div>
+    <section className="mt-12" aria-labelledby="books-list">
+      <h2 id="books-list" className="sr-only">All books</h2>
+      <div className="mt-2 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {books.map(book => <a key={book.url} href={book.url} target="_blank" rel="noopener noreferrer" className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-md">
+          <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary/10 text-primary"><BookOpen size={18} /></span>
+          <h3 className="mt-5 font-display text-lg font-semibold leading-snug">{book.title}</h3>
+          <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{book.description}</p>
+          <span className="mt-4 inline-block text-sm font-semibold text-primary">View on Lulu →</span>
+        </a>)}
+      </div>
+    </section>
+  </main></Shell>;
 }
