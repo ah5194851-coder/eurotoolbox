@@ -17,6 +17,13 @@ export const HOME_SEO: PageSeo = {
   type: 'website',
 };
 
+export const BOOKS_SEO: PageSeo = {
+  title: 'Books by Ali Hassan | EuroToolBox',
+  description: "Practical beginner's guides on AI, cybersecurity, remote work, freelancing, productivity, personal finance and more, by the creator of EuroToolBox.",
+  canonicalPath: '/books',
+  type: 'website',
+};
+
 const CATEGORY_COPY: Record<string, { name: string; description: string }> = {
   text: { name: 'Text tools', description: 'Free browser tools for counting, cleaning and transforming text without uploading your content.' },
   numbers: { name: 'Number tools', description: 'Straightforward browser calculators for percentages, discounts, BMI, loans, VAT and age.' },
@@ -51,6 +58,7 @@ export function getToolPath(slug: string) {
 export function getPageSeo(path: string): PageSeo {
   const cleanPath = path.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
   if (cleanPath === '/') return HOME_SEO;
+  if (cleanPath === '/books') return BOOKS_SEO;
   if (cleanPath === '/privacy') {
     return {
       title: 'Privacy – Your Files Stay in Your Browser | EuroToolBox',
@@ -120,85 +128,3 @@ export function getJsonLd(path: string): unknown[] {
         mainEntity: seo.faq.map(([question, answer]) => ({
           '@type': 'Question',
           name: question,
-          acceptedAnswer: { '@type': 'Answer', text: answer },
-        })),
-      },
-      {
-        ...base,
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'EuroToolBox', item: absoluteUrl('/') },
-          { '@type': 'ListItem', position: 2, name: tool?.category ?? 'Tools', item: absoluteUrl(`/category/${tool?.category.toLowerCase() ?? 'tools'}`) },
-          { '@type': 'ListItem', position: 3, name: tool?.name ?? slug, item: absoluteUrl(getToolPath(slug)) },
-        ],
-      },
-    ];
-  }
-  return [{ ...base, '@type': page.type === 'article' ? 'Article' : 'CollectionPage', name: page.title, description: page.description }];
-}
-
-export function renderHead(path: string) {
-  const page = getPageSeo(path);
-  const canonical = absoluteUrl(page.canonicalPath);
-  const robots = page.noindex ? 'noindex, follow' : 'index, follow';
-  const jsonScripts = getJsonLd(path).map(value => `<script type="application/ld+json">${jsonLd(value)}</script>`).join('');
-  return [
-    `<title>${escapeHtml(page.title)}</title>`,
-    `<meta name="description" content="${escapeHtml(page.description)}" />`,
-    `<meta name="robots" content="${robots}" />`,
-    `<link rel="canonical" href="${canonical}" />`,
-    `<meta property="og:title" content="${escapeHtml(page.title)}" />`,
-    `<meta property="og:description" content="${escapeHtml(page.description)}" />`,
-    `<meta property="og:type" content="${page.type}" />`,
-    `<meta property="og:url" content="${canonical}" />`,
-    `<meta property="og:image" content="${OG_IMAGE_URL}" />`,
-    '<meta property="og:site_name" content="EuroToolBox" />',
-    '<meta name="twitter:card" content="summary_large_image" />',
-    `<meta name="twitter:title" content="${escapeHtml(page.title)}" />`,
-    `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`,
-    `<meta name="twitter:image" content="${OG_IMAGE_URL}" />`,
-    jsonScripts,
-  ].join('\n    ');
-}
-
-export function updateDocumentHead(path: string) {
-  if (typeof document === 'undefined') return;
-  const page = getPageSeo(path);
-  document.title = page.title;
-  const canonical = absoluteUrl(page.canonicalPath);
-  const tags: Record<string, string> = {
-    'meta[name="description"]': page.description,
-    'meta[name="robots"]': page.noindex ? 'noindex, follow' : 'index, follow',
-    'meta[property="og:title"]': page.title,
-    'meta[property="og:description"]': page.description,
-    'meta[property="og:type"]': page.type,
-    'meta[property="og:url"]': canonical,
-    'meta[property="og:image"]': OG_IMAGE_URL,
-    'meta[name="twitter:title"]': page.title,
-    'meta[name="twitter:description"]': page.description,
-    'meta[name="twitter:image"]': OG_IMAGE_URL,
-  };
-  Object.entries(tags).forEach(([selector, content]) => {
-    const attribute = selector.includes('property=') ? 'property' : 'name';
-    const value = selector.match(/["']([^"']+)["']/)?.[1];
-    if (!value) return;
-    let element = document.head.querySelector<HTMLMetaElement>(selector);
-    if (!element) {
-      element = document.createElement('meta');
-      element.setAttribute(attribute, value);
-      document.head.appendChild(element);
-    }
-    element.content = content;
-  });
-  let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-  if (!link) {
-    link = document.createElement('link');
-    link.rel = 'canonical';
-    document.head.appendChild(link);
-  }
-  link.href = canonical;
-}
-
-function escapeHtml(value: string) {
-  return value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character] ?? character);
-}
