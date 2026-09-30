@@ -55,11 +55,11 @@ async function loadPdfJs() {
 
 function ToolSeoContent({ tool, seo }: { tool: typeof tools[number]; seo: typeof toolSeo[string] }) {
   return <section className="mt-14 border-t border-border pt-12">
-    <div className="grid gap-10 lg:grid-cols-[.9fr_1.1fr]">
+    <div className="grid gap-10 lg:grid-cols-[1.05fr_.95fr]">
       <div>
         <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">About this tool</p>
-        <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight">A clearer way to use {tool.name.toLowerCase()}.</h2>
-        <p className="mt-4 leading-7 text-muted-foreground">{seo.intro}</p>
+        <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight">{seo.heading || `How ${tool.name} works`}</h2>
+        <p className="mt-4 text-[15px] leading-7 text-muted-foreground">{seo.longDescription || seo.intro}</p>
       </div>
       <div>
         <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">How to use</p>
@@ -68,7 +68,21 @@ function ToolSeoContent({ tool, seo }: { tool: typeof tools[number]; seo: typeof
         </ol>
       </div>
     </div>
-    <div className="mt-10 grid gap-4 sm:grid-cols-3">
+    {seo.useCases && seo.useCases.length > 0 && (
+      <div className="mt-12">
+        <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">Real-world applications</p>
+        <h3 className="mt-2 font-display text-2xl font-semibold">Practical Use Cases</h3>
+        <div className="mt-5 grid gap-4 md:grid-cols-3">
+          {seo.useCases.map((uc, i) => (
+            <div key={i} className="rounded-xl border border-border bg-card p-5">
+              <h4 className="font-display text-base font-semibold text-foreground">{uc.title}</h4>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">{uc.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+    <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {seo.features.map(feature => <div key={feature} className="rounded-xl border border-border bg-card p-4 text-sm font-semibold">{feature}</div>)}
     </div>
     <div className="mt-12">
@@ -85,11 +99,21 @@ function ToolSeoContent({ tool, seo }: { tool: typeof tools[number]; seo: typeof
 
 export function ToolPage() {
   const { tool: slug } = useParams<{ tool: string }>();
-  const tool = tools.find(t => t.slug === slug);
-  const seo = toolSeo[slug || ''] ?? { title: 'Tool not found · LoveEasyTool', description: 'The requested LoveEasyTool tool could not be found.', intro: '', steps: [], features: [], faq: [] };
-  useEffect(() => { updateDocumentHead(tool ? `/tools/${slug}` : '/404'); }, [slug, tool]);
+
+  // 301 client redirect for overlapping tool image-tools -> image-compressor
+  useEffect(() => {
+    if (slug === 'image-tools' && typeof window !== 'undefined') {
+      window.location.replace('/tools/image-compressor');
+    }
+  }, [slug]);
+
+  const targetSlug = slug === 'image-tools' ? 'image-compressor' : (slug || '');
+  const tool = tools.find(t => t.slug === targetSlug);
+  const seo = toolSeo[targetSlug] ?? { title: 'Tool not found · LoveEasyTool', description: 'The requested LoveEasyTool tool could not be found.', heading: '', intro: '', longDescription: '', useCases: [], steps: [], features: [], faq: [] };
+  
+  useEffect(() => { updateDocumentHead(tool ? `/tools/${targetSlug}` : '/404'); }, [targetSlug, tool]);
   if (!tool) return <NotFound />;
-  return <Shell><main className="mx-auto max-w-[1160px] px-5 py-10 lg:px-10 lg:py-16"><div className="mb-9 flex items-center gap-2 text-sm text-muted-foreground"><Link href="/" className="hover:text-foreground">LoveEasyTool</Link><span>/</span><span>{tool.category}</span><span>/</span><span className="text-foreground">{tool.name}</span></div><div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:items-start"><div className="lg:sticky lg:top-28"><span className="grid h-12 w-12 place-items-center rounded-xl bg-secondary text-secondary-foreground">{tool.icon}</span><p className="mt-6 font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">{tool.category} utility</p><h1 className="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">{slug === 'cv-builder' ? 'Free CV Builder' : tool.name}</h1><p className="mt-4 max-w-sm leading-7 text-muted-foreground">{tool.description} Built for quick answers, with your inputs staying in your browser.</p><div className="mt-7 flex items-center gap-2 text-xs text-muted-foreground"><ShieldCheck size={16} className="text-accent" />Private by default · No account needed</div></div><div><div className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-8">{renderTool(slug)}</div><RelatedTools current={slug} /></div></div><ToolSeoContent tool={tool} seo={seo} /></main></Shell>;
+  return <Shell><main className="mx-auto max-w-[1160px] px-5 py-10 lg:px-10 lg:py-16"><div className="mb-9 flex items-center gap-2 text-sm text-muted-foreground"><Link href="/" className="hover:text-foreground">LoveEasyTool</Link><span>/</span><span>{tool.category}</span><span>/</span><span className="text-foreground">{tool.name}</span></div><div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:items-start"><div className="lg:sticky lg:top-28"><span className="grid h-12 w-12 place-items-center rounded-xl bg-secondary text-secondary-foreground">{tool.icon}</span><p className="mt-6 font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">{tool.category} utility</p><h1 className="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">{targetSlug === 'cv-builder' ? 'Free CV Builder' : tool.name}</h1><p className="mt-4 max-w-sm leading-7 text-muted-foreground">{tool.description} Built for quick answers, with your inputs staying in your browser.</p><div className="mt-7 flex items-center gap-2 text-xs text-muted-foreground"><ShieldCheck size={16} className="text-accent" />Private by default · No account needed</div></div><div><div className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-8">{renderTool(targetSlug)}</div><RelatedTools current={targetSlug} /></div></div><ToolSeoContent tool={tool} seo={seo} /></main></Shell>;
 }
 
 function TextTool({ kind }: { kind: 'counter' | 'case' | 'cleaner' | 'duplicates' }) {

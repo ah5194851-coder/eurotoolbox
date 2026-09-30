@@ -1,4 +1,4 @@
-import { SITE_URL, OG_IMAGE_URL } from './site-config';
+import { SITE_URL, OG_IMAGE_URL, OG_IMAGE_WIDTH, OG_IMAGE_HEIGHT, OG_IMAGE_ALT } from './site-config';
 import { tools } from './App';
 import { toolSeo } from './data/seo';
 
@@ -20,19 +20,43 @@ export const HOME_SEO: PageSeo = {
 };
 
 export const BOOKS_SEO: PageSeo = {
-  title: 'Books - Free Online Tool | LoveEasyTool',
-  description: 'Practical beginner guides on AI, cybersecurity, remote work, freelancing, personal finance and productivity by Ali Hassan, the creator of LoveEasyTool.',
+  title: 'Books by Ali Hassan | LoveEasyTool',
+  description: 'Discover practical books and beginner guides by Ali Hassan on AI, cybersecurity, remote freelancing, personal finance, and high-performance productivity.',
   canonicalPath: '/books',
   type: 'website',
-  keywords: 'books, ali hassan, cybersecurity guide, ai guide, remote work, freelancing, productivity, personal finance, LoveEasyTool',
+  keywords: 'books by ali hassan, cybersecurity guide, ai guide, remote work, freelancing, productivity, personal finance, LoveEasyTool',
 };
 
 export const PRIVACY_SEO: PageSeo = {
-  title: 'Privacy Policy - Free Online Tool | LoveEasyTool',
+  title: 'Privacy Policy: Zero-Upload Local Processing | LoveEasyTool',
   description: 'Read how LoveEasyTool protects your privacy with browser-side processing. Your files, documents, and data never leave your device or reach any server.',
   canonicalPath: '/privacy',
   type: 'article',
   keywords: 'privacy policy, local processing, private tools, zero uploads, LoveEasyTool privacy',
+};
+
+export const ABOUT_SEO: PageSeo = {
+  title: 'About Us | LoveEasyTool',
+  description: 'Learn about LoveEasyTool, founded by Ali Hassan to deliver calm, free, private online tools with zero sign-up and browser-first client-side processing.',
+  canonicalPath: '/about',
+  type: 'website',
+  keywords: 'about loveeasytool, ali hassan, free online tools, client-side tools, private browser utilities',
+};
+
+export const CONTACT_SEO: PageSeo = {
+  title: 'Contact Support & Feedback | LoveEasyTool',
+  description: 'Contact the LoveEasyTool team for tool requests, feedback, bug reports, and book inquiries. We respond within 24 to 48 business hours.',
+  canonicalPath: '/contact',
+  type: 'website',
+  keywords: 'contact loveeasytool, tool suggestions, bug report, ali hassan support',
+};
+
+export const TERMS_SEO: PageSeo = {
+  title: 'Terms of Service | LoveEasyTool',
+  description: 'Read the terms of service for using LoveEasyTool free browser tools, including client-side data ownership and usage guidelines.',
+  canonicalPath: '/terms',
+  type: 'article',
+  keywords: 'terms of service, user agreement, free tool usage, LoveEasyTool terms',
 };
 
 const CATEGORY_COPY: Record<string, { name: string; description: string }> = {
@@ -55,7 +79,7 @@ export function getCategorySeo(slug: string): PageSeo | undefined {
   const copy = CATEGORY_COPY[slug];
   if (!copy) return undefined;
   return {
-    title: `${copy.name} - Free Online Tool | LoveEasyTool`,
+    title: `${copy.name} - Free Online Utilities | LoveEasyTool`,
     description: copy.description,
     canonicalPath: `/category/${slug}`,
     type: 'website',
@@ -72,6 +96,9 @@ export function getPageSeo(path: string): PageSeo {
   if (cleanPath === '/') return HOME_SEO;
   if (cleanPath === '/books') return BOOKS_SEO;
   if (cleanPath === '/privacy') return PRIVACY_SEO;
+  if (cleanPath === '/about') return ABOUT_SEO;
+  if (cleanPath === '/contact') return CONTACT_SEO;
+  if (cleanPath === '/terms') return TERMS_SEO;
   const category = cleanPath.match(/^\/category\/([^/]+)$/)?.[1];
   if (category) return getCategorySeo(category) ?? notFoundSeo(cleanPath);
   const slug = cleanPath.match(/^(?:\/tools|)\/([^/]+)$/)?.[1];
@@ -80,7 +107,7 @@ export function getPageSeo(path: string): PageSeo {
       ...toolSeo[slug],
       canonicalPath: getToolPath(slug),
       type: 'website',
-      keywords: `${toolSeo[slug].title.split(' - ')[0].toLowerCase()}, free online tool, private tool, browser processing, LoveEasyTool`,
+      keywords: `${toolSeo[slug].title.split(':')[0].toLowerCase()}, free online tool, private tool, browser processing, LoveEasyTool`,
     };
   }
   return notFoundSeo(cleanPath);
@@ -205,11 +232,15 @@ export function renderHead(path: string) {
     `<meta property="og:type" content="${page.type}" />`,
     `<meta property="og:url" content="${canonical}" />`,
     `<meta property="og:image" content="${OG_IMAGE_URL}" />`,
+    `<meta property="og:image:width" content="${OG_IMAGE_WIDTH}" />`,
+    `<meta property="og:image:height" content="${OG_IMAGE_HEIGHT}" />`,
+    `<meta property="og:image:alt" content="${escapeHtml(OG_IMAGE_ALT)}" />`,
     '<meta property="og:site_name" content="LoveEasyTool" />',
     '<meta name="twitter:card" content="summary_large_image" />',
     `<meta name="twitter:title" content="${escapeHtml(page.title)}" />`,
     `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`,
     `<meta name="twitter:image" content="${OG_IMAGE_URL}" />`,
+    `<meta name="twitter:image:alt" content="${escapeHtml(OG_IMAGE_ALT)}" />`,
     jsonScripts,
   ].filter(Boolean).join('\n    ');
 }
@@ -230,10 +261,14 @@ export function updateDocumentHead(path: string) {
     'meta[property="og:url"]': canonical,
     'meta[property="og:site_name"]': 'LoveEasyTool',
     'meta[property="og:image"]': OG_IMAGE_URL,
+    'meta[property="og:image:width"]': OG_IMAGE_WIDTH,
+    'meta[property="og:image:height"]': OG_IMAGE_HEIGHT,
+    'meta[property="og:image:alt"]': OG_IMAGE_ALT,
     'meta[name="twitter:card"]': 'summary_large_image',
     'meta[name="twitter:title"]': page.title,
     'meta[name="twitter:description"]': page.description,
     'meta[name="twitter:image"]': OG_IMAGE_URL,
+    'meta[name="twitter:image:alt"]': OG_IMAGE_ALT,
   };
   Object.entries(tags).forEach(([selector, content]) => {
     const attribute = selector.includes('property=') ? 'property' : 'name';
