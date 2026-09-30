@@ -16,7 +16,7 @@ import { categorySlugs, renderHead, absoluteUrl } from './seo';
 import { SITE_URL } from './site-config';
 import { tools } from './App';
 
-export { renderHead, absoluteUrl, SITE_URL };
+export { renderHead, absoluteUrl, SITE_URL, tools };
 
 export const PRERENDER_ROUTES = [
   '/',
