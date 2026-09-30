@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile, unlink } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -63,6 +63,8 @@ await Promise.all([
   writeFile(resolve(publicDir, 'robots.txt'), robots),
   writeFile(resolve(sourcePublicDir, 'sitemap.xml'), sitemap),
   writeFile(resolve(sourcePublicDir, 'robots.txt'), robots),
+  unlink(resolve(publicDir, '_redirects')).catch(() => {}),
+  unlink(resolve(sourcePublicDir, '_redirects')).catch(() => {}),
 ]);
 
 console.log(`Prerendered ${PRERENDER_ROUTES.length} routes plus 404.html`);
