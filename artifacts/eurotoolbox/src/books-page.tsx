@@ -5,7 +5,7 @@ import { Shell } from './App';
 import { updateDocumentHead } from './seo';
 
 const books = [
-  { title: "The Beginner's Guide to Cybersecurity for Everyday People", description: 'A clear, non-technical guide to passwords, phishing, GDPR rights, and staying safe online in Europe.', url: 'https://www.lulu.com/shop/ali-hassan/the-beginners-guide-to-cybersecurity-for-everyday-people/paperback/product-v8nyyzm.html' },
+  { title: "The Beginner's Guide to Cybersecurity for Everyday People", description: 'A clear, non-technical guide to passwords, phishing, privacy rights, and staying safe online.', url: 'https://www.lulu.com/shop/ali-hassan/the-beginners-guide-to-cybersecurity-for-everyday-people/paperback/product-v8nyyzm.html' },
   { title: 'The Daily Mindfulness & Habit Reset Journal', description: 'A guided 30-day program combining mindfulness practices with realistic, gentle habit-building.', url: 'https://www.lulu.com/shop/ali-hassan/the-daily-mindfulness-habit-reset-journal/hardcover/product-q67jn7q.html' },
   { title: 'The Small Business Social Media Content Kit', description: 'A practical system for planning, creating, and scheduling content that grows a small business.', url: 'https://www.lulu.com/shop/ali-hassan/the-small-business-social-media-content-kit/paperback/product-e72dzr5.html' },
   { title: "The Beginner's Guide to Remote Work and the Digital Economy", description: 'A practical guide to finding remote jobs, freelancing, time zones, and staying productive without an office.', url: 'https://www.lulu.com/shop/ali-hassan/the-beginners-guide-to-remote-work-and-the-digital-economy/paperback/product-zmvyvz6.html' },
@@ -26,7 +26,7 @@ export default function BooksPage() {
   }, []);
   return <Shell><main className="mx-auto max-w-[1360px] px-5 py-12 lg:px-10 lg:py-20">
     <div className="max-w-2xl">
-      <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">Toolbox / Books</Link>
+      <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">LoveEasyTool / Books</Link>
       <p className="mt-10 font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">By Ali Hassan</p>
       <h1 className="mt-3 font-display text-5xl font-semibold tracking-tight sm:text-6xl">Books</h1>
       <p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">Practical beginner's guides on AI, cybersecurity, remote work, freelancing, productivity, personal finance and more.</p>

@@ -19,9 +19,9 @@ export default function CategoryPage() {
 
   return <Shell><main className="mx-auto max-w-[1360px] px-5 py-12 lg:px-10 lg:py-20">
     <div className="max-w-2xl">
-      <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">Toolbox / All tools</Link>
+      <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">LoveEasyTool / All tools</Link>
       <p className="mt-10 font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">Tool cabinet / {categoryName}</p>
-      <h1 className="mt-3 font-display text-5xl font-semibold tracking-tight sm:text-6xl">{page.title.split(' – ')[0]}</h1>
+      <h1 className="mt-3 font-display text-5xl font-semibold tracking-tight sm:text-6xl">{page.title.split(/ [–-] /)[0]}</h1>
       <p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">{page.description}</p>
     </div>
     <section className="mt-12" aria-labelledby="category-tools">

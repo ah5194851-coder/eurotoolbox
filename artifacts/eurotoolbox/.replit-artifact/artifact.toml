@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "EuroToolBox"
+title = "LoveEasyTool"
 description = "A fast, privacy-conscious collection of browser-based tools for PDFs, images, text, calculations, careers, and everyday life."
 version = "1.0.0"
 id = "artifacts/eurotoolbox"
@@ -12,10 +12,10 @@ paths = [ "/" ]
 localPort = 21075
 
 [services.development]
-run = "pnpm --filter @workspace/eurotoolbox run dev"
+run = "npm run dev --workspace=@workspace/loveeasytool"
 
 [services.production]
-build = [ "pnpm", "--filter", "@workspace/eurotoolbox", "run", "build" ]
+build = [ "npm", "run", "build", "--workspace=@workspace/loveeasytool" ]
 serve = "static"
 publicDir = "artifacts/eurotoolbox/dist/public"
 

@@ -1,4 +1,4 @@
-const DEFAULT_SITE_URL = 'https://eurotoolbox.ah5194851.workers.dev';
+const DEFAULT_SITE_URL = 'https://loveeasytool.com';
 
 function trimSiteUrl(value: string) {
   return value.replace(/\/+$/, '');

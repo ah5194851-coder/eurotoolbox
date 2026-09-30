@@ -2,47 +2,13 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
-import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { mockupPreviewPlugin } from "./mockupPreviewPlugin";
-
-const BUILD_PORT = "4173";
-const BUILD_BASE_PATH = "/";
-
-const conditionalPlugins =
-  process.env.NODE_ENV !== "production" && process.env.REPL_ID !== undefined
-    ? [
-        await import("@replit/vite-plugin-cartographer").then((m) =>
-          m.cartographer({
-            root: path.resolve(import.meta.dirname, ".."),
-          }),
-        ),
-      ]
-    : [];
 
 export default defineConfig(({ command }) => {
   const isBuild = command === "build";
-  const rawPort = process.env.PORT ?? (isBuild ? BUILD_PORT : undefined);
-
-  if (!rawPort) {
-    throw new Error(
-      "PORT environment variable is required when running the preview server.",
-    );
-  }
-
-  const port = Number(rawPort);
-
-  if (Number.isNaN(port) || port <= 0) {
-    throw new Error(`Invalid PORT value: "${rawPort}"`);
-  }
-
-  const basePath =
-    process.env.BASE_PATH ?? (isBuild ? BUILD_BASE_PATH : undefined);
-
-  if (!basePath) {
-    throw new Error(
-      "BASE_PATH environment variable is required when running the preview server.",
-    );
-  }
+  const rawPort = process.env.PORT ?? (isBuild ? "4173" : "3000");
+  const port = Number(rawPort) || 3000;
+  const basePath = process.env.BASE_PATH ?? "/";
 
   return {
     base: basePath,
@@ -50,8 +16,6 @@ export default defineConfig(({ command }) => {
       mockupPreviewPlugin(),
       react(),
       tailwindcss(),
-      runtimeErrorOverlay(),
-      ...conditionalPlugins,
     ],
     resolve: {
       alias: {
