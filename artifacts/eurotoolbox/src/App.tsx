@@ -70,7 +70,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const [search, setSearch] = useState('');
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      if (window.location.hostname === 'www.loveeasytool.com') {
+      if (window.location.hostname === 'www.loveeasytool.com' || window.location.hostname === 'eurotoolbox.ah5194851.workers.dev') {
         window.location.replace('https://loveeasytool.com' + window.location.pathname + window.location.search + window.location.hash);
         return;
       }

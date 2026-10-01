@@ -1,0 +1,55 @@
+# LoveEasyTool
+
+> Free everyday online tools for text, calculations, PDFs, images, and documents with zero sign-up and client-side privacy.
+
+## About LoveEasyTool
+LoveEasyTool (https://loveeasytool.com) is an open web utility platform created by Ali Hassan to provide calm, fast, and completely private browser tools. The platform's core promise is local-first client-side processing: all calculations, conversions, image processing, and text scrubbing execute directly inside the user's web browser using JavaScript and WebAssembly. No user accounts, email sign-ups, subscriptions, or file uploads to remote servers are required. When you close or refresh your browser tab, your working memory is cleared.
+
+## Available Tools
+
+- [Word counter](https://loveeasytool.com/tools/word-counter): See words, characters, lines and reading time.
+- [Character counter](https://loveeasytool.com/tools/character-counter): Count every character, with or without spaces.
+- [Case converter](https://loveeasytool.com/tools/case-converter): Switch between sentence, title, upper and lower case.
+- [Text cleaner](https://loveeasytool.com/tools/text-cleaner): Tidy whitespace, line breaks and invisible clutter.
+- [Duplicate line remover](https://loveeasytool.com/tools/duplicate-line-remover): Make lists unique while keeping their original order.
+- [Percentage calculator](https://loveeasytool.com/tools/percentage-calculator): Work out percentages, changes and proportions.
+- [Discount calculator](https://loveeasytool.com/tools/discount-calculator): Find the sale price and exactly what you save.
+- [BMI calculator](https://loveeasytool.com/tools/bmi-calculator): A clear BMI estimate from height and weight.
+- [Loan calculator](https://loveeasytool.com/tools/loan-calculator): Estimate monthly payments and total interest.
+- [VAT calculator](https://loveeasytool.com/tools/vat-calculator): Add or remove VAT from a net or gross price.
+- [Age calculator](https://loveeasytool.com/tools/age-calculator): Know your exact age in years, months and days.
+- [Image compressor](https://loveeasytool.com/tools/image-compressor): Reduce image size with a quality slider and local processing.
+- [Image resizer](https://loveeasytool.com/tools/image-resizer): Resize an image to a precise browser-rendered width.
+- [JPG to PNG](https://loveeasytool.com/tools/jpg-to-png): Convert a JPG to a transparent-friendly PNG locally.
+- [PNG to JPG](https://loveeasytool.com/tools/png-to-jpg): Convert a PNG to a compact JPG in your browser.
+- [WebP converter](https://loveeasytool.com/tools/webp-converter): Convert common image formats to WebP locally.
+- [Image cropper](https://loveeasytool.com/tools/image-cropper): Prepare an image crop before downloading a new copy.
+- [PDF text extractor](https://loveeasytool.com/tools/pdf-to-word): Extract selectable plain text from searchable PDF documents.
+- [Word to PDF](https://loveeasytool.com/tools/word-to-pdf): Create a PDF from text directly in your browser.
+- [Merge PDF](https://loveeasytool.com/tools/merge-pdf): Combine multiple PDF files into one downloadable document.
+- [Split PDF](https://loveeasytool.com/tools/split-pdf): Extract selected pages from a PDF into a new file.
+- [PDF optimizer](https://loveeasytool.com/tools/compress-pdf): Re-encode and clean up unreferenced PDF streams and metadata.
+- [PDF to JPG](https://loveeasytool.com/tools/pdf-to-jpg): Render PDF pages to downloadable JPG images.
+- [JPG to PDF helper](https://loveeasytool.com/tools/jpg-to-pdf): Format an image for browser print-to-PDF export.
+- [Date calculator](https://loveeasytool.com/tools/date-calculator): Count days between dates or add days to a date.
+- [Unit converter](https://loveeasytool.com/tools/unit-converter): Convert length, weight, temperature and more.
+- [Time-zone converter](https://loveeasytool.com/tools/time-zone-converter): Compare a moment across cities without guesswork.
+- [Currency reference converter](https://loveeasytool.com/tools/currency-converter): Compare currencies with transparent static reference rates.
+- [CV builder](https://loveeasytool.com/tools/cv-builder): Write a clean, printable CV with a live preview.
+- [Cover-letter generator](https://loveeasytool.com/tools/cover-letter-generator): Turn a few details into a focused first draft.
+- [Salary calculator](https://loveeasytool.com/tools/salary-calculator): Estimate take-home pay after a percentage deduction.
+
+## Categories
+- Text Tools: Word counter, character counter, case converter, text cleaner, duplicate line remover
+- Number Tools: Percentage calculator, discount calculator, BMI calculator, loan calculator, VAT calculator, age calculator
+- File Tools: Image compressor, image resizer, JPG to PNG, PNG to JPG, WebP converter, image cropper
+- PDF Tools: Merge PDF, split PDF, PDF text extractor, Word to PDF, PDF optimizer, PDF to JPG, JPG to PDF helper
+- Time Tools: Date calculator
+- Everyday Tools: Unit converter, time-zone converter, currency reference converter
+- Work Tools: Free CV builder, cover-letter generator, salary calculator
+
+## Core Principles
+- 100% Free: No fees, trials, or hidden paywalls
+- Zero Sign-Up: Immediate access without accounts or emails
+- Privacy-First: All processing happens in local browser memory with zero server uploads
+- Author: Ali Hassan (founder and creator of LoveEasyTool)
