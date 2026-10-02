@@ -74,6 +74,16 @@ export default function AboutPage() {
             </div>
           </div>
 
+          <section className="rounded-2xl border border-border bg-card p-6 sm:p-8">
+            <h2 className="font-display text-2xl font-semibold text-foreground">The Love Tool Factory & Utility Mission</h2>
+            <p className="mt-3 text-base leading-7 text-muted-foreground">
+              Think of LoveEasyTool as an open digital love tool factory: a place where you can quickly pick up the exact instrument you need—whether you require a sharp, single-purpose axe like tool to slice through repetitive lines of text, crop an image, or compress a PDF, or need modern love tool ai productivity helpers to draft a CV and calculate career metrics.
+            </p>
+            <p className="mt-4 text-base leading-7 text-muted-foreground">
+              Whether you discovered us searching for lovetools com ua or exploring open-web alternatives, our platform exists to provide uncompromised utility without noise, tracking, or fees. (And for music enthusiasts arriving from searches like courtney love tool or pop-culture queries, welcome! While we do not tune grunge guitars, we do provide the cleanest, fastest suite of free browser utilities on the web.)
+            </p>
+          </section>
+
           <section className="border-t border-border pt-8">
             <h2 className="font-display text-2xl font-semibold">Explore Our Ecosystem</h2>
             <p className="mt-2 text-muted-foreground">

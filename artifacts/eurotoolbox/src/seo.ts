@@ -16,7 +16,7 @@ export const HOME_SEO: PageSeo = {
   description: 'Free everyday tools for text, numbers, PDFs, files and time. No accounts, no uploads: your files are processed in your browser and stay on your device.',
   canonicalPath: '/',
   type: 'website',
-  keywords: 'online tools, free online utilities, word counter, pdf tools, image compressor, calculators, private tools, no sign-up, LoveEasyTool',
+  keywords: 'online tools, free online utilities, word counter, pdf tools, image compressor, calculators, private tools, no sign-up, LoveEasyTool, axe like tool, love tool factory, love tool ai, lovetools com ua, courtney love tool',
 };
 
 export const BOOKS_SEO: PageSeo = {
@@ -40,7 +40,7 @@ export const ABOUT_SEO: PageSeo = {
   description: 'Learn about LoveEasyTool, founded by Ali Hassan to deliver calm, free, private online tools with zero sign-up and browser-first client-side processing.',
   canonicalPath: '/about',
   type: 'website',
-  keywords: 'about loveeasytool, ali hassan, free online tools, client-side tools, private browser utilities',
+  keywords: 'about loveeasytool, ali hassan, free online tools, client-side tools, private browser utilities, love tool factory, love tool ai, axe like tool, lovetools com ua, courtney love tool',
 };
 
 export const CONTACT_SEO: PageSeo = {
@@ -151,6 +151,7 @@ export function getJsonLd(path: string): unknown[] {
     name: 'LoveEasyTool',
     url: absoluteUrl('/'),
     description: HOME_SEO.description,
+    keywords: HOME_SEO.keywords,
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -265,7 +266,7 @@ export function updateDocumentHead(path: string) {
   const canonical = absoluteUrl(page.canonicalPath);
   const tags: Record<string, string> = {
     'meta[name="description"]': page.description,
-    'meta[name="keywords"]': page.keywords || 'online tools, free online utilities, LoveEasyTool',
+    'meta[name="keywords"]': page.keywords || HOME_SEO.keywords || 'online tools, free online utilities, LoveEasyTool',
     'meta[name="robots"]': page.noindex ? 'noindex, follow' : 'index, follow',
     'meta[name="theme-color"]': '#1a365d',
     'meta[property="og:title"]': page.title,
