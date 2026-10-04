@@ -28,7 +28,9 @@
     <meta name="google-site-verification" content="gUr0jluws07kPmgJnTiCcCkgoXgk8CcMyjgWGLaeTwU" />
     <script>
       if (typeof window !== 'undefined' && (window.location.hostname === 'www.loveeasytool.com' || window.location.hostname === 'eurotoolbox.ah5194851.workers.dev')) {
-        window.location.replace('https://loveeasytool.com' + window.location.pathname + window.location.search + window.location.hash);
+        var p = window.location.pathname;
+        if (p !== '/' && !p.endsWith('/') && p.indexOf('.') === -1) p += '/';
+        window.location.replace('https://loveeasytool.com' + p + window.location.search + window.location.hash);
       }
     </script>
   </head>

@@ -22,7 +22,7 @@ const books = [
 
 export default function BooksPage() {
   useEffect(() => {
-    updateDocumentHead('/books');
+    updateDocumentHead('/books/');
   }, []);
   return <Shell><main className="mx-auto max-w-[1360px] px-5 py-12 lg:px-10 lg:py-20">
     <div className="max-w-2xl">

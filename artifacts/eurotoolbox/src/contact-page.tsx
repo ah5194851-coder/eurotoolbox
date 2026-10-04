@@ -12,7 +12,7 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    updateDocumentHead('/contact');
+    updateDocumentHead('/contact/');
   }, []);
 
   const handleSubmit = (e: FormEvent) => {

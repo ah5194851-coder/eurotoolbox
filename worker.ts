@@ -8,16 +8,33 @@ export default {
   async fetch(request: Request, env: Env, ctx: unknown): Promise<Response> {
     const url = new URL(request.url);
 
-    // Early hostname check: permanently redirect requests arriving on eurotoolbox.ah5194851.workers.dev
-    // to the same path and query string on https://loveeasytool.com
-    // e.g. eurotoolbox.ah5194851.workers.dev/tools/merge-pdf?q=1 -> https://loveeasytool.com/tools/merge-pdf?q=1
+    // 1. Permanent redirect for alternate hostname eurotoolbox.ah5194851.workers.dev
     if (url.hostname === 'eurotoolbox.ah5194851.workers.dev') {
-      const destination = new URL(url.pathname + url.search, 'https://loveeasytool.com');
-      return Response.redirect(destination.toString(), 301);
+      let pathname = url.pathname;
+      if (pathname !== '/' && !pathname.endsWith('/') && !pathname.includes('.')) {
+        pathname += '/';
+      }
+      const target = 'https://loveeasytool.com' + pathname + url.search;
+      return Response.redirect(target, 301);
     }
 
-    // Normal requests on loveeasytool.com itself and any other domains continue to work normally,
-    // served directly from static assets
+    // 2. Permanent 301 redirect for deprecated/overlapping image-tools path
+    if (
+      url.pathname === '/tools/image-tools' ||
+      url.pathname === '/tools/image-tools/' ||
+      url.pathname === '/image-tools' ||
+      url.pathname === '/image-tools/'
+    ) {
+      return Response.redirect('https://loveeasytool.com/tools/image-compressor/', 301);
+    }
+
+    // 3. Permanent 301 redirect for extensionless HTML paths to canonical trailing slash
+    // This replaces Cloudflare's default 307/302 temporary redirects with an explicit 301
+    if (url.pathname !== '/' && !url.pathname.endsWith('/') && !url.pathname.includes('.')) {
+      const target = 'https://loveeasytool.com' + url.pathname + '/' + url.search;
+      return Response.redirect(target, 301);
+    }
+
     return env.ASSETS.fetch(request);
   },
 };

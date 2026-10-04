@@ -12,7 +12,7 @@ export default function CategoryPage() {
   const filtered = tools.filter(tool => tool.category.toLowerCase() === slug);
 
   useEffect(() => {
-    updateDocumentHead(page ? `/category/${slug}` : '/404');
+    updateDocumentHead(page ? `/category/${slug}/` : '/404');
   }, [page, slug]);
 
   if (!page || !categoryName) return <NotFound />;
@@ -27,7 +27,7 @@ export default function CategoryPage() {
     <section className="mt-12" aria-labelledby="category-tools">
       <h2 id="category-tools" className="font-display text-3xl font-semibold tracking-tight">Browse {categoryName.toLowerCase()} tools</h2>
       <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {filtered.map(tool => <Link key={tool.slug} href={`/tools/${tool.slug}`} className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-md">
+        {filtered.map(tool => <Link key={tool.slug} href={`/tools/${tool.slug}/`} className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-md">
           <div className="flex items-start justify-between"><span className="grid h-10 w-10 place-items-center rounded-lg bg-primary/10 text-primary">{tool.icon}</span><ArrowRight size={17} className="text-muted-foreground transition group-hover:translate-x-1 group-hover:text-primary" /></div>
           <h3 className="mt-5 font-display text-xl font-semibold">{tool.name}</h3>
           <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{tool.description}</p>

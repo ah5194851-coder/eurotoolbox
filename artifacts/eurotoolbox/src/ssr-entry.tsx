@@ -20,24 +20,24 @@ export { renderHead, absoluteUrl, SITE_URL, tools };
 
 export const PRERENDER_ROUTES = [
   '/',
-  '/about',
-  '/contact',
-  '/terms',
-  '/privacy',
-  '/books',
-  ...categorySlugs.map(slug => `/category/${slug}`),
-  ...tools.map(tool => `/tools/${tool.slug}`),
-  ...tools.map(tool => `/${tool.slug}`),
+  '/about/',
+  '/contact/',
+  '/terms/',
+  '/privacy/',
+  '/books/',
+  ...categorySlugs.map(slug => `/category/${slug}/`),
+  ...tools.map(tool => `/tools/${tool.slug}/`),
+  ...tools.map(tool => `/${tool.slug}/`),
 ];
 export const SITEMAP_ROUTES = [
   '/',
-  '/about',
-  '/contact',
-  '/terms',
-  '/privacy',
-  '/books',
-  ...categorySlugs.map(slug => `/category/${slug}`),
-  ...tools.map(tool => `/tools/${tool.slug}`),
+  '/about/',
+  '/contact/',
+  '/terms/',
+  '/privacy/',
+  '/books/',
+  ...categorySlugs.map(slug => `/category/${slug}/`),
+  ...tools.map(tool => `/tools/${tool.slug}/`),
 ];
 
 export function renderRoute(path: string) {

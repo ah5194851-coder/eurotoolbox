@@ -33,7 +33,8 @@ function documentFor(path, body) {
 }
 
 async function writeRoute(path, body) {
-  const output = path === '/' ? resolve(publicDir, 'index.html') : resolve(publicDir, path.slice(1), 'index.html');
+  const clean = path.replace(/^\/|\/$/g, '');
+  const output = clean === '' ? resolve(publicDir, 'index.html') : resolve(publicDir, clean, 'index.html');
   await mkdir(dirname(output), { recursive: true });
   await writeFile(output, documentFor(path, body));
 }
@@ -65,7 +66,7 @@ LoveEasyTool (${SITE_URL}) is an open web utility platform created by Ali Hassan
 
 ## Available Tools
 
-${tools.map(tool => `- [${tool.name}](${SITE_URL}/tools/${tool.slug}): ${tool.description}`).join('\n')}
+${tools.map(tool => `- [${tool.name}](${SITE_URL}/tools/${tool.slug}/): ${tool.description}`).join('\n')}
 
 ## Categories
 - Text Tools: Word counter, character counter, case converter, text cleaner, duplicate line remover

@@ -71,23 +71,27 @@ export function Shell({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (window.location.hostname === 'www.loveeasytool.com' || window.location.hostname === 'eurotoolbox.ah5194851.workers.dev') {
-        window.location.replace('https://loveeasytool.com' + window.location.pathname + window.location.search + window.location.hash);
+        let pathname = window.location.pathname;
+        if (pathname !== '/' && !pathname.endsWith('/') && !pathname.includes('.')) {
+          pathname += '/';
+        }
+        window.location.replace('https://loveeasytool.com' + pathname + window.location.search + window.location.hash);
         return;
       }
-      // Trailing slash 301-style redirect to non-trailing slash canonical
-      if (window.location.pathname.length > 1 && window.location.pathname.endsWith('/')) {
-        window.location.replace(window.location.pathname.slice(0, -1) + window.location.search + window.location.hash);
-        return;
-      }
-      // Overlap redirect for image-tools -> image-compressor
-      if (window.location.pathname === '/tools/image-tools' || window.location.pathname === '/image-tools') {
-        window.location.replace('/tools/image-compressor');
+      // Overlap redirect for image-tools -> image-compressor/
+      if (window.location.pathname === '/tools/image-tools' || window.location.pathname === '/tools/image-tools/' || window.location.pathname === '/image-tools' || window.location.pathname === '/image-tools/') {
+        window.location.replace('/tools/image-compressor/');
         return;
       }
     }
   }, []);
   const matching = useMemo(() => search.length > 1 ? tools.filter(t => t.name.toLowerCase().includes(search.toLowerCase())).slice(0, 5) : [], [search]);
-  const go = (path: string) => { setLocation(path); setSearch(''); setMenuOpen(false); };
+  const go = (path: string) => { 
+    const finalPath = path.endsWith('/') ? path : `${path}/`;
+    setLocation(finalPath); 
+    setSearch(''); 
+    setMenuOpen(false); 
+  };
   return <div className="noise min-h-[100dvh] bg-background">
     <header className="sticky top-0 z-40 border-b border-border/80 bg-background/90 backdrop-blur-xl">
       <div className="mx-auto flex h-[72px] max-w-[1360px] items-center gap-5 px-5 lg:px-10">
@@ -95,15 +99,15 @@ export function Shell({ children }: { children: ReactNode }) {
         <div className="relative ml-auto hidden w-full max-w-[320px] md:block">
           <Search size={17} className="absolute left-3 top-3 text-muted-foreground" />
           <input data-testid="input-tool-search" aria-label="Search tools" value={search} onChange={e => setSearch(e.target.value)} placeholder="Find a tool..." className="w-full rounded-full border border-border bg-card py-2.5 pl-9 pr-4 text-sm outline-none focus:border-primary" />
-          {matching.length > 0 && <div className="absolute left-0 right-0 top-12 rounded-xl border border-border bg-card p-1.5 shadow-lg">{matching.map(t => <button data-testid={`button-search-${t.slug}`} key={t.slug} onClick={() => go(`/tools/${t.slug}`)} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm hover:bg-muted"><span className="text-primary">{t.icon}</span>{t.name}</button>)}</div>}
+          {matching.length > 0 && <div className="absolute left-0 right-0 top-12 rounded-xl border border-border bg-card p-1.5 shadow-lg">{matching.map(t => <button data-testid={`button-search-${t.slug}`} key={t.slug} onClick={() => go(`/tools/${t.slug}/`)} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm hover:bg-muted"><span className="text-primary">{t.icon}</span>{t.name}</button>)}</div>}
         </div>
-        <nav className="hidden items-center gap-5 text-sm font-semibold md:flex"><Link href="/#tools" data-testid="link-browse-tools" className="text-muted-foreground transition hover:text-foreground">Browse tools</Link><Link href="/tools/cv-builder" data-testid="link-cv-builder" className="text-muted-foreground transition hover:text-foreground">CV builder</Link><Link href="/books" data-testid="link-books" className="text-muted-foreground transition hover:text-foreground">Books</Link><Link href="/about" data-testid="link-about" className="text-muted-foreground transition hover:text-foreground">About</Link></nav>
+        <nav className="hidden items-center gap-5 text-sm font-semibold md:flex"><Link href="/#tools" data-testid="link-browse-tools" className="text-muted-foreground transition hover:text-foreground">Browse tools</Link><Link href="/tools/cv-builder/" data-testid="link-cv-builder" className="text-muted-foreground transition hover:text-foreground">CV builder</Link><Link href="/books/" data-testid="link-books" className="text-muted-foreground transition hover:text-foreground">Books</Link><Link href="/about/" data-testid="link-about" className="text-muted-foreground transition hover:text-foreground">About</Link></nav>
         <button data-testid="button-mobile-menu" aria-label="Open menu" onClick={() => setMenuOpen(!menuOpen)} className="rounded-lg p-2 hover:bg-muted md:hidden">{menuOpen ? <X size={21} /> : <Menu size={21} />}</button>
       </div>
-      {menuOpen && <div className="border-t border-border bg-card px-5 py-4 md:hidden"><div className="relative mb-3"><Search size={16} className="absolute left-3 top-3 text-muted-foreground" /><input autoFocus data-testid="input-mobile-tool-search" value={search} onChange={e => setSearch(e.target.value)} placeholder="Find a tool..." className="w-full rounded-lg border border-input bg-background py-2.5 pl-9 text-sm" /></div><div className="grid gap-1">{(matching.length ? matching : tools.slice(0, 5)).map(t => <button data-testid={`button-mobile-${t.slug}`} key={t.slug} onClick={() => go(`/tools/${t.slug}`)} className="flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-muted">{t.icon}{t.name}</button>)}</div></div>}
+      {menuOpen && <div className="border-t border-border bg-card px-5 py-4 md:hidden"><div className="relative mb-3"><Search size={16} className="absolute left-3 top-3 text-muted-foreground" /><input autoFocus data-testid="input-mobile-tool-search" value={search} onChange={e => setSearch(e.target.value)} placeholder="Find a tool..." className="w-full rounded-lg border border-input bg-background py-2.5 pl-9 text-sm" /></div><div className="grid gap-1">{(matching.length ? matching : tools.slice(0, 5)).map(t => <button data-testid={`button-mobile-${t.slug}`} key={t.slug} onClick={() => go(`/tools/${t.slug}/`)} className="flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-muted">{t.icon}{t.name}</button>)}</div></div>}
     </header>
     {children}
-    <footer className="border-t border-border bg-card"><div className="mx-auto flex max-w-[1360px] flex-col gap-7 px-5 py-10 lg:flex-row lg:items-end lg:justify-between lg:px-10"><div><Link href="/" data-testid="link-footer-home" className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-[11px] bg-secondary text-secondary-foreground shadow-sm"><KeyRound size={19} strokeWidth={2.5} /></span><span><span className="block font-display text-lg font-bold leading-none tracking-tight">LoveEasyTool</span><span className="mt-0.5 block font-mono-ui text-[9px] uppercase tracking-[.15em] text-muted-foreground">Everyday utility</span></span></Link><p className="mt-4 max-w-xs text-sm leading-6 text-muted-foreground">Free online tools for everyday life. Built to be fast, private and pleasantly obvious.</p></div><div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">{['Text', 'Numbers', 'Files', 'Work'].map(c => <a key={c} href={`/category/${c.toLowerCase()}`} className="hover:text-foreground">{c} tools</a>)}<Link href="/about" className="hover:text-foreground">About</Link><Link href="/contact" className="hover:text-foreground">Contact</Link><Link href="/terms" className="hover:text-foreground">Terms</Link><Link href="/privacy" className="hover:text-foreground">Privacy</Link><Link href="/books" className="hover:text-foreground">Books</Link><span className="flex items-center gap-1.5 text-accent"><ShieldCheck size={15} />No uploads by default</span></div><p className="font-mono-ui text-[10px] uppercase tracking-widest text-muted-foreground">Made for the open web · {new Date().getFullYear()}</p></div></footer>
+    <footer className="border-t border-border bg-card"><div className="mx-auto flex max-w-[1360px] flex-col gap-7 px-5 py-10 lg:flex-row lg:items-end lg:justify-between lg:px-10"><div><Link href="/" data-testid="link-footer-home" className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-[11px] bg-secondary text-secondary-foreground shadow-sm"><KeyRound size={19} strokeWidth={2.5} /></span><span><span className="block font-display text-lg font-bold leading-none tracking-tight">LoveEasyTool</span><span className="mt-0.5 block font-mono-ui text-[9px] uppercase tracking-[.15em] text-muted-foreground">Everyday utility</span></span></Link><p className="mt-4 max-w-xs text-sm leading-6 text-muted-foreground">Free online tools for everyday life. Built to be fast, private and pleasantly obvious.</p></div><div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">{['Text', 'Numbers', 'Files', 'Work'].map(c => <Link key={c} href={`/category/${c.toLowerCase()}/`} className="hover:text-foreground">{c} tools</Link>)}<Link href="/about/" className="hover:text-foreground">About</Link><Link href="/contact/" className="hover:text-foreground">Contact</Link><Link href="/terms/" className="hover:text-foreground">Terms</Link><Link href="/privacy/" className="hover:text-foreground">Privacy</Link><Link href="/books/" className="hover:text-foreground">Books</Link><span className="flex items-center gap-1.5 text-accent"><ShieldCheck size={15} />No uploads by default</span></div><p className="font-mono-ui text-[10px] uppercase tracking-widest text-muted-foreground">Made for the open web · {new Date().getFullYear()}</p></div></footer>
   </div>;
 }
 
@@ -112,7 +116,7 @@ function RouteLoading() {
 }
 
 function Router() {
-  return <ErrorBoundary><Suspense fallback={<RouteLoading />}><Switch><Route path="/" component={LazyHomePage} /><Route path="/about" component={LazyAboutPage} /><Route path="/contact" component={LazyContactPage} /><Route path="/terms" component={LazyTermsPage} /><Route path="/privacy" component={LazyPrivacyPage} /><Route path="/books" component={LazyBooksPage} /><Route path="/category/:category" component={LazyCategoryPage} /><Route path="/tools/:tool" component={LazyToolPage} /><Route path="/:tool" component={LazyToolPage} /><Route component={NotFound} /></Switch></Suspense></ErrorBoundary>;
+  return <ErrorBoundary><Suspense fallback={<RouteLoading />}><Switch><Route path="/" component={LazyHomePage} /><Route path="/about" component={LazyAboutPage} /><Route path="/about/" component={LazyAboutPage} /><Route path="/contact" component={LazyContactPage} /><Route path="/contact/" component={LazyContactPage} /><Route path="/terms" component={LazyTermsPage} /><Route path="/terms/" component={LazyTermsPage} /><Route path="/privacy" component={LazyPrivacyPage} /><Route path="/privacy/" component={LazyPrivacyPage} /><Route path="/books" component={LazyBooksPage} /><Route path="/books/" component={LazyBooksPage} /><Route path="/category/:category" component={LazyCategoryPage} /><Route path="/category/:category/" component={LazyCategoryPage} /><Route path="/tools/:tool" component={LazyToolPage} /><Route path="/tools/:tool/" component={LazyToolPage} /><Route path="/:tool" component={LazyToolPage} /><Route path="/:tool/" component={LazyToolPage} /><Route component={NotFound} /></Switch></Suspense></ErrorBoundary>;
 }
 
 function App() {

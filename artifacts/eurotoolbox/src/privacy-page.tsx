@@ -5,7 +5,7 @@ import { updateDocumentHead } from './seo';
 
 export default function PrivacyPage() {
   useEffect(() => {
-    updateDocumentHead('/privacy');
+    updateDocumentHead('/privacy/');
   }, []);
 
   return <Shell><main className="mx-auto max-w-[900px] px-5 py-12 lg:px-10 lg:py-20">

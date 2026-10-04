@@ -22,7 +22,7 @@ export const HOME_SEO: PageSeo = {
 export const BOOKS_SEO: PageSeo = {
   title: 'Books by Ali Hassan | LoveEasyTool',
   description: 'Discover practical books and beginner guides by Ali Hassan on AI, cybersecurity, remote freelancing, personal finance, and high-performance productivity.',
-  canonicalPath: '/books',
+  canonicalPath: '/books/',
   type: 'website',
   keywords: 'books by ali hassan, cybersecurity guide, ai guide, remote work, freelancing, productivity, personal finance, LoveEasyTool',
 };
@@ -30,7 +30,7 @@ export const BOOKS_SEO: PageSeo = {
 export const PRIVACY_SEO: PageSeo = {
   title: 'Privacy Policy: Zero-Upload Local Processing | LoveEasyTool',
   description: 'Read how LoveEasyTool protects your privacy with browser-side processing. Your files, documents, and data never leave your device or reach any server.',
-  canonicalPath: '/privacy',
+  canonicalPath: '/privacy/',
   type: 'article',
   keywords: 'privacy policy, local processing, private tools, zero uploads, LoveEasyTool privacy',
 };
@@ -38,7 +38,7 @@ export const PRIVACY_SEO: PageSeo = {
 export const ABOUT_SEO: PageSeo = {
   title: 'About Us | LoveEasyTool',
   description: 'Learn about LoveEasyTool, founded by Ali Hassan to deliver calm, free, private online tools with zero sign-up and browser-first client-side processing.',
-  canonicalPath: '/about',
+  canonicalPath: '/about/',
   type: 'website',
   keywords: 'about loveeasytool, ali hassan, free online tools, client-side tools, private browser utilities, love tool factory, love tool ai, axe like tool, lovetools com ua, courtney love tool',
 };
@@ -46,7 +46,7 @@ export const ABOUT_SEO: PageSeo = {
 export const CONTACT_SEO: PageSeo = {
   title: 'Contact Support & Feedback | LoveEasyTool',
   description: 'Contact the LoveEasyTool team for tool requests, feedback, bug reports, and book inquiries. We respond within 24 to 48 business hours.',
-  canonicalPath: '/contact',
+  canonicalPath: '/contact/',
   type: 'website',
   keywords: 'contact loveeasytool, tool suggestions, bug report, ali hassan support',
 };
@@ -54,7 +54,7 @@ export const CONTACT_SEO: PageSeo = {
 export const TERMS_SEO: PageSeo = {
   title: 'Terms of Service | LoveEasyTool',
   description: 'Read the terms of service for using LoveEasyTool free browser tools, including client-side data ownership and usage guidelines.',
-  canonicalPath: '/terms',
+  canonicalPath: '/terms/',
   type: 'article',
   keywords: 'terms of service, user agreement, free tool usage, LoveEasyTool terms',
 };
@@ -72,36 +72,39 @@ const CATEGORY_COPY: Record<string, { name: string; description: string }> = {
 export const categorySlugs = Object.keys(CATEGORY_COPY);
 
 export function categoryPath(category: string) {
-  return `/category/${category.toLowerCase()}`;
+  return `/category/${category.toLowerCase()}/`;
 }
 
 export function getCategorySeo(slug: string): PageSeo | undefined {
-  const copy = CATEGORY_COPY[slug];
+  const cleanSlug = slug.toLowerCase().replace(/^\/|\/$/g, '');
+  const copy = CATEGORY_COPY[cleanSlug];
   if (!copy) return undefined;
   return {
     title: `${copy.name} - Free Online Utilities | LoveEasyTool`,
     description: copy.description,
-    canonicalPath: `/category/${slug}`,
+    canonicalPath: `/category/${cleanSlug}/`,
     type: 'website',
     keywords: `${copy.name.toLowerCase()}, free online utilities, browser tools, LoveEasyTool`,
   };
 }
 
 export function getToolPath(slug: string) {
-  return `/tools/${slug}`;
+  const cleanSlug = slug.replace(/^\/|\/$/g, '');
+  return `/tools/${cleanSlug}/`;
 }
 
 export function getPageSeo(path: string): PageSeo {
-  const cleanPath = path.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
+  const raw = path.split(/[?#]/)[0] || '/';
+  const cleanPath = raw === '/' ? '/' : (raw.endsWith('/') ? raw : `${raw}/`);
   if (cleanPath === '/') return HOME_SEO;
-  if (cleanPath === '/books') return BOOKS_SEO;
-  if (cleanPath === '/privacy') return PRIVACY_SEO;
-  if (cleanPath === '/about') return ABOUT_SEO;
-  if (cleanPath === '/contact') return CONTACT_SEO;
-  if (cleanPath === '/terms') return TERMS_SEO;
-  const category = cleanPath.match(/^\/category\/([^/]+)$/)?.[1];
+  if (cleanPath === '/books/') return BOOKS_SEO;
+  if (cleanPath === '/privacy/') return PRIVACY_SEO;
+  if (cleanPath === '/about/') return ABOUT_SEO;
+  if (cleanPath === '/contact/') return CONTACT_SEO;
+  if (cleanPath === '/terms/') return TERMS_SEO;
+  const category = cleanPath.match(/^\/category\/([^/]+)\/?$/)?.[1];
   if (category) return getCategorySeo(category) ?? notFoundSeo(cleanPath);
-  const slug = cleanPath.match(/^(?:\/tools|)\/([^/]+)$/)?.[1];
+  const slug = cleanPath.match(/^(?:\/tools|)\/([^/]+)\/?$/)?.[1];
   if (slug && toolSeo[slug]) {
     return {
       ...toolSeo[slug],
@@ -117,7 +120,7 @@ export function notFoundSeo(path = '/404'): PageSeo {
   return {
     title: 'Page Not Found | LoveEasyTool',
     description: 'The requested LoveEasyTool page could not be found. Explore our free, private online tools for text, numbers, PDFs, and files directly in your browser.',
-    canonicalPath: path,
+    canonicalPath: path.endsWith('/') ? path : `${path}/`,
     type: 'website',
     noindex: true,
   };
@@ -214,7 +217,7 @@ export function getJsonLd(path: string): unknown[] {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'LoveEasyTool', item: absoluteUrl('/') },
-          { '@type': 'ListItem', position: 2, name: tool?.category ?? 'Tools', item: absoluteUrl(`/category/${tool?.category.toLowerCase() ?? 'tools'}`) },
+          { '@type': 'ListItem', position: 2, name: tool?.category ?? 'Tools', item: absoluteUrl(`/category/${tool?.category.toLowerCase() ?? 'tools'}/`) },
           { '@type': 'ListItem', position: 3, name: tool?.name ?? slug, item: absoluteUrl(getToolPath(slug)) },
         ],
       },

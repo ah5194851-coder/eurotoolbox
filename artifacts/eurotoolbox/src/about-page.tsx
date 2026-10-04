@@ -6,7 +6,7 @@ import { updateDocumentHead } from './seo';
 
 export default function AboutPage() {
   useEffect(() => {
-    updateDocumentHead('/about');
+    updateDocumentHead('/about/');
   }, []);
 
   return (
@@ -93,7 +93,7 @@ export default function AboutPage() {
               <Link href="/#tools" className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground hover:bg-primary/90">
                 Browse all tools <ArrowRight size={16} />
               </Link>
-              <Link href="/books" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-3 font-semibold text-foreground hover:border-primary">
+              <Link href="/books/" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-3 font-semibold text-foreground hover:border-primary">
                 View books by Ali Hassan
               </Link>
             </div>

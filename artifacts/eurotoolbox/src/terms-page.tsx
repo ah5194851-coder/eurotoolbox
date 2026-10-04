@@ -5,7 +5,7 @@ import { updateDocumentHead } from './seo';
 
 export default function TermsPage() {
   useEffect(() => {
-    updateDocumentHead('/terms');
+    updateDocumentHead('/terms/');
   }, []);
 
   return (
