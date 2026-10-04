@@ -8,8 +8,8 @@ export default {
   async fetch(request: Request, env: Env, ctx: unknown): Promise<Response> {
     const url = new URL(request.url);
 
-    // 1. Permanent redirect for alternate hostname eurotoolbox.ah5194851.workers.dev
-    if (url.hostname === 'eurotoolbox.ah5194851.workers.dev') {
+    // 1. Permanent 301 redirect for www and alternate hostnames
+    if (url.hostname === 'www.loveeasytool.com' || url.hostname === 'eurotoolbox.ah5194851.workers.dev') {
       let pathname = url.pathname;
       if (pathname !== '/' && !pathname.endsWith('/') && !pathname.includes('.')) {
         pathname += '/';

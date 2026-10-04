@@ -49,13 +49,21 @@ export function renderRoute(path: string) {
           <Switch>
             <Route path="/" component={Home} />
             <Route path="/about" component={AboutPage} />
+            <Route path="/about/" component={AboutPage} />
             <Route path="/contact" component={ContactPage} />
+            <Route path="/contact/" component={ContactPage} />
             <Route path="/terms" component={TermsPage} />
+            <Route path="/terms/" component={TermsPage} />
             <Route path="/privacy" component={PrivacyPage} />
+            <Route path="/privacy/" component={PrivacyPage} />
             <Route path="/books" component={BooksPage} />
+            <Route path="/books/" component={BooksPage} />
             <Route path="/category/:category" component={CategoryPage} />
+            <Route path="/category/:category/" component={CategoryPage} />
             <Route path="/tools/:tool" component={ToolPage} />
+            <Route path="/tools/:tool/" component={ToolPage} />
             <Route path="/:tool" component={ToolPage} />
+            <Route path="/:tool/" component={ToolPage} />
             <Route component={NotFound} />
           </Switch>
         </Router>
