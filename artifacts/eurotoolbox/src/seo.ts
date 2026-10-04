@@ -134,34 +134,59 @@ function jsonLd(value: unknown) {
   return JSON.stringify(value).replace(/</g, '\\u003c');
 }
 
+function getGoogleApplicationCategory(category?: string): string {
+  switch ((category || '').toLowerCase()) {
+    case 'text':
+    case 'pdf':
+      return 'ProductivityApplication';
+    case 'work':
+      return 'BusinessApplication';
+    case 'files':
+      return 'DesignApplication';
+    case 'numbers':
+    case 'time':
+    case 'everyday':
+    default:
+      return 'UtilitiesApplication';
+  }
+}
+
 export function getJsonLd(path: string): unknown[] {
   const page = getPageSeo(path);
   const cleanPath = path.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
-  const base = { '@context': 'https://schema.org', url: absoluteUrl(page.canonicalPath) };
+  const canonical = absoluteUrl(page.canonicalPath);
 
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': absoluteUrl('/#organization'),
     name: 'LoveEasyTool',
     url: absoluteUrl('/'),
-    logo: absoluteUrl('/apple-touch-icon.svg'),
+    logo: {
+      '@type': 'ImageObject',
+      url: absoluteUrl('/apple-touch-icon.svg'),
+      width: 180,
+      height: 180,
+    },
+    image: OG_IMAGE_URL,
     description: 'Free everyday tools for text, numbers, PDFs, files and time. Fast, private browser-based utilities.',
+    founder: {
+      '@type': 'Person',
+      name: 'Ali Hassan',
+      url: absoluteUrl('/about/'),
+    },
   };
 
   const webSiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': absoluteUrl('/#website'),
     name: 'LoveEasyTool',
+    alternateName: ['Love Easy Tool', 'LoveEasyTool.com'],
     url: absoluteUrl('/'),
     description: HOME_SEO.description,
-    keywords: HOME_SEO.keywords,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${absoluteUrl('/')}?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
+    publisher: {
+      '@id': absoluteUrl('/#organization'),
     },
   };
 
@@ -169,42 +194,47 @@ export function getJsonLd(path: string): unknown[] {
     return [webSiteSchema, organizationSchema];
   }
 
+  // 1. Tool pages
   const slug = cleanPath.match(/^(?:\/tools|)\/([^/]+)$/)?.[1];
   if (slug && toolSeo[slug]) {
     const tool = tools.find(item => item.slug === slug);
     const seo = toolSeo[slug];
     return [
       {
-        ...base,
+        '@context': 'https://schema.org',
         '@type': 'WebApplication',
+        '@id': `${canonical}#app`,
         name: tool?.name ?? slug,
+        url: canonical,
         description: seo.answerSummary || seo.description,
-        url: absoluteUrl(getToolPath(slug)),
-        applicationCategory: `${tool?.category || 'Utilities'}Application`,
-        operatingSystem: 'All modern web browsers (Chrome, Safari, Firefox, Edge)',
-        browserRequirements: 'Requires JavaScript and HTML5 canvas. No installation required.',
+        applicationCategory: getGoogleApplicationCategory(tool?.category),
+        operatingSystem: 'All',
+        browserRequirements: 'Requires JavaScript. Runs locally in web browser.',
+        image: OG_IMAGE_URL,
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'USD',
           availability: 'https://schema.org/InStock',
         },
-        featureList: [
-          seo.facts?.pricing || '100% Free (no subscriptions or credit cards)',
-          seo.facts?.authRequired || 'No account required',
-          seo.facts?.executionEnvironment || 'Client-side in-browser processing',
-          seo.facts?.dataPrivacy || 'Zero server uploads (files processed locally)',
-          seo.facts?.supportedFormatsAndLimits || 'Standard browser formats',
-          ...(seo.features || []),
-        ],
+        author: {
+          '@type': 'Person',
+          name: 'Ali Hassan',
+          url: absoluteUrl('/about/'),
+        },
         publisher: {
           '@type': 'Organization',
+          '@id': absoluteUrl('/#organization'),
           name: 'LoveEasyTool',
           url: absoluteUrl('/'),
+          logo: {
+            '@type': 'ImageObject',
+            url: absoluteUrl('/apple-touch-icon.svg'),
+          },
         },
       },
       {
-        ...base,
+        '@context': 'https://schema.org',
         '@type': 'FAQPage',
         mainEntity: seo.faq.map(([question, answer]) => ({
           '@type': 'Question',
@@ -213,20 +243,258 @@ export function getJsonLd(path: string): unknown[] {
         })),
       },
       {
-        ...base,
+        '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'LoveEasyTool', item: absoluteUrl('/') },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
           { '@type': 'ListItem', position: 2, name: tool?.category ?? 'Tools', item: absoluteUrl(`/category/${tool?.category.toLowerCase() ?? 'tools'}/`) },
-          { '@type': 'ListItem', position: 3, name: tool?.name ?? slug, item: absoluteUrl(getToolPath(slug)) },
+          { '@type': 'ListItem', position: 3, name: tool?.name ?? slug, item: canonical },
         ],
       },
       organizationSchema,
     ];
   }
 
+  // 2. Category pages
+  const categoryMatch = cleanPath.match(/^\/category\/([^/]+)$/)?.[1];
+  if (categoryMatch && CATEGORY_COPY[categoryMatch.toLowerCase()]) {
+    const catKey = categoryMatch.toLowerCase();
+    const copy = CATEGORY_COPY[catKey];
+    const categoryTools = tools.filter(t => t.category.toLowerCase() === catKey);
+
+    return [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        '@id': `${canonical}#webpage`,
+        url: canonical,
+        name: page.title,
+        description: page.description,
+        mainEntity: {
+          '@type': 'ItemList',
+          name: copy.name,
+          numberOfItems: categoryTools.length,
+          itemListElement: categoryTools.map((t, idx) => ({
+            '@type': 'ListItem',
+            position: idx + 1,
+            name: t.name,
+            url: absoluteUrl(getToolPath(t.slug)),
+          })),
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+          { '@type': 'ListItem', position: 2, name: copy.name, item: canonical },
+        ],
+      },
+      organizationSchema,
+    ];
+  }
+
+  // 3. About page
+  if (cleanPath === '/about') {
+    return [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        '@id': `${canonical}#webpage`,
+        url: canonical,
+        name: ABOUT_SEO.title,
+        description: ABOUT_SEO.description,
+        mainEntity: {
+          '@type': 'Organization',
+          '@id': absoluteUrl('/#organization'),
+          name: 'LoveEasyTool',
+          url: absoluteUrl('/'),
+          founder: {
+            '@type': 'Person',
+            name: 'Ali Hassan',
+            url: canonical,
+          },
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+          { '@type': 'ListItem', position: 2, name: 'About Us', item: canonical },
+        ],
+      },
+      organizationSchema,
+    ];
+  }
+
+  // 4. Contact page
+  if (cleanPath === '/contact') {
+    return [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ContactPage',
+        '@id': `${canonical}#webpage`,
+        url: canonical,
+        name: CONTACT_SEO.title,
+        description: CONTACT_SEO.description,
+        mainEntity: {
+          '@type': 'Organization',
+          '@id': absoluteUrl('/#organization'),
+          name: 'LoveEasyTool',
+          url: absoluteUrl('/'),
+          contactPoint: {
+            '@type': 'ContactPoint',
+            contactType: 'Customer Support & Inquiries',
+            email: 'support@loveeasytool.com',
+            url: canonical,
+          },
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+          { '@type': 'ListItem', position: 2, name: 'Contact', item: canonical },
+        ],
+      },
+      organizationSchema,
+    ];
+  }
+
+  // 5. Privacy page (fully compliant Article markup with required Google headline, image, author, datePublished)
+  if (cleanPath === '/privacy') {
+    return [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        '@id': `${canonical}#article`,
+        headline: 'Privacy Policy: Zero-Upload Local Processing',
+        name: PRIVACY_SEO.title,
+        description: PRIVACY_SEO.description,
+        url: canonical,
+        image: [OG_IMAGE_URL],
+        datePublished: '2024-01-01T00:00:00Z',
+        dateModified: '2026-10-04T00:00:00Z',
+        inLanguage: 'en',
+        author: {
+          '@type': 'Person',
+          name: 'Ali Hassan',
+          url: absoluteUrl('/about/'),
+        },
+        publisher: {
+          '@type': 'Organization',
+          '@id': absoluteUrl('/#organization'),
+          name: 'LoveEasyTool',
+          url: absoluteUrl('/'),
+          logo: {
+            '@type': 'ImageObject',
+            url: absoluteUrl('/apple-touch-icon.svg'),
+          },
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': canonical,
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+          { '@type': 'ListItem', position: 2, name: 'Privacy Policy', item: canonical },
+        ],
+      },
+      organizationSchema,
+    ];
+  }
+
+  // 6. Terms page (fully compliant Article markup with required Google headline, image, author, datePublished)
+  if (cleanPath === '/terms') {
+    return [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        '@id': `${canonical}#article`,
+        headline: 'Terms of Service: Local-First Browser Tool Guidelines',
+        name: TERMS_SEO.title,
+        description: TERMS_SEO.description,
+        url: canonical,
+        image: [OG_IMAGE_URL],
+        datePublished: '2024-01-01T00:00:00Z',
+        dateModified: '2026-10-04T00:00:00Z',
+        inLanguage: 'en',
+        author: {
+          '@type': 'Person',
+          name: 'Ali Hassan',
+          url: absoluteUrl('/about/'),
+        },
+        publisher: {
+          '@type': 'Organization',
+          '@id': absoluteUrl('/#organization'),
+          name: 'LoveEasyTool',
+          url: absoluteUrl('/'),
+          logo: {
+            '@type': 'ImageObject',
+            url: absoluteUrl('/apple-touch-icon.svg'),
+          },
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': canonical,
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+          { '@type': 'ListItem', position: 2, name: 'Terms of Service', item: canonical },
+        ],
+      },
+      organizationSchema,
+    ];
+  }
+
+  // 7. Books page
+  if (cleanPath === '/books') {
+    return [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        '@id': `${canonical}#webpage`,
+        url: canonical,
+        name: BOOKS_SEO.title,
+        description: BOOKS_SEO.description,
+        author: {
+          '@type': 'Person',
+          name: 'Ali Hassan',
+          url: absoluteUrl('/about/'),
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+          { '@type': 'ListItem', position: 2, name: 'Books', item: canonical },
+        ],
+      },
+      organizationSchema,
+    ];
+  }
+
+  // Fallback for 404 or other generic pages
   return [
-    { ...base, '@type': page.type === 'article' ? 'Article' : 'CollectionPage', name: page.title, description: page.description },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: page.title,
+      description: page.description,
+    },
     organizationSchema,
   ];
 }
@@ -306,6 +574,16 @@ export function updateDocumentHead(path: string) {
     document.head.appendChild(link);
   }
   link.href = canonical;
+
+  // Sync structured data JSON-LD scripts in DOM
+  document.head.querySelectorAll('script[type="application/ld+json"]').forEach(node => node.remove());
+  const schemas = getJsonLd(path);
+  schemas.forEach(schema => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = jsonLd(schema);
+    document.head.appendChild(script);
+  });
 }
 
 function escapeHtml(value: string) {
