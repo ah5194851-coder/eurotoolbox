@@ -42,5 +42,40 @@ export default function BooksPage() {
         </a>)}
       </div>
     </section>
+
+    <section className="mt-20 rounded-2xl border border-border bg-card p-6 sm:p-8">
+      <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+        <div>
+          <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Companion Utilities</p>
+          <h2 className="mt-1 font-display text-2xl font-semibold">Practical Tools for Daily Productivity</h2>
+          <p className="mt-2 text-sm text-muted-foreground max-w-xl">
+            Put the principles from these books into practice with LoveEasyTool's free browser-based career, finance, and writing utilities.
+          </p>
+        </div>
+        <Link href="/#tools" className="text-sm font-semibold text-primary hover:underline">
+          Explore full toolbox →
+        </Link>
+      </div>
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {[
+          { name: 'Free CV Builder', slug: 'cv-builder', cat: 'Career', desc: 'Craft a clean, ATS-friendly resume directly in your browser.' },
+          { name: 'Cover Letter Generator', slug: 'cover-letter-generator', cat: 'Career', desc: 'Draft persuasive cover letters tailored to your target position.' },
+          { name: 'Salary Calculator', slug: 'salary-calculator', cat: 'Finance', desc: 'Calculate take-home pay, tax estimates, and freelance earnings.' },
+          { name: 'Loan Calculator', slug: 'loan-calculator', cat: 'Finance', desc: 'Estimate loan amortizations and interest payments accurately.' },
+          { name: 'Percentage Calculator', slug: 'percentage-calculator', cat: 'Numbers', desc: 'Compute margins, percentage increases, and proportions.' },
+          { name: 'Word Counter', slug: 'word-counter', cat: 'Writing', desc: 'Check word counts, character limits, and reading time estimates.' },
+        ].map(t => (
+          <Link
+            key={t.slug}
+            href={`/tools/${t.slug}/`}
+            className="group rounded-xl border border-border/80 bg-background/60 p-4 transition hover:border-primary hover:shadow-2xs"
+          >
+            <p className="font-mono-ui text-[10px] uppercase tracking-wider text-accent">{t.cat}</p>
+            <h3 className="mt-1 font-display text-base font-semibold group-hover:text-primary transition">{t.name}</h3>
+            <p className="mt-1 text-xs text-muted-foreground">{t.desc}</p>
+          </Link>
+        ))}
+      </div>
+    </section>
   </main></Shell>;
 }

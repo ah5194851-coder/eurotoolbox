@@ -68,14 +68,16 @@ LoveEasyTool (${SITE_URL}) is an open web utility platform created by Ali Hassan
 
 ${tools.map(tool => `- [${tool.name}](${SITE_URL}/tools/${tool.slug}/): ${tool.description}`).join('\n')}
 
-## Categories
-- Text Tools: Word counter, character counter, case converter, text cleaner, duplicate line remover
-- Number Tools: Percentage calculator, discount calculator, BMI calculator, loan calculator, VAT calculator, age calculator
-- File Tools: Image compressor, image resizer, JPG to PNG, PNG to JPG, WebP converter, image cropper
-- PDF Tools: Merge PDF, split PDF, PDF text extractor, Word to PDF, PDF optimizer, PDF to JPG, JPG to PDF helper
-- Time Tools: Date calculator
-- Everyday Tools: Unit converter, time-zone converter, currency reference converter
-- Work Tools: Free CV builder, cover-letter generator, salary calculator
+## Categories & Knowledge Clusters
+- [Text Tools](${SITE_URL}/category/text/): Word counter, character counter, case converter, text cleaner, duplicate line remover
+- [Number Tools](${SITE_URL}/category/numbers/): Percentage calculator, discount calculator, BMI calculator, loan calculator, VAT calculator, age calculator
+- [File Tools](${SITE_URL}/category/files/): Image compressor, image resizer, JPG to PNG, PNG to JPG, WebP converter, image cropper
+- [PDF Tools](${SITE_URL}/category/pdf/): Merge PDF, split PDF, PDF text extractor, Word to PDF, PDF optimizer, PDF to JPG, JPG to PDF helper
+- [Time Tools](${SITE_URL}/category/time/): Date calculator
+- [Everyday Tools](${SITE_URL}/category/everyday/): Unit converter, time-zone converter, currency reference converter
+- [Work Tools](${SITE_URL}/category/work/): Free CV builder, cover-letter generator, salary calculator
+- [Author & Books](${SITE_URL}/books/): Practical guides by Ali Hassan on AI, cybersecurity, remote work, and freelancing
+- [About Us & Privacy](${SITE_URL}/about/): Zero-upload client-side architecture and platform mission (${SITE_URL}/privacy/)
 
 ## Core Principles
 - 100% Free: No fees, trials, or hidden paywalls

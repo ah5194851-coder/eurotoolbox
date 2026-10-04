@@ -94,6 +94,44 @@ function ToolSeoContent({ tool, seo }: { tool: typeof tools[number]; seo: typeof
         </details>)}
       </div>
     </div>
+
+    <div className="mt-14 rounded-2xl border border-border bg-card p-6 sm:p-8">
+      <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+        <div>
+          <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">Knowledge Network</p>
+          <h3 className="font-display text-2xl font-semibold">Explore All Tool Cabinets</h3>
+        </div>
+        <Link href="/#tools" className="text-sm font-semibold text-primary hover:underline">
+          View all 31 tools on home →
+        </Link>
+      </div>
+      <p className="mt-2 text-sm text-muted-foreground">
+        LoveEasyTool organizes free, private browser utilities into seven dedicated cabinets. Switch categories or discover related single-purpose tools.
+      </p>
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {[
+          { name: 'Text Tools', slug: 'text', count: '5 tools', desc: 'Word count, cases, cleanup, deduplication' },
+          { name: 'Number Calculators', slug: 'numbers', count: '6 tools', desc: 'Percentages, discounts, VAT, loans, BMI, age' },
+          { name: 'File Utilities', slug: 'files', count: '6 tools', desc: 'Compress, resize, WebP, JPG, PNG & cropper' },
+          { name: 'PDF Tools', slug: 'pdf', count: '7 tools', desc: 'Merge, split, optimize, PDF to Word and images' },
+          { name: 'Time Tools', slug: 'time', count: '1 tool', desc: 'Date difference and calendar duration math' },
+          { name: 'Everyday Tools', slug: 'everyday', count: '3 tools', desc: 'Unit conversions, world time zones, currency' },
+          { name: 'Career & Work', slug: 'work', count: '3 tools', desc: 'CV builder, cover letter drafting, salary' },
+        ].map(c => (
+          <Link
+            key={c.slug}
+            href={`/category/${c.slug}/`}
+            className="group rounded-xl border border-border/80 bg-background/60 p-4 transition hover:-translate-y-0.5 hover:border-primary hover:shadow-2xs"
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-display text-base font-semibold text-foreground group-hover:text-primary transition">{c.name}</span>
+              <span className="rounded-full bg-secondary/80 px-2 py-0.5 font-mono-ui text-[10px] font-bold text-secondary-foreground">{c.count}</span>
+            </div>
+            <p className="mt-1.5 text-xs text-muted-foreground line-clamp-2">{c.desc}</p>
+          </Link>
+        ))}
+      </div>
+    </div>
   </section>;
 }
 
@@ -260,7 +298,82 @@ function Currency() { const [amount, setAmount] = useState('100'); const [from, 
 function CVBuilder() { const [name, setName] = useState('Alex Morgan'); const [role, setRole] = useState('Product designer'); const [email, setEmail] = useState('alex@example.com'); const [summary, setSummary] = useState('Thoughtful product designer who turns complex workflows into clear, useful experiences.'); const [skills, setSkills] = useState('Research, Figma, Prototyping, Accessibility'); return <div className="grid gap-6"><div className="grid gap-4 sm:grid-cols-2"><Field label="Full name" value={name} onChange={setName} /><Field label="Target role" value={role} onChange={setRole} /><Field label="Email" value={email} onChange={setEmail} /><Field label="Key skills" value={skills} onChange={setSkills} /></div><label className="grid gap-1.5 text-sm font-medium"><span>Profile summary</span><textarea data-testid="textarea-cv-summary" value={summary} onChange={e => setSummary(e.target.value)} className="min-h-24 rounded-lg border border-input bg-background p-3 outline-none focus:border-primary" /></label><div className="rounded-xl border border-border bg-background p-7 print-area"><div className="flex flex-col justify-between gap-4 border-b-2 border-primary pb-5 sm:flex-row"><div><h2 className="font-display text-4xl font-bold">{name || 'Your name'}</h2><p className="mt-1 text-primary">{role || 'Your role'}</p></div><p className="text-sm text-muted-foreground">{email}</p></div><div className="mt-6"><p className="font-mono-ui text-[10px] uppercase tracking-wider text-muted-foreground">Profile</p><p className="mt-2 max-w-xl leading-7">{summary}</p></div><div className="mt-6"><p className="font-mono-ui text-[10px] uppercase tracking-wider text-muted-foreground">Skills</p><div className="mt-2 flex flex-wrap gap-2">{skills.split(',').map(s => <span key={s} className="rounded-full bg-muted px-3 py-1 text-sm">{s.trim()}</span>)}</div></div></div><Button onClick={() => window.print()}><Printer size={16} />Print CV</Button><p className="text-xs text-muted-foreground">Tip: choose “Save as PDF” in your print dialog.</p></div>; }
 function CoverLetter() { const [name, setName] = useState('Alex Morgan'); const [company, setCompany] = useState('Northline Studio'); const [role, setRole] = useState('Product Designer'); const [tone, setTone] = useState('Warm and direct'); const [generated, setGenerated] = useState(''); const generate = () => setGenerated(`Dear ${company} team,\n\nI am writing to apply for the ${role} position. The way your team makes useful, considered products is exactly the kind of work I want to contribute to.\n\nI bring a practical, collaborative approach: I ask good questions, make the complex visible, and care about the small details that help people move forward. I would welcome the chance to talk about how that approach could support ${company}.\n\nThank you for your time,\n${name}`); return <div className="grid gap-5"><div className="grid gap-4 sm:grid-cols-2"><Field label="Your name" value={name} onChange={setName} /><Field label="Company" value={company} onChange={setCompany} /><Field label="Role" value={role} onChange={setRole} /><SelectField label="Tone" value={tone} onChange={setTone} options={['Warm and direct', 'Formal', 'Confident']} /></div><Button onClick={generate}><Sparkles size={16} />Generate a first draft</Button>{generated && <div className="animate-fade"><textarea data-testid="textarea-cover-letter" value={generated} onChange={e => setGenerated(e.target.value)} className="min-h-[300px] w-full rounded-xl border border-input bg-background p-5 text-[15px] leading-7 outline-none" /><div className="mt-3 flex gap-2"><Button variant="outline" onClick={() => navigator.clipboard?.writeText(generated)}><Copy size={15} />Copy draft</Button><Button variant="quiet" onClick={() => { const a = document.createElement('a'); a.href = `data:text/plain;charset=utf-8,${encodeURIComponent(generated)}`; a.download = 'cover-letter.txt'; a.click(); }}><Download size={16} />Download</Button></div></div>}<p className="text-xs text-muted-foreground">This creates a starting point, not a promise. Add a specific achievement and check every detail before sending.</p></div>; }
 
-function RelatedTools({ current }: { current: string }) { const currentTool = tools.find(t => t.slug === current); const related = tools.filter(t => t.category === currentTool?.category && t.slug !== current).slice(0, 3); return related.length ? <div className="mt-10"><p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-muted-foreground">Related tools</p><div className="mt-3 flex flex-wrap gap-2">{related.map(t => <Link href={`/tools/${t.slug}/`} data-testid={`link-related-${t.slug}`} key={t.slug} className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-2 text-sm font-medium transition hover:border-primary hover:text-primary">{t.name}<ArrowRight size={14} /></Link>)}</div></div> : null; }
+function RelatedTools({ current }: { current: string }) {
+  const currentTool = tools.find(t => t.slug === current);
+  if (!currentTool) return null;
+
+  const crossCategoryPicks: Record<string, string[]> = {
+    'word-counter': ['character-counter', 'case-converter', 'text-cleaner', 'duplicate-line-remover', 'cv-builder', 'cover-letter-generator'],
+    'character-counter': ['word-counter', 'case-converter', 'text-cleaner', 'duplicate-line-remover', 'cv-builder', 'cover-letter-generator'],
+    'case-converter': ['word-counter', 'text-cleaner', 'duplicate-line-remover', 'character-counter', 'cv-builder'],
+    'text-cleaner': ['duplicate-line-remover', 'case-converter', 'word-counter', 'character-counter', 'word-to-pdf'],
+    'duplicate-line-remover': ['text-cleaner', 'word-counter', 'case-converter', 'character-counter'],
+    'percentage-calculator': ['discount-calculator', 'vat-calculator', 'loan-calculator', 'salary-calculator', 'bmi-calculator', 'age-calculator'],
+    'discount-calculator': ['percentage-calculator', 'vat-calculator', 'currency-converter', 'salary-calculator', 'loan-calculator'],
+    'bmi-calculator': ['percentage-calculator', 'unit-converter', 'age-calculator', 'date-calculator'],
+    'loan-calculator': ['salary-calculator', 'percentage-calculator', 'vat-calculator', 'discount-calculator'],
+    'vat-calculator': ['percentage-calculator', 'discount-calculator', 'salary-calculator', 'currency-converter'],
+    'age-calculator': ['date-calculator', 'time-zone-converter', 'bmi-calculator', 'percentage-calculator'],
+    'image-compressor': ['image-resizer', 'webp-converter', 'jpg-to-png', 'png-to-jpg', 'image-cropper', 'merge-pdf'],
+    'image-resizer': ['image-compressor', 'image-cropper', 'webp-converter', 'jpg-to-png', 'png-to-jpg', 'jpg-to-pdf'],
+    'jpg-to-png': ['png-to-jpg', 'webp-converter', 'image-compressor', 'image-resizer', 'jpg-to-pdf'],
+    'png-to-jpg': ['jpg-to-png', 'webp-converter', 'image-compressor', 'image-resizer'],
+    'webp-converter': ['image-compressor', 'image-resizer', 'jpg-to-png', 'png-to-jpg', 'image-cropper'],
+    'image-cropper': ['image-resizer', 'image-compressor', 'jpg-to-png', 'png-to-jpg', 'webp-converter'],
+    'pdf-to-word': ['word-to-pdf', 'merge-pdf', 'split-pdf', 'compress-pdf', 'text-cleaner', 'word-counter'],
+    'word-to-pdf': ['pdf-to-word', 'merge-pdf', 'split-pdf', 'compress-pdf', 'cv-builder', 'pdf-to-jpg'],
+    'merge-pdf': ['split-pdf', 'compress-pdf', 'word-to-pdf', 'pdf-to-word', 'pdf-to-jpg', 'jpg-to-pdf'],
+    'split-pdf': ['merge-pdf', 'compress-pdf', 'pdf-to-word', 'word-to-pdf', 'pdf-to-jpg'],
+    'compress-pdf': ['merge-pdf', 'split-pdf', 'pdf-to-word', 'image-compressor', 'word-to-pdf'],
+    'pdf-to-jpg': ['jpg-to-pdf', 'merge-pdf', 'split-pdf', 'image-compressor', 'image-resizer'],
+    'jpg-to-pdf': ['pdf-to-jpg', 'merge-pdf', 'image-compressor', 'image-resizer', 'compress-pdf'],
+    'date-calculator': ['age-calculator', 'time-zone-converter', 'unit-converter', 'salary-calculator'],
+    'unit-converter': ['time-zone-converter', 'currency-converter', 'percentage-calculator', 'date-calculator', 'bmi-calculator'],
+    'time-zone-converter': ['date-calculator', 'unit-converter', 'currency-converter'],
+    'currency-converter': ['vat-calculator', 'percentage-calculator', 'salary-calculator', 'unit-converter'],
+    'cv-builder': ['cover-letter-generator', 'salary-calculator', 'word-counter', 'word-to-pdf', 'merge-pdf', 'text-cleaner'],
+    'cover-letter-generator': ['cv-builder', 'salary-calculator', 'word-counter', 'text-cleaner', 'word-to-pdf'],
+    'salary-calculator': ['loan-calculator', 'vat-calculator', 'percentage-calculator', 'cv-builder', 'discount-calculator'],
+  };
+
+  const recommendedSlugs = crossCategoryPicks[current] || tools.filter(t => t.category === currentTool.category && t.slug !== current).map(t => t.slug);
+  const relatedList = tools.filter(t => t.slug !== current && recommendedSlugs.includes(t.slug)).slice(0, 6);
+
+  return (
+    <div className="mt-10 rounded-2xl border border-border bg-card p-6">
+      <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+        <div>
+          <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Related Utilities</p>
+          <h3 className="font-display text-lg font-semibold">Recommended Companion Tools</h3>
+        </div>
+        <Link 
+          href={`/category/${currentTool.category.toLowerCase()}/`} 
+          className="text-xs font-semibold text-primary hover:underline"
+        >
+          Explore all {currentTool.category} tools →
+        </Link>
+      </div>
+      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {relatedList.map(t => (
+          <Link
+            key={t.slug}
+            href={`/tools/${t.slug}/`}
+            data-testid={`link-related-${t.slug}`}
+            className="group flex items-start gap-3 rounded-xl border border-border/80 bg-background/50 p-3.5 transition hover:border-primary hover:bg-muted/40 hover:shadow-2xs"
+          >
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition">
+              {t.icon}
+            </span>
+            <div className="min-w-0">
+              <p className="text-xs font-semibold text-foreground group-hover:text-primary transition truncate">{t.name}</p>
+              <p className="mt-0.5 text-[11px] leading-4 text-muted-foreground line-clamp-1">{t.description}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function renderTool(slug?: string) {
   if (slug === 'word-counter') return <TextTool kind="counter" />;

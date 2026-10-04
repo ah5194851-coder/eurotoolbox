@@ -101,13 +101,151 @@ export function Shell({ children }: { children: ReactNode }) {
           <input data-testid="input-tool-search" aria-label="Search tools" value={search} onChange={e => setSearch(e.target.value)} placeholder="Find a tool..." className="w-full rounded-full border border-border bg-card py-2.5 pl-9 pr-4 text-sm outline-none focus:border-primary" />
           {matching.length > 0 && <div className="absolute left-0 right-0 top-12 rounded-xl border border-border bg-card p-1.5 shadow-lg">{matching.map(t => <button data-testid={`button-search-${t.slug}`} key={t.slug} onClick={() => go(`/tools/${t.slug}/`)} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm hover:bg-muted"><span className="text-primary">{t.icon}</span>{t.name}</button>)}</div>}
         </div>
-        <nav className="hidden items-center gap-5 text-sm font-semibold md:flex"><Link href="/#tools" data-testid="link-browse-tools" className="text-muted-foreground transition hover:text-foreground">Browse tools</Link><Link href="/tools/cv-builder/" data-testid="link-cv-builder" className="text-muted-foreground transition hover:text-foreground">CV builder</Link><Link href="/books/" data-testid="link-books" className="text-muted-foreground transition hover:text-foreground">Books</Link><Link href="/about/" data-testid="link-about" className="text-muted-foreground transition hover:text-foreground">About</Link></nav>
+        <nav className="hidden items-center gap-5 text-sm font-semibold md:flex">
+          <Link href="/#tools" data-testid="link-browse-tools" className="text-muted-foreground transition hover:text-foreground">Browse tools</Link>
+          <Link href="/category/pdf/" data-testid="link-nav-pdf" className="text-muted-foreground transition hover:text-foreground">PDF tools</Link>
+          <Link href="/category/text/" data-testid="link-nav-text" className="text-muted-foreground transition hover:text-foreground">Text tools</Link>
+          <Link href="/tools/cv-builder/" data-testid="link-cv-builder" className="text-muted-foreground transition hover:text-foreground">CV builder</Link>
+          <Link href="/books/" data-testid="link-books" className="text-muted-foreground transition hover:text-foreground">Books</Link>
+          <Link href="/about/" data-testid="link-about" className="text-muted-foreground transition hover:text-foreground">About</Link>
+        </nav>
         <button data-testid="button-mobile-menu" aria-label="Open menu" onClick={() => setMenuOpen(!menuOpen)} className="rounded-lg p-2 hover:bg-muted md:hidden">{menuOpen ? <X size={21} /> : <Menu size={21} />}</button>
       </div>
-      {menuOpen && <div className="border-t border-border bg-card px-5 py-4 md:hidden"><div className="relative mb-3"><Search size={16} className="absolute left-3 top-3 text-muted-foreground" /><input autoFocus data-testid="input-mobile-tool-search" value={search} onChange={e => setSearch(e.target.value)} placeholder="Find a tool..." className="w-full rounded-lg border border-input bg-background py-2.5 pl-9 text-sm" /></div><div className="grid gap-1">{(matching.length ? matching : tools.slice(0, 5)).map(t => <button data-testid={`button-mobile-${t.slug}`} key={t.slug} onClick={() => go(`/tools/${t.slug}/`)} className="flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-muted">{t.icon}{t.name}</button>)}</div></div>}
+      {menuOpen && (
+        <div className="border-t border-border bg-card px-5 py-4 md:hidden">
+          <div className="relative mb-3">
+            <Search size={16} className="absolute left-3 top-3 text-muted-foreground" />
+            <input autoFocus data-testid="input-mobile-tool-search" value={search} onChange={e => setSearch(e.target.value)} placeholder="Find a tool..." className="w-full rounded-lg border border-input bg-background py-2.5 pl-9 text-sm" />
+          </div>
+          {matching.length > 0 ? (
+            <div className="grid gap-1 mb-4">
+              {matching.map(t => (
+                <button data-testid={`button-mobile-${t.slug}`} key={t.slug} onClick={() => go(`/tools/${t.slug}/`)} className="flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-muted">
+                  {t.icon}{t.name}
+                </button>
+              ))}
+            </div>
+          ) : null}
+          <div className="border-t border-border/60 pt-3">
+            <p className="mb-2 font-mono-ui text-[10px] uppercase tracking-wider text-muted-foreground">Categories</p>
+            <div className="grid grid-cols-2 gap-2 mb-4 text-sm font-medium">
+              <Link href="/category/text/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Text Tools</Link>
+              <Link href="/category/numbers/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Number Tools</Link>
+              <Link href="/category/files/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">File Tools</Link>
+              <Link href="/category/pdf/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">PDF Tools</Link>
+              <Link href="/category/time/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Time Tools</Link>
+              <Link href="/category/everyday/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Everyday Tools</Link>
+              <Link href="/category/work/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Work Tools</Link>
+              <Link href="/tools/cv-builder/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">CV Builder</Link>
+            </div>
+            <div className="flex gap-4 border-t border-border/60 pt-3 text-sm text-muted-foreground">
+              <Link href="/books/" onClick={() => setMenuOpen(false)} className="hover:text-foreground">Books</Link>
+              <Link href="/about/" onClick={() => setMenuOpen(false)} className="hover:text-foreground">About</Link>
+              <Link href="/contact/" onClick={() => setMenuOpen(false)} className="hover:text-foreground">Contact</Link>
+              <Link href="/privacy/" onClick={() => setMenuOpen(false)} className="hover:text-foreground">Privacy</Link>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
     {children}
-    <footer className="border-t border-border bg-card"><div className="mx-auto flex max-w-[1360px] flex-col gap-7 px-5 py-10 lg:flex-row lg:items-end lg:justify-between lg:px-10"><div><Link href="/" data-testid="link-footer-home" className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-[11px] bg-secondary text-secondary-foreground shadow-sm"><KeyRound size={19} strokeWidth={2.5} /></span><span><span className="block font-display text-lg font-bold leading-none tracking-tight">LoveEasyTool</span><span className="mt-0.5 block font-mono-ui text-[9px] uppercase tracking-[.15em] text-muted-foreground">Everyday utility</span></span></Link><p className="mt-4 max-w-xs text-sm leading-6 text-muted-foreground">Free online tools for everyday life. Built to be fast, private and pleasantly obvious.</p></div><div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">{['Text', 'Numbers', 'Files', 'Work'].map(c => <Link key={c} href={`/category/${c.toLowerCase()}/`} className="hover:text-foreground">{c} tools</Link>)}<Link href="/about/" className="hover:text-foreground">About</Link><Link href="/contact/" className="hover:text-foreground">Contact</Link><Link href="/terms/" className="hover:text-foreground">Terms</Link><Link href="/privacy/" className="hover:text-foreground">Privacy</Link><Link href="/books/" className="hover:text-foreground">Books</Link><span className="flex items-center gap-1.5 text-accent"><ShieldCheck size={15} />No uploads by default</span></div><p className="font-mono-ui text-[10px] uppercase tracking-widest text-muted-foreground">Made for the open web · {new Date().getFullYear()}</p></div></footer>
+    <footer className="border-t border-border bg-card">
+      <div className="mx-auto max-w-[1360px] px-5 py-12 lg:px-10 lg:py-16">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
+          <div className="lg:col-span-1">
+            <Link href="/" data-testid="link-footer-home" className="flex items-center gap-3">
+              <span className="grid h-9 w-9 place-items-center rounded-[11px] bg-secondary text-secondary-foreground shadow-sm">
+                <KeyRound size={19} strokeWidth={2.5} />
+              </span>
+              <span>
+                <span className="block font-display text-lg font-bold leading-none tracking-tight">LoveEasyTool</span>
+                <span className="mt-0.5 block font-mono-ui text-[9px] uppercase tracking-[.15em] text-muted-foreground">Everyday utility</span>
+              </span>
+            </Link>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">
+              Free, fast, private online tools for everyday work, calculations, and documents. Zero sign-up, zero server uploads.
+            </p>
+            <p className="mt-3 text-xs leading-5 text-muted-foreground">
+              Created by <span className="font-semibold text-foreground">Ali Hassan</span>.
+            </p>
+            <div className="mt-4 flex items-center gap-2 rounded-lg border border-border/60 bg-muted/40 p-2.5 text-xs text-accent">
+              <ShieldCheck size={16} className="shrink-0" />
+              <span>Processed locally in your browser tab</span>
+            </div>
+          </div>
+
+          <div>
+            <p className="font-mono-ui text-[11px] font-bold uppercase tracking-[.18em] text-accent">Tool Cabinets</p>
+            <ul className="mt-4 grid gap-2.5 text-sm text-muted-foreground">
+              <li><Link href="/category/text/" className="hover:text-foreground hover:underline">Text Tools</Link></li>
+              <li><Link href="/category/numbers/" className="hover:text-foreground hover:underline">Number Calculators</Link></li>
+              <li><Link href="/category/files/" className="hover:text-foreground hover:underline">File & Image Utilities</Link></li>
+              <li><Link href="/category/pdf/" className="hover:text-foreground hover:underline">PDF Tools</Link></li>
+              <li><Link href="/category/time/" className="hover:text-foreground hover:underline">Time & Date Tools</Link></li>
+              <li><Link href="/category/everyday/" className="hover:text-foreground hover:underline">Everyday Converters</Link></li>
+              <li><Link href="/category/work/" className="hover:text-foreground hover:underline">Career & Work Tools</Link></li>
+              <li><Link href="/#tools" className="font-semibold text-primary hover:underline">Browse All 31 Tools →</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="font-mono-ui text-[11px] font-bold uppercase tracking-[.18em] text-accent">PDF & File Tools</p>
+            <ul className="mt-4 grid gap-2.5 text-sm text-muted-foreground">
+              <li><Link href="/tools/merge-pdf/" className="hover:text-foreground hover:underline">Merge PDF</Link></li>
+              <li><Link href="/tools/split-pdf/" className="hover:text-foreground hover:underline">Split PDF</Link></li>
+              <li><Link href="/tools/compress-pdf/" className="hover:text-foreground hover:underline">PDF Optimizer</Link></li>
+              <li><Link href="/tools/pdf-to-word/" className="hover:text-foreground hover:underline">PDF Text Extractor</Link></li>
+              <li><Link href="/tools/word-to-pdf/" className="hover:text-foreground hover:underline">Word to PDF</Link></li>
+              <li><Link href="/tools/pdf-to-jpg/" className="hover:text-foreground hover:underline">PDF to JPG</Link></li>
+              <li><Link href="/tools/image-compressor/" className="hover:text-foreground hover:underline">Image Compressor</Link></li>
+              <li><Link href="/tools/image-resizer/" className="hover:text-foreground hover:underline">Image Resizer</Link></li>
+              <li><Link href="/tools/webp-converter/" className="hover:text-foreground hover:underline">WebP Converter</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="font-mono-ui text-[11px] font-bold uppercase tracking-[.18em] text-accent">Text & Calculators</p>
+            <ul className="mt-4 grid gap-2.5 text-sm text-muted-foreground">
+              <li><Link href="/tools/word-counter/" className="hover:text-foreground hover:underline">Word Counter</Link></li>
+              <li><Link href="/tools/character-counter/" className="hover:text-foreground hover:underline">Character Counter</Link></li>
+              <li><Link href="/tools/case-converter/" className="hover:text-foreground hover:underline">Case Converter</Link></li>
+              <li><Link href="/tools/duplicate-line-remover/" className="hover:text-foreground hover:underline">Duplicate Line Remover</Link></li>
+              <li><Link href="/tools/percentage-calculator/" className="hover:text-foreground hover:underline">Percentage Calculator</Link></li>
+              <li><Link href="/tools/vat-calculator/" className="hover:text-foreground hover:underline">VAT Calculator</Link></li>
+              <li><Link href="/tools/bmi-calculator/" className="hover:text-foreground hover:underline">BMI Calculator</Link></li>
+              <li><Link href="/tools/loan-calculator/" className="hover:text-foreground hover:underline">Loan Calculator</Link></li>
+              <li><Link href="/tools/cv-builder/" className="hover:text-foreground hover:underline">Free CV Builder</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="font-mono-ui text-[11px] font-bold uppercase tracking-[.18em] text-accent">Platform & Author</p>
+            <ul className="mt-4 grid gap-2.5 text-sm text-muted-foreground">
+              <li><Link href="/about/" className="hover:text-foreground hover:underline">About LoveEasyTool</Link></li>
+              <li><Link href="/books/" className="hover:text-foreground hover:underline">Books by Ali Hassan</Link></li>
+              <li><Link href="/contact/" className="hover:text-foreground hover:underline">Contact & Support</Link></li>
+              <li><Link href="/privacy/" className="hover:text-foreground hover:underline">Privacy Policy</Link></li>
+              <li><Link href="/terms/" className="hover:text-foreground hover:underline">Terms of Service</Link></li>
+              <li><Link href="/tools/salary-calculator/" className="hover:text-foreground hover:underline">Salary Calculator</Link></li>
+              <li><Link href="/tools/date-calculator/" className="hover:text-foreground hover:underline">Date Calculator</Link></li>
+              <li><Link href="/tools/unit-converter/" className="hover:text-foreground hover:underline">Unit Converter</Link></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row text-xs text-muted-foreground">
+          <p>© {new Date().getFullYear()} LoveEasyTool · Made for the open web by Ali Hassan</p>
+          <div className="flex flex-wrap items-center gap-6">
+            <Link href="/" className="hover:text-foreground">Home</Link>
+            <Link href="/about/" className="hover:text-foreground">About</Link>
+            <Link href="/books/" className="hover:text-foreground">Books</Link>
+            <Link href="/privacy/" className="hover:text-foreground">Privacy</Link>
+            <Link href="/terms/" className="hover:text-foreground">Terms</Link>
+            <Link href="/contact/" className="hover:text-foreground">Contact</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>;
 }
 

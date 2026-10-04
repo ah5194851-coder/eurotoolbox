@@ -152,7 +152,7 @@ export default function ContactPage() {
               </span>
               <h3 className="mt-4 font-display text-xl font-semibold">Tool Feature Requests</h3>
               <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                Is there a specific text cleaner, conversion table, or calculator formula you need for school or work? Send us the details and we regularly prioritize user-requested tools.
+                Is there a specific <Link href="/category/text/" className="font-semibold text-primary underline">text cleaner</Link>, <Link href="/category/everyday/" className="font-semibold text-primary underline">conversion table</Link>, or <Link href="/category/numbers/" className="font-semibold text-primary underline">calculator formula</Link> you need for school or work? Check our <Link href="/#tools" className="font-semibold text-primary underline">current 31 tools</Link> or send us your suggestions and we regularly prioritize user-requested features.
               </p>
             </div>
 

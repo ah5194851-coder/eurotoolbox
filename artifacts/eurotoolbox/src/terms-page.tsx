@@ -44,10 +44,10 @@ export default function TermsPage() {
               While we strive for high precision across all calculators and converters:
             </p>
             <ul className="mt-3 list-disc space-y-2 pl-6 text-sm leading-6 text-muted-foreground">
-              <li><strong>Financial & Tax Calculators</strong> (VAT, Loan, Salary): Results are mathematical estimates for planning purposes and do not constitute certified tax, legal, or financial advice.</li>
-              <li><strong>Health & BMI Tools</strong>: Body Mass Index is an informational screening ratio and does not substitute professional medical diagnosis.</li>
-              <li><strong>Currency Converter</strong>: Uses static reference exchange rates for estimations when live forex feeds are not connected.</li>
-              <li><strong>Document & Image Tools</strong>: Output quality depends on your device's browser capabilities and input file formats.</li>
+              <li><strong>Financial & Tax Calculators</strong> (<Link href="/tools/vat-calculator/" className="underline hover:text-primary">VAT</Link>, <Link href="/tools/loan-calculator/" className="underline hover:text-primary">Loan</Link>, <Link href="/tools/salary-calculator/" className="underline hover:text-primary">Salary</Link>): Results are mathematical estimates for planning purposes and do not constitute certified tax, legal, or financial advice.</li>
+              <li><strong>Health & BMI Tools</strong>: Body Mass Index on our <Link href="/tools/bmi-calculator/" className="underline hover:text-primary">BMI calculator</Link> is an informational screening ratio and does not substitute professional medical diagnosis.</li>
+              <li><strong>Currency Converter</strong>: Our <Link href="/tools/currency-converter/" className="underline hover:text-primary">currency converter</Link> uses static reference exchange rates for estimations when live forex feeds are not connected.</li>
+              <li><strong>Document & Image Tools</strong>: Output quality on <Link href="/category/pdf/" className="underline hover:text-primary">PDF tools</Link> and <Link href="/category/files/" className="underline hover:text-primary">file utilities</Link> depends on your device's browser capabilities and input file formats.</li>
             </ul>
           </section>
 

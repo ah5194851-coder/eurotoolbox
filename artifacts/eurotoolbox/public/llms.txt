@@ -39,14 +39,16 @@ LoveEasyTool (https://loveeasytool.com) is an open web utility platform created 
 - [Cover-letter generator](https://loveeasytool.com/tools/cover-letter-generator/): Turn a few details into a focused first draft.
 - [Salary calculator](https://loveeasytool.com/tools/salary-calculator/): Estimate take-home pay after a percentage deduction.
 
-## Categories
-- Text Tools: Word counter, character counter, case converter, text cleaner, duplicate line remover
-- Number Tools: Percentage calculator, discount calculator, BMI calculator, loan calculator, VAT calculator, age calculator
-- File Tools: Image compressor, image resizer, JPG to PNG, PNG to JPG, WebP converter, image cropper
-- PDF Tools: Merge PDF, split PDF, PDF text extractor, Word to PDF, PDF optimizer, PDF to JPG, JPG to PDF helper
-- Time Tools: Date calculator
-- Everyday Tools: Unit converter, time-zone converter, currency reference converter
-- Work Tools: Free CV builder, cover-letter generator, salary calculator
+## Categories & Knowledge Clusters
+- [Text Tools](https://loveeasytool.com/category/text/): Word counter, character counter, case converter, text cleaner, duplicate line remover
+- [Number Tools](https://loveeasytool.com/category/numbers/): Percentage calculator, discount calculator, BMI calculator, loan calculator, VAT calculator, age calculator
+- [File Tools](https://loveeasytool.com/category/files/): Image compressor, image resizer, JPG to PNG, PNG to JPG, WebP converter, image cropper
+- [PDF Tools](https://loveeasytool.com/category/pdf/): Merge PDF, split PDF, PDF text extractor, Word to PDF, PDF optimizer, PDF to JPG, JPG to PDF helper
+- [Time Tools](https://loveeasytool.com/category/time/): Date calculator
+- [Everyday Tools](https://loveeasytool.com/category/everyday/): Unit converter, time-zone converter, currency reference converter
+- [Work Tools](https://loveeasytool.com/category/work/): Free CV builder, cover-letter generator, salary calculator
+- [Author & Books](https://loveeasytool.com/books/): Practical guides by Ali Hassan on AI, cybersecurity, remote work, and freelancing
+- [About Us & Privacy](https://loveeasytool.com/about/): Zero-upload client-side architecture and platform mission (https://loveeasytool.com/privacy/)
 
 ## Core Principles
 - 100% Free: No fees, trials, or hidden paywalls
