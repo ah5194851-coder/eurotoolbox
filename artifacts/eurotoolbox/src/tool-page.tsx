@@ -3,7 +3,7 @@ import { Link, useParams } from 'wouter';
 import {
   ArrowRight, BadgeEuro, BookOpen, ChevronDown, Copy, Download, FileImage,
   FileText, Globe2, ImageDown, Landmark, Percent, Printer, RefreshCw,
-  ShieldCheck, Sparkles, Timer, Upload
+  ShieldCheck, Sparkles, Timer, Upload, Zap
 } from 'lucide-react';
 import NotFound from '@/pages/not-found';
 import { Shell, tools } from './App';
@@ -57,37 +57,82 @@ function ToolSeoContent({ tool, seo }: { tool: typeof tools[number]; seo: typeof
   return <section className="mt-14 border-t border-border pt-12">
     <div className="grid gap-10 lg:grid-cols-[1.05fr_.95fr]">
       <div>
-        <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">About this tool</p>
+        <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">About this utility</p>
         <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight">{seo.heading || `How ${tool.name} works`}</h2>
         <p className="mt-4 text-[15px] leading-7 text-muted-foreground">{seo.longDescription || seo.intro}</p>
       </div>
       <div>
-        <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">How to use</p>
+        <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">Instructions</p>
+        <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight">How to Use {tool.name}</h2>
         <ol className="mt-4 grid gap-3">
           {seo.steps.map((step, index) => <li key={step} className="flex gap-3 text-sm leading-6"><span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-secondary font-mono-ui text-xs font-bold text-secondary-foreground">{index + 1}</span><span>{step}</span></li>)}
         </ol>
       </div>
     </div>
+
+    {/* Features */}
+    <div className="mt-14">
+      <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">Capabilities</p>
+      <h2 className="mt-2 font-display text-2xl font-semibold">Features of {tool.name}</h2>
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {seo.features.map(feature => <div key={feature} className="rounded-xl border border-border bg-card p-4 text-sm font-semibold">{feature}</div>)}
+      </div>
+    </div>
+
+    {/* Why Use LoveEasyTool */}
+    <div className="mt-14 rounded-2xl border border-border bg-muted/20 p-6 sm:p-8">
+      <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Core Benefits</p>
+      <h2 className="mt-2 font-display text-2xl font-semibold">Why Use LoveEasyTool for {tool.name}?</h2>
+      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="rounded-xl border border-border bg-card p-5">
+          <div className="flex items-center gap-2 text-primary font-semibold text-sm">
+            <ShieldCheck size={18} className="text-accent" />
+            100% Client-Side Privacy
+          </div>
+          <p className="mt-2 text-xs leading-5 text-muted-foreground">
+            Your data never touches remote servers. Everything processes locally inside your browser memory and is wiped clean on tab close.
+          </p>
+        </div>
+        <div className="rounded-xl border border-border bg-card p-5">
+          <div className="flex items-center gap-2 text-primary font-semibold text-sm">
+            <Zap size={18} className="text-accent" />
+            Zero Sign-Up or Registration
+          </div>
+          <p className="mt-2 text-xs leading-5 text-muted-foreground">
+            No accounts, no email requirements, and no passwords. Immediate access to every feature from any device worldwide.
+          </p>
+        </div>
+        <div className="rounded-xl border border-border bg-card p-5">
+          <div className="flex items-center gap-2 text-primary font-semibold text-sm">
+            <Sparkles size={18} className="text-accent" />
+            Free Forever with No Limits
+          </div>
+          <p className="mt-2 text-xs leading-5 text-muted-foreground">
+            No hidden fees, no subscriptions, and no artificial daily limits. Use the utility as often as you need for work or study.
+          </p>
+        </div>
+      </div>
+    </div>
+
     {seo.useCases && seo.useCases.length > 0 && (
-      <div className="mt-12">
+      <div className="mt-14">
         <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">Real-world applications</p>
-        <h3 className="mt-2 font-display text-2xl font-semibold">Practical Use Cases</h3>
+        <h2 className="mt-2 font-display text-2xl font-semibold">Practical Use Cases</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           {seo.useCases.map((uc, i) => (
             <div key={i} className="rounded-xl border border-border bg-card p-5">
-              <h4 className="font-display text-base font-semibold text-foreground">{uc.title}</h4>
+              <h3 className="font-display text-base font-semibold text-foreground">{uc.title}</h3>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{uc.description}</p>
             </div>
           ))}
         </div>
       </div>
     )}
-    <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {seo.features.map(feature => <div key={feature} className="rounded-xl border border-border bg-card p-4 text-sm font-semibold">{feature}</div>)}
-    </div>
-    <div className="mt-12">
+
+    <div className="mt-14">
       <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">Frequently asked questions</p>
-      <div className="mt-3 divide-y divide-border rounded-xl border border-border bg-card">
+      <h2 className="mt-2 font-display text-2xl font-semibold">Frequently Asked Questions</h2>
+      <div className="mt-4 divide-y divide-border rounded-xl border border-border bg-card">
         {seo.faq.map(([question, answer]) => <details key={question} className="group p-4">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold">{question}<ChevronDown size={16} className="shrink-0 transition group-open:rotate-180" /></summary>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">{answer}</p>

@@ -851,7 +851,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'image-resizer': {
     title: 'Image Resizer: Resize Photo Dimensions Online | LoveEasyTool',
-    description: 'Resize image dimensions in pixels with our free online image resizer. Fast, client-side photo resizing with zero uploads.',
+    description: 'Resize image pixel dimensions and aspect ratios online with our free image resizer. Scale photos for web and social media with zero uploads or quality loss.',
     heading: 'High-quality image pixel dimension resizing',
     intro: 'Resize an image to a precise browser-rendered width and height while maintaining aspect ratio.',
     answerSummary: 'LoveEasyTool Image Resizer is a free photo scaling tool that resizes image width and height in pixels using bilinear canvas interpolation. No account is required. All image scaling takes place inside your browser without uploading pictures to external cloud servers.',
@@ -877,7 +877,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'jpg-to-png': {
     title: 'JPG to PNG: Convert Images with High Quality | LoveEasyTool',
-    description: 'Convert JPG photos to PNG format locally in your browser with our free online JPG to PNG converter. Fast and 100% private.',
+    description: 'Convert JPG images to high-resolution PNG format in your browser with our free online converter. Fast, private local file conversion with zero cloud uploads.',
     heading: 'Lossless JPG to PNG format conversion in browser',
     intro: 'Convert JPG images to transparent-friendly PNG format without sending files across the internet.',
     answerSummary: 'LoveEasyTool JPG to PNG Converter is a free image conversion tool that converts JPEG images into lossless PNG files in your browser. It requires no sign-up or file upload. Decoding and re-encoding run locally on your device via Canvas APIs.',
@@ -903,7 +903,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'png-to-jpg': {
     title: 'PNG to JPG: Convert Images to Compact JPG | LoveEasyTool',
-    description: 'Convert PNG graphics to compact JPG format in your browser with our free online PNG to JPG converter. Fast, private, and simple.',
+    description: 'Convert PNG pictures into compact, lightweight JPG files online with our free converter. Reduce image file sizes with zero quality loss and complete privacy.',
     heading: 'Fast PNG to compact JPEG conversion',
     intro: 'Convert heavy PNG graphics into lightweight JPG files for sharing and web optimization.',
     answerSummary: 'LoveEasyTool PNG to JPG Converter is a free tool that converts PNG images into compact JPG files with automatic white background fill for transparent areas. It requires no account. Conversion runs on your computer or phone with zero cloud storage.',
@@ -929,7 +929,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'webp-converter': {
     title: 'WebP Converter: Convert WebP to JPG & PNG Online | LoveEasyTool',
-    description: 'Convert WebP images to JPG or PNG, or convert pictures to next-gen WebP format locally in your browser with zero sign-up.',
+    description: 'Convert WebP images to universal JPG or PNG formats, or convert photos to next-gen WebP online. Free, fast browser conversion with zero server uploads.',
     heading: 'Next-gen WebP image format conversion and decoding',
     intro: 'Convert modern WebP images downloaded from the web into universally compatible JPGs or PNGs.',
     answerSummary: 'LoveEasyTool WebP Converter is a free image tool that converts next-gen WebP files into universally compatible JPG and PNG images (or converts JPG/PNG into WebP). It operates without sign-up, watermarks, or cloud uploads, executing entirely via client-side browser decoding.',
@@ -955,7 +955,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'image-cropper': {
     title: 'Image Cropper: Crop Photos Online Privately | LoveEasyTool',
-    description: 'Crop images to custom aspect ratios or square formats directly in your browser with our free online image cropper. 100% private.',
+    description: 'Crop images to custom aspect ratios or square profile dimensions directly in your browser with our free online image cropper. 100% private with no sign-up.',
     heading: 'Interactive client-side image cropping and framing',
     intro: 'Crop images to remove unwanted borders, focus on subjects, or fit exact aspect ratios.',
     answerSummary: 'LoveEasyTool Image Cropper is a free online tool for cropping and framing photos to custom aspect ratios or square profile dimensions. It requires no login. The crop executes locally on an HTML5 canvas, ensuring personal photos and confidential documents are never transmitted across the internet.',
@@ -981,7 +981,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'word-to-pdf': {
     title: 'Word to PDF: Create PDF Documents from Text | LoveEasyTool',
-    description: 'Create clean, downloadable PDF documents from text directly in your browser with our free online Word to PDF tool. Zero sign-up required.',
+    description: 'Create clean, downloadable PDF documents from text directly in your browser with our free online Word to PDF tool. Zero sign-up, fast, and completely private.',
     heading: 'Browser-based document drafting and instant PDF generation',
     intro: 'Draft or paste formatted text and generate a clean, downloadable PDF file directly in your browser.',
     answerSummary: 'LoveEasyTool Word to PDF is a free document creation tool that turns formatted text, notes, and letters into downloadable PDF files. No sign-up or software installation is required. PDF generation executes in your local browser using client-side JavaScript, keeping your notes and letters private.',
@@ -1007,7 +1007,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'split-pdf': {
     title: 'Split PDF: Extract Pages from PDF Files Online | LoveEasyTool',
-    description: 'Extract specific pages or page ranges from PDF files into a new document with our free online PDF splitter. Fast, client-side, and private.',
+    description: 'Extract specific pages or page ranges from PDF files into a new document with our free online PDF splitter. Fast, client-side, and private with zero uploads.',
     heading: 'Extract specific pages and ranges from PDF documents',
     intro: 'Extract selected pages from a large PDF document into a new standalone file without sending files to the cloud.',
     answerSummary: 'LoveEasyTool Split PDF is a free in-browser utility that extracts designated page numbers or page ranges from a PDF document into a new standalone file. It requires no sign-up or payment. The separation executes locally in browser RAM using pdf-lib WebAssembly, ensuring sensitive documents are never uploaded to cloud servers.',
@@ -1033,7 +1033,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'pdf-to-jpg': {
     title: 'PDF to JPG: Render PDF Pages to Images | LoveEasyTool',
-    description: 'Render and export PDF document pages into high-resolution JPG images directly in your browser with our free online PDF to JPG tool.',
+    description: 'Render and export PDF document pages into high-resolution JPG images directly in your browser with our free online PDF to JPG tool. 100% private and free.',
     heading: 'High-resolution PDF page rendering into JPG image files',
     intro: 'Render PDF document pages into crisp, shareable JPG images using client-side canvas rasterization.',
     answerSummary: 'LoveEasyTool PDF to JPG is a free in-browser tool that rasterizes PDF document pages into individual high-resolution JPG image files. It requires no account or registration. Rendering is handled locally by Mozilla PDF.js and Canvas, ensuring confidential paperwork is never uploaded to remote servers.',
@@ -1059,7 +1059,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'date-calculator': {
     title: 'Date Calculator: Days Between Dates & Add Days | LoveEasyTool',
-    description: 'Calculate days between two dates or add/subtract days from any date with our free online date calculator. Fast, calendar-accurate time math.',
+    description: 'Calculate exact calendar days between two dates or add and subtract days with our free online date calculator. Instant, accurate calendar math with no sign-up.',
     heading: 'Calendar duration, days between dates, and future date calculator',
     intro: 'Count the exact number of calendar days between two dates, or find out what date it will be in 30, 60, or 90 days.',
     answerSummary: 'LoveEasyTool Date Calculator is a free time math utility that computes the exact number of days between two dates or determines future and past calendar dates by adding or subtracting days. It requires no login or installation. All calculations run locally in your browser with full Gregorian calendar leap-year precision.',
@@ -1086,7 +1086,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'unit-converter': {
     title: 'Unit Converter: Convert Length, Weight, Temperature | LoveEasyTool',
-    description: 'Convert between metric and imperial units for length, weight, temperature, and volume with our free online unit converter. Instant and accurate.',
+    description: 'Convert between metric and imperial units for length, weight, temperature, and volume with our free online unit converter. Instant, accurate, and 100% free.',
     heading: 'Universal metric and imperial measurement conversion',
     intro: 'Convert length, weight, temperature, volume, and everyday measurements between metric and imperial systems.',
     answerSummary: 'LoveEasyTool Unit Converter is a free measurement conversion tool for converting between metric and imperial units for length (meters, feet, inches), mass (kilograms, pounds), and temperature (Celsius, Fahrenheit). No sign-up or internet API call is needed; calculations run instantaneously on your device.',
@@ -1113,7 +1113,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'time-zone-converter': {
     title: 'Time Zone Converter: Compare World Clocks Online | LoveEasyTool',
-    description: 'Compare time zones across world cities without guesswork with our free online time zone converter. Schedule international meetings effortlessly.',
+    description: 'Compare time zones across world cities without guesswork with our free online time zone converter. Schedule international meetings effortlessly with no sign-up.',
     heading: 'Cross-city time comparison and international meeting planner',
     intro: 'Compare times between London, New York, Dubai, Karachi, Tokyo, and global cities to coordinate international calls without errors.',
     answerSummary: 'LoveEasyTool Time Zone Converter is a free world clock comparison utility that aligns local times across international business hubs (London, New York, Dubai, Karachi, Tokyo, etc.). It requires no account. Time offset calculations leverage your browser\'s native Internationalization (Intl) API, automatically accounting for active Daylight Saving Time adjustments.',
@@ -1140,7 +1140,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'cover-letter-generator': {
     title: 'Cover Letter Generator: Professional Letter Drafts | LoveEasyTool',
-    description: 'Generate focused, professional cover letters tailored to your job applications with our free online cover letter generator. No sign-up required.',
+    description: 'Generate focused, professional cover letters tailored to your job applications with our free online cover letter generator. Fast, free, and no sign-up required.',
     heading: 'Customized professional cover letter drafting in minutes',
     intro: 'Turn key job details and your background into a focused, recruiter-ready first draft cover letter in your browser.',
     answerSummary: 'LoveEasyTool Cover Letter Generator is a free career utility that synthesizes structured, professional first-draft cover letters based on your target role, company name, and key qualifications. It requires no sign-up or credit card. Letter generation takes place within your browser session, keeping your employment background confidential.',
@@ -1167,7 +1167,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   'salary-calculator': {
     title: 'Salary Calculator: Take-Home Pay & Net Salary Estimator | LoveEasyTool',
-    description: 'Estimate your net take-home pay after tax and deduction percentages with our free online salary calculator. Simple, private financial planning.',
+    description: 'Estimate your net take-home pay after tax and deduction percentages with our free online salary calculator. Fast, accurate, and completely private.',
     heading: 'Gross to net take-home salary and deduction estimation',
     intro: 'Estimate your take-home pay per month, week, or year after percentage deductions for taxes, retirement, and insurance.',
     answerSummary: 'LoveEasyTool Salary Calculator is a free take-home pay estimator that breaks down gross annual or monthly income into net take-home pay after customizable percentage deductions (taxes, pension, social contributions). It requires no sign-up. Figures are calculated locally on your device, ensuring compensation details remain strictly confidential.',

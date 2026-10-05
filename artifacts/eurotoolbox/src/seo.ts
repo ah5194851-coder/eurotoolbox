@@ -12,11 +12,11 @@ export type PageSeo = {
 };
 
 export const HOME_SEO: PageSeo = {
-  title: 'LoveEasyTool: Free Online Tools, No Sign-Up, Files Stay Private',
-  description: 'Free everyday tools for text, numbers, PDFs, files and time. No accounts, no uploads: your files are processed in your browser and stay on your device.',
+  title: 'Free Online Tools – Calculators, PDF, Image & Text Tools | LoveEasyTool',
+  description: 'Free online tools and calculators for PDF, image, text, and daily math. 100% free with no sign-up: all files process privately in your browser with zero uploads.',
   canonicalPath: '/',
   type: 'website',
-  keywords: 'online tools, free online utilities, word counter, pdf tools, image compressor, calculators, private tools, no sign-up, LoveEasyTool, axe like tool, love tool factory, love tool ai, lovetools com ua, courtney love tool',
+  keywords: 'free online tools, online tools, free tools online, useful online tools, free web tools, online calculators, pdf tools online, image compressor, text tools, free converters, private tools, no sign-up, LoveEasyTool',
 };
 
 export const BOOKS_SEO: PageSeo = {
@@ -479,7 +479,9 @@ export function getJsonLd(path: string): unknown[] {
 export function renderHead(path: string) {
   const page = getPageSeo(path);
   const canonical = absoluteUrl(page.canonicalPath);
-  const robots = page.noindex ? 'noindex, follow' : 'index, follow';
+  const robots = page.noindex
+    ? 'noindex, follow'
+    : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
   const jsonScripts = getJsonLd(path).map(value => `<script type="application/ld+json">${jsonLd(value)}</script>`).join('\n    ');
   const keywordsTag = page.keywords ? `<meta name="keywords" content="${escapeHtml(page.keywords)}" />` : '';
   return [
@@ -498,7 +500,13 @@ export function renderHead(path: string) {
     `<meta property="og:image:height" content="${OG_IMAGE_HEIGHT}" />`,
     `<meta property="og:image:alt" content="${escapeHtml(OG_IMAGE_ALT)}" />`,
     '<meta property="og:site_name" content="LoveEasyTool" />',
+    '<meta property="og:locale" content="en_US" />',
+    '<meta property="og:locale:alternate" content="en_GB" />',
+    '<meta property="og:locale:alternate" content="en_CA" />',
+    '<meta property="og:locale:alternate" content="en_AU" />',
     '<meta name="twitter:card" content="summary_large_image" />',
+    '<meta name="twitter:site" content="@LoveEasyTool" />',
+    '<meta name="twitter:creator" content="@LoveEasyTool" />',
     `<meta name="twitter:title" content="${escapeHtml(page.title)}" />`,
     `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`,
     `<meta name="twitter:image" content="${OG_IMAGE_URL}" />`,
@@ -512,21 +520,27 @@ export function updateDocumentHead(path: string) {
   const page = getPageSeo(path);
   document.title = page.title;
   const canonical = absoluteUrl(page.canonicalPath);
+  const robots = page.noindex
+    ? 'noindex, follow'
+    : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
   const tags: Record<string, string> = {
     'meta[name="description"]': page.description,
     'meta[name="keywords"]': page.keywords || HOME_SEO.keywords || 'online tools, free online utilities, LoveEasyTool',
-    'meta[name="robots"]': page.noindex ? 'noindex, follow' : 'index, follow',
+    'meta[name="robots"]': robots,
     'meta[name="theme-color"]': '#1a365d',
     'meta[property="og:title"]': page.title,
     'meta[property="og:description"]': page.description,
     'meta[property="og:type"]': page.type,
     'meta[property="og:url"]': canonical,
     'meta[property="og:site_name"]': 'LoveEasyTool',
+    'meta[property="og:locale"]': 'en_US',
     'meta[property="og:image"]': OG_IMAGE_URL,
     'meta[property="og:image:width"]': OG_IMAGE_WIDTH,
     'meta[property="og:image:height"]': OG_IMAGE_HEIGHT,
     'meta[property="og:image:alt"]': OG_IMAGE_ALT,
     'meta[name="twitter:card"]': 'summary_large_image',
+    'meta[name="twitter:site"]': '@LoveEasyTool',
+    'meta[name="twitter:creator"]': '@LoveEasyTool',
     'meta[name="twitter:title"]': page.title,
     'meta[name="twitter:description"]': page.description,
     'meta[name="twitter:image"]': OG_IMAGE_URL,
