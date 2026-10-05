@@ -1,7 +1,7 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    if (url.hostname === "eurotoolbox.ah5194851.workers.dev") {
+    if (url.hostname === "eurotoolbox.ah5194851.workers.dev" || url.hostname === "www.loveeasytool.com") {
       const target = "https://loveeasytool.com" + url.pathname + url.search;
       return Response.redirect(target, 301);
     }

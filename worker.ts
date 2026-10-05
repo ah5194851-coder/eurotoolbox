@@ -7,7 +7,7 @@ interface Env {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
-    if (url.hostname === "eurotoolbox.ah5194851.workers.dev") {
+    if (url.hostname === "eurotoolbox.ah5194851.workers.dev" || url.hostname === "www.loveeasytool.com") {
       const target = "https://loveeasytool.com" + url.pathname + url.search;
       return Response.redirect(target, 301);
     }
