@@ -5,6 +5,21 @@ export default {
       const target = "https://loveeasytool.com" + url.pathname + url.search;
       return Response.redirect(target, 301);
     }
-    return env.ASSETS.fetch(request);
+
+    const response = await env.ASSETS.fetch(request);
+    const newHeaders = new Headers(response.headers);
+    newHeaders.set(
+      "Strict-Transport-Security",
+      "max-age=31536000; includeSubDomains; preload"
+    );
+    newHeaders.set("X-Content-Type-Options", "nosniff");
+    newHeaders.set("Referrer-Policy", "strict-origin-when-cross-origin");
+
+    const hasBody = response.body && response.status !== 204 && response.status !== 304;
+    return new Response(hasBody ? response.body : null, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: newHeaders,
+    });
   },
 };
