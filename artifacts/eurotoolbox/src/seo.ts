@@ -164,9 +164,9 @@ export function getJsonLd(path: string): unknown[] {
     url: absoluteUrl('/'),
     logo: {
       '@type': 'ImageObject',
-      url: absoluteUrl('/apple-touch-icon.svg'),
-      width: 180,
-      height: 180,
+      url: absoluteUrl('/logo.png'),
+      width: 512,
+      height: 512,
     },
     image: OG_IMAGE_URL,
     description: 'Free everyday tools for text, numbers, PDFs, files and time. Fast, private browser-based utilities.',
@@ -208,14 +208,13 @@ export function getJsonLd(path: string): unknown[] {
         url: canonical,
         description: seo.answerSummary || seo.description,
         applicationCategory: getGoogleApplicationCategory(tool?.category),
-        operatingSystem: 'All',
+        operatingSystem: 'Windows, macOS, Linux, Android, iOS',
         browserRequirements: 'Requires JavaScript. Runs locally in web browser.',
         image: OG_IMAGE_URL,
         offers: {
           '@type': 'Offer',
-          price: '0',
+          price: 0,
           priceCurrency: 'USD',
-          availability: 'https://schema.org/InStock',
         },
         author: {
           '@type': 'Person',
@@ -229,7 +228,9 @@ export function getJsonLd(path: string): unknown[] {
           url: absoluteUrl('/'),
           logo: {
             '@type': 'ImageObject',
-            url: absoluteUrl('/apple-touch-icon.svg'),
+            url: absoluteUrl('/logo.png'),
+            width: 512,
+            height: 512,
           },
         },
       },
@@ -363,39 +364,27 @@ export function getJsonLd(path: string): unknown[] {
     ];
   }
 
-  // 5. Privacy page (fully compliant Article markup with required Google headline, image, author, datePublished)
+  // 5. Privacy page (WebPage markup per Google guidelines prohibiting Article markup on legal policy pages)
   if (cleanPath === '/privacy') {
     return [
       {
         '@context': 'https://schema.org',
-        '@type': 'Article',
-        '@id': `${canonical}#article`,
-        headline: 'Privacy Policy: Zero-Upload Local Processing',
+        '@type': 'WebPage',
+        '@id': `${canonical}#webpage`,
         name: PRIVACY_SEO.title,
         description: PRIVACY_SEO.description,
         url: canonical,
-        image: [OG_IMAGE_URL],
-        datePublished: '2024-01-01T00:00:00Z',
-        dateModified: '2026-10-04T00:00:00Z',
         inLanguage: 'en',
-        author: {
-          '@type': 'Person',
-          name: 'Ali Hassan',
-          url: absoluteUrl('/about/'),
+        isPartOf: {
+          '@type': 'WebSite',
+          '@id': absoluteUrl('/#website'),
+          name: 'LoveEasyTool',
+          url: absoluteUrl('/'),
         },
-        publisher: {
+        about: {
           '@type': 'Organization',
           '@id': absoluteUrl('/#organization'),
           name: 'LoveEasyTool',
-          url: absoluteUrl('/'),
-          logo: {
-            '@type': 'ImageObject',
-            url: absoluteUrl('/apple-touch-icon.svg'),
-          },
-        },
-        mainEntityOfPage: {
-          '@type': 'WebPage',
-          '@id': canonical,
         },
       },
       {
@@ -410,39 +399,27 @@ export function getJsonLd(path: string): unknown[] {
     ];
   }
 
-  // 6. Terms page (fully compliant Article markup with required Google headline, image, author, datePublished)
+  // 6. Terms page (WebPage markup per Google guidelines prohibiting Article markup on terms of service)
   if (cleanPath === '/terms') {
     return [
       {
         '@context': 'https://schema.org',
-        '@type': 'Article',
-        '@id': `${canonical}#article`,
-        headline: 'Terms of Service: Local-First Browser Tool Guidelines',
+        '@type': 'WebPage',
+        '@id': `${canonical}#webpage`,
         name: TERMS_SEO.title,
         description: TERMS_SEO.description,
         url: canonical,
-        image: [OG_IMAGE_URL],
-        datePublished: '2024-01-01T00:00:00Z',
-        dateModified: '2026-10-04T00:00:00Z',
         inLanguage: 'en',
-        author: {
-          '@type': 'Person',
-          name: 'Ali Hassan',
-          url: absoluteUrl('/about/'),
+        isPartOf: {
+          '@type': 'WebSite',
+          '@id': absoluteUrl('/#website'),
+          name: 'LoveEasyTool',
+          url: absoluteUrl('/'),
         },
-        publisher: {
+        about: {
           '@type': 'Organization',
           '@id': absoluteUrl('/#organization'),
           name: 'LoveEasyTool',
-          url: absoluteUrl('/'),
-          logo: {
-            '@type': 'ImageObject',
-            url: absoluteUrl('/apple-touch-icon.svg'),
-          },
-        },
-        mainEntityOfPage: {
-          '@type': 'WebPage',
-          '@id': canonical,
         },
       },
       {
