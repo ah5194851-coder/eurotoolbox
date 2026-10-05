@@ -27,7 +27,6 @@ export const PRERENDER_ROUTES = [
   '/books/',
   ...categorySlugs.map(slug => `/category/${slug}/`),
   ...tools.map(tool => `/tools/${tool.slug}/`),
-  ...tools.map(tool => `/${tool.slug}/`),
 ];
 export const SITEMAP_ROUTES = [
   '/',

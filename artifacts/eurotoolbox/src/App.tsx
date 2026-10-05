@@ -233,6 +233,26 @@ export function Shell({ children }: { children: ReactNode }) {
           </div>
         </div>
 
+        {/* Complete Tools Directory for Deep Internal Linking */}
+        <div className="mt-12 border-t border-border pt-10">
+          <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+            <div>
+              <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Knowledge Network</p>
+              <h3 className="font-display text-base font-semibold text-foreground">Directory of All 31 Free Online Utilities</h3>
+            </div>
+            <Link href="/#tools" className="text-xs font-semibold text-primary hover:underline">
+              Search all tools →
+            </Link>
+          </div>
+          <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-muted-foreground sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+            {tools.map(t => (
+              <Link key={t.slug} href={`/tools/${t.slug}/`} className="hover:text-primary hover:underline truncate">
+                {t.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row text-xs text-muted-foreground">
           <p>© {new Date().getFullYear()} LoveEasyTool · Made for the open web by Ali Hassan</p>
           <div className="flex flex-wrap items-center gap-6">
