@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, Search, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, Search, ShieldCheck, Zap, HelpCircle, CheckCircle2, Lock, Cpu, Sparkles, FileText, Calculator, Image as ImageIcon, FileCode } from 'lucide-react';
 import { Link } from 'wouter';
 import { categories, Shell, tools } from './App';
 import { updateDocumentHead } from './seo';
@@ -88,6 +88,189 @@ export default function Home() {
             </Link>
           );
         })}
+      </div>
+    </section>
+
+    {/* Section: Architectural Advantage of Client-Side Computing */}
+    <section className="border-t border-border bg-muted/20 py-16 lg:py-24">
+      <div className="mx-auto max-w-[1360px] px-5 lg:px-10">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+          <div>
+            <p className="font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">Technical Architecture</p>
+            <h2 className="mt-2 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
+              Why Zero-Upload Browser Processing Outperforms Cloud Services
+            </h2>
+            <div className="mt-6 space-y-4 text-base leading-8 text-muted-foreground">
+              <p>
+                Most free online converters and utility websites operate by transmitting your confidential files over the internet to remote cloud servers. Once uploaded, those servers queue your files, create temporary disk caches, process them, and send back a download link. This legacy architecture presents severe data privacy vulnerabilities, exposes sensitive contracts or photographs to potential server breaches, and introduces frustrating upload and download delays.
+              </p>
+              <p>
+                LoveEasyTool is built on modern web capabilities including WebAssembly, the HTML5 Canvas API, and client-side JavaScript worker threads. When you count words in an article, compress a photographic image, calculate complex amortized loan schedules, or merge legal PDF documents, every single byte is read and processed in your local computer or phone RAM.
+              </p>
+              <p>
+                Nothing is uploaded. No copies exist in the cloud. No third party can inspect your private financials, resumes, tax documents, or family photographs. When you finish your task and close your browser tab, all working memory is instantly and completely wiped.
+              </p>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link href="/privacy/" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
+                Read our Zero-Upload Privacy Guarantee <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              {
+                icon: <Lock className="text-accent" size={24} />,
+                title: 'Strict Local Isolation',
+                description: 'Files and text inputs never traverse internet transit cables or touch remote web storage. Processing stays within the browser security sandbox.',
+              },
+              {
+                icon: <Cpu className="text-primary" size={24} />,
+                title: 'Hardware Acceleration',
+                description: 'Calculations and image manipulation harness your local device processor and GPU cores directly, delivering zero-latency results.',
+              },
+              {
+                icon: <ShieldCheck className="text-secondary-foreground" size={24} />,
+                title: 'Zero Account Tracking',
+                description: 'No email registrations, passwords, session cookies, tracking pixels, or marketing drip campaigns required to use any tool.',
+              },
+              {
+                icon: <Zap className="text-accent" size={24} />,
+                title: 'No Queue Wait Times',
+                description: 'Skip artificial "processing queues" and throttling limits imposed by commercial cloud services trying to force premium subscriptions.',
+              },
+            ].map((card, idx) => (
+              <div key={idx} className="rounded-2xl border border-border bg-card p-6 shadow-2xs">
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-muted/60">{card.icon}</span>
+                <h3 className="mt-4 font-display text-lg font-semibold text-foreground">{card.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{card.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Section: Real-World Workflows */}
+    <section className="mx-auto max-w-[1360px] px-5 py-16 lg:px-10 lg:py-24">
+      <div>
+        <p className="font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">Practical Workflows</p>
+        <h2 className="mt-2 font-display text-4xl font-semibold tracking-tight">How Professionals Use LoveEasyTool Daily</h2>
+        <p className="mt-3 max-w-2xl text-muted-foreground">
+          Streamline your routine digital responsibilities with intuitive, purpose-built utilities tailored for modern work.
+        </p>
+      </div>
+
+      <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="rounded-2xl border border-border bg-card p-7 shadow-sm">
+          <div className="flex items-center gap-3">
+            <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary/10 text-primary">
+              <FileText size={20} />
+            </span>
+            <span className="font-mono-ui text-xs font-bold uppercase tracking-wider text-muted-foreground">Workflow 01</span>
+          </div>
+          <h3 className="mt-5 font-display text-xl font-semibold">Job Applications & Career Advancement</h3>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+            Draft a clean, recruiter-approved modern resume using our Free CV Builder, generate an accompanying tailored introduction letter, and compress the resulting PDF file for effortless email attachments or job board portal uploads.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-2 pt-4 border-t border-border/60">
+            <Link href="/tools/cv-builder/" className="text-xs font-semibold text-primary hover:underline">CV Builder →</Link>
+            <span className="text-muted-foreground text-xs">·</span>
+            <Link href="/tools/compress-pdf/" className="text-xs font-semibold text-primary hover:underline">Compress PDF →</Link>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-border bg-card p-7 shadow-sm">
+          <div className="flex items-center gap-3">
+            <span className="grid h-10 w-10 place-items-center rounded-lg bg-accent/15 text-accent">
+              <ImageIcon size={20} />
+            </span>
+            <span className="font-mono-ui text-xs font-bold uppercase tracking-wider text-muted-foreground">Workflow 02</span>
+          </div>
+          <h3 className="mt-5 font-display text-xl font-semibold">Web Performance & Image Optimization</h3>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+            Shrink heavy photographs and banners with our Image Compressor, resize exact pixel dimensions to avoid layout shifts, and convert legacy PNG and JPG assets into next-generation WebP formats for Google Core Web Vitals compliance.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-2 pt-4 border-t border-border/60">
+            <Link href="/tools/image-compressor/" className="text-xs font-semibold text-primary hover:underline">Compressor →</Link>
+            <span className="text-muted-foreground text-xs">·</span>
+            <Link href="/tools/webp-converter/" className="text-xs font-semibold text-primary hover:underline">WebP Converter →</Link>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-border bg-card p-7 shadow-sm">
+          <div className="flex items-center gap-3">
+            <span className="grid h-10 w-10 place-items-center rounded-lg bg-secondary text-secondary-foreground">
+              <Calculator size={20} />
+            </span>
+            <span className="font-mono-ui text-xs font-bold uppercase tracking-wider text-muted-foreground">Workflow 03</span>
+          </div>
+          <h3 className="mt-5 font-display text-xl font-semibold">Financial & Retail Mathematical Analysis</h3>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+            Compute gross-to-net VAT splits for commercial invoicing, evaluate multi-tier discount savings during sales promotions, estimate monthly mortgage payments with amortization tables, and verify project delivery schedules.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-2 pt-4 border-t border-border/60">
+            <Link href="/tools/vat-calculator/" className="text-xs font-semibold text-primary hover:underline">VAT Calculator →</Link>
+            <span className="text-muted-foreground text-xs">·</span>
+            <Link href="/tools/loan-calculator/" className="text-xs font-semibold text-primary hover:underline">Loan Calculator →</Link>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Section: Homepage FAQ */}
+    <section className="border-t border-border bg-muted/15 py-16 lg:py-24">
+      <div className="mx-auto max-w-[1360px] px-5 lg:px-10">
+        <div className="max-w-3xl">
+          <p className="font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">Got Questions?</p>
+          <h2 className="mt-2 font-display text-4xl font-semibold tracking-tight">Frequently Asked Questions</h2>
+          <p className="mt-3 text-muted-foreground">
+            Everything you need to know about our browser-based utility architecture, privacy guarantees, and usage policies.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {[
+            {
+              q: 'Is LoveEasyTool really 100% free with no hidden charges?',
+              a: 'Yes. Every utility on LoveEasyTool is completely free to use. There are no paid tiers, no monthly subscription fees, no locked pro features, and no artificial daily usage limits.',
+            },
+            {
+              q: 'Do I need to create an account or provide an email address?',
+              a: 'No. We believe utility tools should be immediately accessible without registration barriers. You can jump directly to any tool, complete your work, download your result, and close the tab without ever entering an email address or password.',
+            },
+            {
+              q: 'How can you guarantee that my documents and photos remain private?',
+              a: 'Our tools use client-side APIs (such as the HTML5 File API, WebAssembly, and Canvas) that execute within the browser sandbox on your device. Your files are never uploaded across the internet to our servers. Because we never receive your files, it is technically impossible for us to store, inspect, or leak them.',
+            },
+            {
+              q: 'Will LoveEasyTool work on my smartphone or tablet?',
+              a: 'Yes. The entire website is built with a responsive, mobile-first design. All calculators, text formatters, image converters, and PDF tools function smoothly on modern iOS Safari, Android Chrome, and tablet browsers without installing any applications.',
+            },
+            {
+              q: 'Are there file size limits when compressing images or merging PDFs?',
+              a: 'Because operations execute in your browser memory rather than on shared cloud infrastructure, limits are dictated by your device available RAM rather than artificial server caps. Modern phones and computers can easily handle documents and images of dozens of megabytes.',
+            },
+            {
+              q: 'Can I bookmark specific tools for direct access?',
+              a: 'Yes. Every tool has its own dedicated, canonical URL (such as /tools/word-counter/ or /tools/merge-pdf/) that you can save to your browser bookmarks or pin to your home screen for instantaneous access.',
+            },
+            {
+              q: 'How does LoveEasyTool compare to traditional ad-heavy utility sites?',
+              a: 'Traditional utility websites are often cluttered with distracting banner advertisements, slow third-party tracking scripts, deceptive download buttons, and restrictive limits designed to funnel users into paid subscriptions. LoveEasyTool prioritizes a clean, distraction-free environment with high contrast, fast loading speeds, and zero pop-ups.',
+            },
+            {
+              q: 'Is LoveEasyTool compliant with GDPR, CCPA, and global privacy standards?',
+              a: 'Yes, fully compliant by design. Under our local-first architecture, no personally identifiable information (PII), uploaded documents, or IP-linked records are ever harvested, processed on remote servers, or transferred to third-party data brokers.',
+            },
+          ].map((item, idx) => (
+            <div key={idx} className="rounded-2xl border border-border bg-card p-6 shadow-2xs">
+              <h3 className="font-display text-lg font-semibold text-foreground">{item.q}</h3>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">{item.a}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   </main></Shell>;

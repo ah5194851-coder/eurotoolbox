@@ -1,7 +1,8 @@
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, HelpCircle, CheckCircle2 } from 'lucide-react';
 import { Link, useParams } from 'wouter';
 import { categories, Shell, tools } from './App';
 import { getCategorySeo, updateDocumentHead } from './seo';
+import { CATEGORY_GUIDES } from './data/category-guides';
 import { useEffect } from 'react';
 import NotFound from '@/pages/not-found';
 
@@ -76,6 +77,59 @@ export default function CategoryPage() {
             ))}
           </div>
         </section>
+
+        {/* Detailed Category Guide & In-Depth Content */}
+        {CATEGORY_GUIDES[slug] && (
+          <section className="mt-20 border-t border-border pt-16">
+            <div className="max-w-3xl">
+              <p className="font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">Educational Guide & Reference</p>
+              <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                {CATEGORY_GUIDES[slug].overviewTitle}
+              </h2>
+              <div className="mt-6 space-y-4 text-base leading-8 text-muted-foreground">
+                {CATEGORY_GUIDES[slug].overviewContent.map((paragraph, idx) => (
+                  <p key={idx}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-12">
+              <h3 className="font-display text-2xl font-semibold tracking-tight">
+                {CATEGORY_GUIDES[slug].featuresTitle}
+              </h3>
+              <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                {CATEGORY_GUIDES[slug].features.map((feature, idx) => (
+                  <div key={idx} className="rounded-xl border border-border bg-card p-6 shadow-2xs">
+                    <div className="flex items-center gap-2.5">
+                      <CheckCircle2 size={18} className="text-accent shrink-0" />
+                      <h4 className="font-display text-lg font-semibold">{feature.title}</h4>
+                    </div>
+                    <p className="mt-3 text-sm leading-6 text-muted-foreground">{feature.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Category FAQ */}
+            <div className="mt-16 rounded-2xl border border-border bg-card p-8 shadow-sm">
+              <div className="flex items-center gap-2.5">
+                <HelpCircle size={22} className="text-primary" />
+                <h3 className="font-display text-2xl font-semibold">Frequently Asked Questions</h3>
+              </div>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Common questions regarding browser processing, accuracy, security, and usage for our {categoryName.toLowerCase()} utilities.
+              </p>
+              <div className="mt-8 grid gap-6 sm:grid-cols-2">
+                {CATEGORY_GUIDES[slug].faqs.map((faq, idx) => (
+                  <div key={idx} className="border-t border-border/60 pt-4">
+                    <h4 className="font-display text-base font-semibold text-foreground">{faq.question}</h4>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Cross-linking: Other Tool Cabinets */}
         <section className="mt-20 border-t border-border pt-16">
