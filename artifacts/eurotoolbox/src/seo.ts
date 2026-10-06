@@ -16,7 +16,7 @@ export const HOME_SEO: PageSeo = {
   description: 'Free online tools and calculators for PDF, image, text, and daily math. 100% free with no sign-up: all files process privately in your browser with zero uploads.',
   canonicalPath: '/',
   type: 'website',
-  keywords: 'free online tools, online tools, free tools online, useful online tools, free web tools, online calculators, pdf tools online, image compressor, text tools, free converters, private tools, no sign-up, LoveEasyTool',
+  keywords: 'online tools, free online utilities, pdf tools, image compressor, calculators',
 };
 
 export const BOOKS_SEO: PageSeo = {
@@ -40,7 +40,7 @@ export const ABOUT_SEO: PageSeo = {
   description: 'Learn about LoveEasyTool, founded by Ali Hassan to deliver calm, free, private online tools with zero sign-up and browser-first client-side processing.',
   canonicalPath: '/about/',
   type: 'website',
-  keywords: 'about loveeasytool, ali hassan, free online tools, client-side tools, private browser utilities, love tool factory, love tool ai, axe like tool, lovetools com ua, courtney love tool',
+  keywords: 'about loveeasytool, ali hassan, free online tools, client-side tools, private browser utilities, online tools, free online utilities, calculators',
 };
 
 export const CONTACT_SEO: PageSeo = {
