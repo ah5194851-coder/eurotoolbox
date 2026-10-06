@@ -199,16 +199,18 @@ export function getJsonLd(path: string): unknown[] {
   if (slug && toolSeo[slug]) {
     const tool = tools.find(item => item.slug === slug);
     const seo = toolSeo[slug];
+    const toolName = slug === 'cv-builder' ? 'Free CV Builder' : (tool?.name ?? slug);
+    const toolDescription = seo.description || seo.answerSummary || tool?.description;
     return [
       {
         '@context': 'https://schema.org',
         '@type': 'WebApplication',
         '@id': `${canonical}#app`,
-        name: tool?.name ?? slug,
+        name: toolName,
+        description: toolDescription,
         url: canonical,
-        description: seo.answerSummary || seo.description,
         applicationCategory: getGoogleApplicationCategory(tool?.category),
-        operatingSystem: 'Windows, macOS, Linux, Android, iOS',
+        operatingSystem: 'Any',
         browserRequirements: 'Requires JavaScript. Runs locally in web browser.',
         image: OG_IMAGE_URL,
         offers: {
@@ -236,21 +238,21 @@ export function getJsonLd(path: string): unknown[] {
       },
       {
         '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+          { '@type': 'ListItem', position: 2, name: tool?.category ? `${tool.category} Tools` : 'Tools', item: absoluteUrl(`/category/${tool?.category.toLowerCase() ?? 'tools'}/`) },
+          { '@type': 'ListItem', position: 3, name: toolName, item: canonical },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
         '@type': 'FAQPage',
         mainEntity: seo.faq.map(([question, answer]) => ({
           '@type': 'Question',
           name: question,
           acceptedAnswer: { '@type': 'Answer', text: answer },
         })),
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
-          { '@type': 'ListItem', position: 2, name: tool?.category ?? 'Tools', item: absoluteUrl(`/category/${tool?.category.toLowerCase() ?? 'tools'}/`) },
-          { '@type': 'ListItem', position: 3, name: tool?.name ?? slug, item: canonical },
-        ],
       },
       organizationSchema,
     ];
