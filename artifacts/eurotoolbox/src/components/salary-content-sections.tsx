@@ -164,7 +164,7 @@ export function SalaryCalculatorsLinkList() {
       <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
         <div>
           <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Specialized Calculators</p>
-          <h3 className="font-display text-xl font-semibold text-foreground">Salary Calculators & Take-Home Tools</h3>
+          <h2 className="font-display text-xl font-semibold text-foreground">Salary Calculators & Take-Home Tools</h2>
         </div>
         <span className="text-xs text-muted-foreground">Pre-configured modes for common salary questions</span>
       </div>

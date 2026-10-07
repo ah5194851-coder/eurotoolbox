@@ -65,8 +65,18 @@ export function SalaryLandingPage({ slug }: SalaryLandingPageProps) {
               100% Private · Runs in your browser · No sign-up
             </div>
 
+            {/* Quick Answer Summary for AI Search */}
+            <div className="mt-6 rounded-xl border border-border bg-card p-4 text-sm leading-relaxed shadow-2xs">
+              <p className="mb-1.5 font-mono-ui text-[10px] font-bold uppercase tracking-wider text-accent">
+                Quick Answer & Summary
+              </p>
+              <p className="text-muted-foreground text-xs leading-5 sm:text-sm sm:leading-6">
+                {data.intro}
+              </p>
+            </div>
+
             {/* Quick Summary Card */}
-            <div className="mt-6 rounded-xl border border-border/80 bg-muted/30 p-4 text-xs">
+            <div className="mt-4 rounded-xl border border-border/80 bg-muted/30 p-4 text-xs">
               <p className="mb-2.5 font-mono-ui text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                 Tool Parameters
               </p>
@@ -195,7 +205,7 @@ export function SalaryLandingPage({ slug }: SalaryLandingPageProps) {
           <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
             <div>
               <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Knowledge Network</p>
-              <h3 className="font-display text-xl font-semibold text-foreground">Explore Related Salary & Career Tools</h3>
+              <h2 className="font-display text-xl font-semibold text-foreground">Explore Related Salary & Career Tools</h2>
             </div>
             <Link href="/tools/salary-calculator/" className="text-xs font-semibold text-primary hover:underline">
               Universal salary calculator →
@@ -213,9 +223,9 @@ export function SalaryLandingPage({ slug }: SalaryLandingPageProps) {
                 className="group flex flex-col justify-between rounded-xl border border-border/80 bg-card p-4 transition hover:-translate-y-0.5 hover:border-primary hover:shadow-2xs"
               >
                 <div>
-                  <h4 className="font-display text-sm font-semibold text-foreground group-hover:text-primary transition">
+                  <h3 className="font-display text-sm font-semibold text-foreground group-hover:text-primary transition">
                     {page.h1}
-                  </h4>
+                  </h3>
                   <p className="mt-1 text-xs text-muted-foreground line-clamp-2 leading-relaxed">
                     {page.intro}
                   </p>

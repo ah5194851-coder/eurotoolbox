@@ -148,7 +148,7 @@ function ToolSeoContent({ tool, seo }: { tool: typeof tools[number]; seo: typeof
       <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
         <div>
           <p className="font-mono-ui text-[10px] uppercase tracking-[.16em] text-accent">Knowledge Network</p>
-          <h3 className="font-display text-2xl font-semibold">Explore All Tool Cabinets</h3>
+          <h2 className="font-display text-2xl font-semibold">Explore All Tool Cabinets</h2>
         </div>
         <Link href="/#tools" className="text-sm font-semibold text-primary hover:underline">
           View all 31 tools on home →

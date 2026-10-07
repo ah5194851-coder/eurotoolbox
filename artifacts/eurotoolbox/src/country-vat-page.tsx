@@ -65,8 +65,18 @@ export function CountryVatPage({ countrySlug }: CountryVatPageProps) {
               100% Private · Runs in your browser · No sign-up
             </div>
 
+            {/* Quick Answer Summary for AI Search */}
+            <div className="mt-6 rounded-xl border border-border bg-card p-4 text-sm leading-relaxed shadow-2xs">
+              <p className="mb-1.5 font-mono-ui text-[10px] font-bold uppercase tracking-wider text-accent">
+                Quick Summary & Tax Rates
+              </p>
+              <p className="text-muted-foreground text-xs leading-5 sm:text-sm sm:leading-6">
+                {data.intro}
+              </p>
+            </div>
+
             {/* Quick Country Stats Box */}
-            <div className="mt-6 rounded-xl border border-border/80 bg-muted/30 p-4 text-xs">
+            <div className="mt-4 rounded-xl border border-border/80 bg-muted/30 p-4 text-xs">
               <p className="mb-2.5 font-mono-ui text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                 {data.countryName} Tax Summary
               </p>
@@ -221,7 +231,7 @@ export function CountryVatPage({ countrySlug }: CountryVatPageProps) {
           <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
             <div>
               <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">International Directory</p>
-              <h3 className="font-display text-xl font-semibold text-foreground">Other Country VAT Calculators</h3>
+              <h2 className="font-display text-xl font-semibold text-foreground">Other Country VAT Calculators</h2>
             </div>
             <Link href="/tools/vat-calculator/" className="text-xs font-semibold text-primary hover:underline">
               Main Global VAT Calculator →
@@ -261,7 +271,7 @@ export function CountryVatPage({ countrySlug }: CountryVatPageProps) {
         {/* Internal Linking Hub 2: Companion Calculators */}
         <section className="mt-8 rounded-2xl border border-border bg-muted/20 p-6">
           <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Companion Financial Tools</p>
-          <h3 className="mt-1 font-display text-lg font-semibold text-foreground">Related Percentage & Pricing Utilities</h3>
+          <h2 className="mt-1 font-display text-lg font-semibold text-foreground">Related Percentage & Pricing Utilities</h2>
           <p className="mt-1.5 text-xs text-muted-foreground">
             Check out other free, client-side arithmetic calculators on LoveEasyTool:
           </p>

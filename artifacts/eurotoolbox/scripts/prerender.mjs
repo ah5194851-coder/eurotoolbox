@@ -55,6 +55,19 @@ ${crawlRoutes.map(route => `  <url><loc>${absoluteUrl(route)}</loc><lastmod>${to
 `;
 const robots = `User-agent: *
 Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: ${SITE_URL}/sitemap.xml
 `;
 
