@@ -66,7 +66,7 @@ export const SALARY_LANDING_PAGES: Record<string, SalaryLandingPageData> = {
   'monthly-salary-calculator': {
     slug: 'monthly-salary-calculator',
     canonicalPath: '/monthly-salary-calculator/',
-    metaTitle: 'Monthly Salary Calculator – Gross to Net Take-Home Pay | LoveEasyTool',
+    metaTitle: 'Monthly Salary Calculator – Take-Home Pay | LoveEasyTool',
     metaDescription: 'Free monthly salary calculator. Convert monthly earnings to net take-home pay, annual income, weekly wages, and hourly rates. Fast and private.',
     h1: 'Monthly Salary Calculator',
     defaultMode: 'gross-to-net',
@@ -129,7 +129,7 @@ export const SALARY_LANDING_PAGES: Record<string, SalaryLandingPageData> = {
   'hourly-to-salary-calculator': {
     slug: 'hourly-to-salary-calculator',
     canonicalPath: '/hourly-to-salary-calculator/',
-    metaTitle: 'Hourly to Salary Calculator – Convert Hourly Wage to Annual & Monthly | LoveEasyTool',
+    metaTitle: 'Hourly to Salary Calculator – Convert Wages | LoveEasyTool',
     metaDescription: 'Convert hourly wage to annual salary, monthly income, and weekly earnings. Adjust hours per week and weeks per year. Free, private, and client-side.',
     h1: 'Hourly to Salary Calculator',
     defaultMode: 'converter',
@@ -192,7 +192,7 @@ export const SALARY_LANDING_PAGES: Record<string, SalaryLandingPageData> = {
   'annual-to-monthly-salary-calculator': {
     slug: 'annual-to-monthly-salary-calculator',
     canonicalPath: '/annual-to-monthly-salary-calculator/',
-    metaTitle: 'Annual to Monthly Salary Calculator – Convert Yearly Pay | LoveEasyTool',
+    metaTitle: 'Annual to Monthly Salary Calculator | LoveEasyTool',
     metaDescription: 'Free annual to monthly salary calculator. Convert yearly compensation to monthly gross and net take-home pay with deductions. Private & instant.',
     h1: 'Annual to Monthly Salary Calculator',
     defaultMode: 'gross-to-net',
@@ -255,7 +255,7 @@ export const SALARY_LANDING_PAGES: Record<string, SalaryLandingPageData> = {
   'basic-salary-calculator': {
     slug: 'basic-salary-calculator',
     canonicalPath: '/basic-salary-calculator/',
-    metaTitle: 'Basic Salary Calculator – Calculate Basic, Allowances & Deductions | LoveEasyTool',
+    metaTitle: 'Basic Salary Calculator – Allowances & Pay | LoveEasyTool',
     metaDescription: 'Calculate basic salary, allowances, and deductions to determine gross and net pay. Ideal for employment contracts, UAE, Saudi, and international pay structures.',
     h1: 'Basic Salary Calculator',
     defaultMode: 'basic-breakdown',
@@ -318,7 +318,7 @@ export const SALARY_LANDING_PAGES: Record<string, SalaryLandingPageData> = {
   'net-salary-calculator': {
     slug: 'net-salary-calculator',
     canonicalPath: '/net-salary-calculator/',
-    metaTitle: 'Net Salary Calculator – Calculate Real Take-Home Pay | LoveEasyTool',
+    metaTitle: 'Net Salary Calculator – Take-Home Pay | LoveEasyTool',
     metaDescription: 'Free net salary calculator. Calculate actual take-home income after tax deductions, pension contributions, and insurance. Fast, private, and client-side.',
     h1: 'Net Salary Calculator',
     defaultMode: 'gross-to-net',

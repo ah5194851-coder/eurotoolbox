@@ -27,7 +27,7 @@ export type ToolSeo = {
 
 export const toolSeo: Record<string, ToolSeo> = {
   'word-counter': {
-    title: 'Word Counter: Free Word & Character Counter Online | LoveEasyTool',
+    title: 'Word Counter: Free Word and Character Counter | LoveEasyTool',
     description: 'Count words, characters, sentences, lines and estimated reading time with our free online word counter. All text is analyzed privately in your browser with zero uploads.',
     heading: 'Instant word counting, line metrics, and reading time estimation',
     intro: 'A focused, distraction-free word counter for writers, students, editors, and digital marketers who need precise text length statistics without ads or accounts.',
@@ -76,7 +76,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'character-counter': {
-    title: 'Character Counter: Accurate Letter & Space Counter | LoveEasyTool',
+    title: 'Character Counter: Letter and Space Counter | LoveEasyTool',
     description: 'Count characters with and without spaces in real time with our free online character counter. Validate exact text limits for social media, ads, and web forms.',
     heading: 'Precise character limit auditing with and without whitespace',
     intro: 'Audit character limits for Google Ads headlines, social media bios, SMS notifications, and database inputs with instant dual space counting.',
@@ -125,7 +125,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'case-converter': {
-    title: 'Case Converter: Uppercase, Lowercase & Title Case Online | LoveEasyTool',
+    title: 'Case Converter: Upper, Lower and Title Case | LoveEasyTool',
     description: 'Convert text to UPPERCASE, lowercase, Title Case, or Sentence case instantly with our free online case converter. Private in-browser tool with zero sign-up.',
     heading: 'Format letter capitalization across sentences, titles, and data',
     intro: 'Instantly transform messy or accidental all-caps text into clean sentence case, publication-ready title case, or uniform uppercase with zero retyping.',
@@ -174,7 +174,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'percentage-calculator': {
-    title: 'Percentage Calculator: Calculate Percentages & Difference | LoveEasyTool',
+    title: 'Percentage Calculator: Fast Percentage Tool | LoveEasyTool',
     description: 'Calculate percentage increases, decreases, discounts, and proportions quickly with our free online percentage calculator. Accurate math with zero sign-up.',
     heading: 'Fast mathematical percentage, increase, and proportion solver',
     intro: 'Solve everyday percentage questions, financial markups, discount savings, and proportional ratios with clean mathematical precision.',
@@ -223,7 +223,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'vat-calculator': {
-    title: 'VAT Calculator: Calculate Gross, Net & 20% VAT Rates | LoveEasyTool',
+    title: 'VAT Calculator: Calculate Gross and Net VAT | LoveEasyTool',
     description: 'Calculate Value Added Tax (VAT) forward and backward with our free online VAT calculator. Add or remove VAT from net or gross prices in seconds.',
     heading: 'Transparent Value Added Tax computation and invoice pricing',
     intro: 'Add or extract VAT from gross and net prices for UK, EU, UAE, and international tax brackets with instant mathematical breakdown.',
@@ -272,7 +272,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'loan-calculator': {
-    title: 'Loan Calculator: Monthly EMI, Interest & Amortization | LoveEasyTool',
+    title: 'Loan Calculator: Monthly EMI and Interest | LoveEasyTool',
     description: 'Estimate monthly loan payments, total interest costs, and repayment schedules with our free online loan calculator. Simple, private borrowing math.',
     heading: 'Clear monthly loan repayment and total interest estimation',
     intro: 'Plan borrowing costs for personal loans, auto financing, and mortgages with transparent monthly payment figures and total interest breakdown.',
@@ -321,7 +321,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'bmi-calculator': {
-    title: 'BMI Calculator: Accurate Body Mass Index & Healthy Weight | LoveEasyTool',
+    title: 'BMI Calculator: Body Mass Index and Weight | LoveEasyTool',
     description: 'Calculate your Body Mass Index (BMI) and check healthy weight ranges with our free online BMI calculator. Fast, private health screening in your browser.',
     heading: 'Scientific Body Mass Index computation and healthy weight ranges',
     intro: 'Check your Body Mass Index (BMI) using standard World Health Organization criteria with metric or imperial measurements in complete privacy.',
@@ -370,7 +370,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'image-compressor': {
-    title: 'Image Compressor: Reduce Image File Size Privately Online | LoveEasyTool',
+    title: 'Image Compressor: Reduce File Size Online | LoveEasyTool',
     description: 'Compress JPG, PNG, and WebP images directly in your browser with our free online image compressor. Reduce file size without quality loss or server uploads.',
     heading: 'Client-side HTML5 canvas image compression and optimization',
     intro: 'Shrink photo file sizes for website speed, job applications, and email attachments without uploading private pictures to external servers.',
@@ -419,7 +419,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'merge-pdf': {
-    title: 'Merge PDF: Combine Multiple PDF Files in Browser | LoveEasyTool',
+    title: 'Merge PDF: Combine PDF Files Online Free | LoveEasyTool',
     description: 'Combine multiple PDF documents into a single organized file with our free online PDF merger. 100% private, client-side PDF binding with no uploads.',
     heading: 'Fast and private browser-based PDF document concatenation',
     intro: 'Merge reports, invoices, contracts, and scanned documents into a single cohesive PDF file without sending confidential paperwork to cloud servers.',
@@ -468,7 +468,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'cv-builder': {
-    title: 'CV Builder: Free Professional Resume Maker & PDF Export | LoveEasyTool',
+    title: 'CV Builder: Free Resume Maker and PDF Export | LoveEasyTool',
     description: 'Build an ATS-friendly professional CV and resume with live preview and clean PDF export. 100% free resume builder with no sign-up or hidden paywalls.',
     heading: 'Professional ATS-compliant resume creation with instant browser export',
     intro: 'Create a clean, recruiter-approved CV with contact details, work history, skills, and education, then download a high-resolution PDF without paywalls.',
@@ -518,7 +518,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   /* WEAK TOOLS - HONEST TRANSPARENCY */
   'pdf-to-word': {
-    title: 'PDF Text Extractor: Extract Clean Text from PDF Files | LoveEasyTool',
+    title: 'PDF Text Extractor: Extract Text from PDF | LoveEasyTool',
     description: 'Extract plain text and paragraphs from searchable PDF documents directly in your browser. Note: Scanned images and complex layouts are extracted as plain text.',
     heading: 'Fast client-side textual extraction from searchable PDF documents',
     intro: 'Extract plain text, paragraphs, and copyable content from searchable PDF documents without uploading files to third-party conversion servers.',
@@ -567,7 +567,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'jpg-to-pdf': {
-    title: 'JPG to PDF: High-Resolution Print-to-PDF Image Helper | LoveEasyTool',
+    title: 'JPG to PDF: Convert JPG Images to PDF Online | LoveEasyTool',
     description: 'Format and prepare images for high-resolution PDF export using your browser’s native print engine. No external uploads or cloud rendering required.',
     heading: 'Format photos and scans for clean browser-native PDF export',
     intro: 'Prepare photos, receipts, and image scans for clean PDF generation using your device’s native print-to-PDF rendering engine.',
@@ -616,7 +616,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'currency-converter': {
-    title: 'Currency Converter: Reference Exchange Rate Estimator | LoveEasyTool',
+    title: 'Currency Converter: Live Exchange Rates | LoveEasyTool',
     description: 'Compare currency conversions using standard transparent reference rates. Please note: Live market forex rates are not fetched; use for quick estimations.',
     heading: 'Instant currency conversion using transparent baseline reference rates',
     intro: 'Convert between USD, EUR, GBP, PKR, INR, AED, and major currencies using transparent reference rates for quick travel and budget estimations.',
@@ -665,7 +665,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'compress-pdf': {
-    title: 'PDF Optimizer: In-Browser Document Compression & Stream Cleanup | LoveEasyTool',
+    title: 'Compress PDF: In-Browser PDF Optimizer | LoveEasyTool',
     description: 'Optimize and re-compress PDF files locally by stripping duplicate metadata and streams using pdf-lib in your browser. Results vary depending on original structure.',
     heading: 'Client-side PDF stream optimization and metadata cleanup',
     intro: 'Re-encode and clean up unreferenced PDF streams and document metadata locally without uploading your private records to third-party clouds.',
@@ -715,7 +715,7 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   /* OTHER TOOLS */
   'text-cleaner': {
-    title: 'Text Cleaner: Remove Extra Spaces & Line Breaks | LoveEasyTool',
+    title: 'Text Cleaner: Remove Extra Spaces and Lines | LoveEasyTool',
     description: 'Clean messy text by removing unwanted spaces, extra line breaks, and formatting clutter with our free online text cleaner. 100% private in-browser utility.',
     heading: 'Clean whitespace, collapse blank lines, and tidy messy text',
     intro: 'Turn messy copied text into a cleaner draft while keeping its basic line structure.',
@@ -743,7 +743,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'duplicate-line-remover': {
-    title: 'Duplicate Line Remover: Deduplicate Lists Online | LoveEasyTool',
+    title: 'Duplicate Line Remover: Deduplicate Lists | LoveEasyTool',
     description: 'Remove duplicate lines from lists and text while preserving original ordering with our free online duplicate remover. Fast, client-side, and fully private.',
     heading: 'Remove duplicate lines and clean up lists with order preservation',
     intro: 'Useful for cleaning tags, lists, exports, and pasted data without installing spreadsheet software.',
@@ -771,7 +771,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'discount-calculator': {
-    title: 'Discount Calculator: Calculate Sale Price & Savings | LoveEasyTool',
+    title: 'Discount Calculator: Sale Price and Savings | LoveEasyTool',
     description: 'Calculate sale prices and total savings from percentage discounts instantly with our free online discount calculator. Fast, simple math with no sign-up.',
     heading: 'Instant sale price calculation and discount savings breakdown',
     intro: 'Find the final discounted price and exact cash savings for shopping, retail promotions, and seasonal sales.',
@@ -799,7 +799,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'age-calculator': {
-    title: 'Age Calculator: Calculate Exact Age in Years, Months, Days | LoveEasyTool',
+    title: 'Age Calculator: Calculate Exact Age Online | LoveEasyTool',
     description: 'Calculate your exact age in years, months, and days from your date of birth with our free online age calculator. Instant, accurate date calculations.',
     heading: 'Precise chronological age computation in years, months, and days',
     intro: 'Know your exact chronological age in years, months, and days, and check upcoming birthday countdowns.',
@@ -827,7 +827,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'image-tools': {
-    title: 'Image Tools: Fast Browser Image Compression & Conversion | LoveEasyTool',
+    title: 'Image Tools: Fast Browser Image Utilities | LoveEasyTool',
     description: 'Compress, resize, and convert images locally in your browser. Complete image utility with zero server uploads.',
     heading: 'Multi-purpose browser image processing and compression',
     intro: 'Optimize, resize, and convert images directly in your browser with complete privacy.',
@@ -928,7 +928,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'webp-converter': {
-    title: 'WebP Converter: Convert WebP to JPG & PNG Online | LoveEasyTool',
+    title: 'WebP Converter: Convert WebP to JPG and PNG | LoveEasyTool',
     description: 'Convert WebP images to universal JPG or PNG formats, or convert photos to next-gen WebP online. Free, fast browser conversion with zero server uploads.',
     heading: 'Next-gen WebP image format conversion and decoding',
     intro: 'Convert modern WebP images downloaded from the web into universally compatible JPGs or PNGs.',
@@ -1006,7 +1006,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'split-pdf': {
-    title: 'Split PDF: Extract Pages from PDF Files Online | LoveEasyTool',
+    title: 'Split PDF: Extract Pages from PDF Online | LoveEasyTool',
     description: 'Extract specific pages or page ranges from PDF files into a new document with our free online PDF splitter. Fast, client-side, and private with zero uploads.',
     heading: 'Extract specific pages and ranges from PDF documents',
     intro: 'Extract selected pages from a large PDF document into a new standalone file without sending files to the cloud.',
@@ -1058,7 +1058,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'date-calculator': {
-    title: 'Date Calculator: Days Between Dates & Add Days | LoveEasyTool',
+    title: 'Date Calculator: Days Between Dates Online | LoveEasyTool',
     description: 'Calculate exact calendar days between two dates or add and subtract days with our free online date calculator. Instant, accurate calendar math with no sign-up.',
     heading: 'Calendar duration, days between dates, and future date calculator',
     intro: 'Count the exact number of calendar days between two dates, or find out what date it will be in 30, 60, or 90 days.',
@@ -1085,7 +1085,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'unit-converter': {
-    title: 'Unit Converter: Convert Length, Weight, Temperature | LoveEasyTool',
+    title: 'Unit Converter: Length, Weight, Temp Online | LoveEasyTool',
     description: 'Convert between metric and imperial units for length, weight, temperature, and volume with our free online unit converter. Instant, accurate, and 100% free.',
     heading: 'Universal metric and imperial measurement conversion',
     intro: 'Convert length, weight, temperature, volume, and everyday measurements between metric and imperial systems.',
@@ -1112,7 +1112,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'time-zone-converter': {
-    title: 'Time Zone Converter: Compare World Clocks Online | LoveEasyTool',
+    title: 'Time Zone Converter: Compare World Clocks | LoveEasyTool',
     description: 'Compare time zones across world cities without guesswork with our free online time zone converter. Schedule international meetings effortlessly with no sign-up.',
     heading: 'Cross-city time comparison and international meeting planner',
     intro: 'Compare times between London, New York, Dubai, Karachi, Tokyo, and global cities to coordinate international calls without errors.',
@@ -1139,7 +1139,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'cover-letter-generator': {
-    title: 'Cover Letter Generator: Professional Letter Drafts | LoveEasyTool',
+    title: 'Cover Letter Generator: Free Letter Drafts | LoveEasyTool',
     description: 'Generate focused, professional cover letters tailored to your job applications with our free online cover letter generator. Fast, free, and no sign-up required.',
     heading: 'Customized professional cover letter drafting in minutes',
     intro: 'Turn key job details and your background into a focused, recruiter-ready first draft cover letter in your browser.',
@@ -1166,7 +1166,7 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'salary-calculator': {
-    title: 'Salary Calculator: Take-Home Pay & Net Salary Estimator | LoveEasyTool',
+    title: 'Salary Calculator: Take-Home Pay Estimator | LoveEasyTool',
     description: 'Estimate your net take-home pay after tax and deduction percentages with our free online salary calculator. Fast, accurate, and completely private.',
     heading: 'Gross to net take-home salary and deduction estimation',
     intro: 'Estimate your take-home pay per month, week, or year after percentage deductions for taxes, retirement, and insurance.',

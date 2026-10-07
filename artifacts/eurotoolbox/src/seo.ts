@@ -14,7 +14,7 @@ export type PageSeo = {
 };
 
 export const HOME_SEO: PageSeo = {
-  title: 'Free Online Tools – Calculators, PDF, Image & Text Tools | LoveEasyTool',
+  title: 'Free Online Tools & Calculators | LoveEasyTool',
   description: 'Free online tools and calculators for PDF, image, text, and daily math. 100% free with no sign-up: all files process privately in your browser with zero uploads.',
   canonicalPath: '/',
   type: 'website',
@@ -171,11 +171,6 @@ export function getJsonLd(path: string): Record<string, unknown> {
     logo: absoluteUrl('/logo.png'),
     description: 'Free everyday tools for text, numbers, PDFs, files and time. Fast, private browser-based utilities.',
     email: 'support@loveeasytool.com',
-    founder: {
-      '@type': 'Person',
-      name: 'Ali Hassan',
-      url: absoluteUrl('/about/'),
-    },
   };
 
   const webSiteEntity = {
@@ -212,11 +207,6 @@ export function getJsonLd(path: string): Record<string, unknown> {
         inLanguage: 'en',
         isPartOf: {
           '@id': absoluteUrl('/#website'),
-        },
-        about: {
-          '@type': 'Thing',
-          name: toolName,
-          description: toolDescription,
         },
       },
       {
@@ -266,11 +256,6 @@ export function getJsonLd(path: string): Record<string, unknown> {
           isPartOf: {
             '@id': absoluteUrl('/#website'),
           },
-          about: {
-            '@type': 'Thing',
-            name: cData.h1,
-            description: cData.metaDescription,
-          },
         },
         {
           '@type': 'BreadcrumbList',
@@ -315,11 +300,6 @@ export function getJsonLd(path: string): Record<string, unknown> {
           inLanguage: 'en',
           isPartOf: {
             '@id': absoluteUrl('/#website'),
-          },
-          about: {
-            '@type': 'Thing',
-            name: sData.h1,
-            description: sData.metaDescription,
           },
         },
         {
@@ -368,17 +348,6 @@ export function getJsonLd(path: string): Record<string, unknown> {
           inLanguage: 'en',
           isPartOf: {
             '@id': absoluteUrl('/#website'),
-          },
-          mainEntity: {
-            '@type': 'ItemList',
-            name: copy.name,
-            numberOfItems: categoryTools.length,
-            itemListElement: categoryTools.map((t, idx) => ({
-              '@type': 'ListItem',
-              position: idx + 1,
-              name: t.name,
-              item: absoluteUrl(getToolPath(t.slug)),
-            })),
           },
         },
         {
@@ -473,9 +442,6 @@ export function getJsonLd(path: string): Record<string, unknown> {
           isPartOf: {
             '@id': absoluteUrl('/#website'),
           },
-          about: {
-            '@id': absoluteUrl('/#organization'),
-          },
         },
         {
           '@type': 'BreadcrumbList',
@@ -504,9 +470,6 @@ export function getJsonLd(path: string): Record<string, unknown> {
           inLanguage: 'en',
           isPartOf: {
             '@id': absoluteUrl('/#website'),
-          },
-          about: {
-            '@id': absoluteUrl('/#organization'),
           },
         },
         {
