@@ -34,10 +34,14 @@
     <link rel="apple-touch-icon" type="image/svg+xml" href="/apple-touch-icon.svg" />
     <meta name="google-site-verification" content="gUr0jluws07kPmgJnTiCcCkgoXgk8CcMyjgWGLaeTwU" />
     <script>
-      if (typeof window !== 'undefined' && (window.location.hostname === 'www.loveeasytool.com' || window.location.hostname === 'eurotoolbox.ah5194851.workers.dev')) {
-        var p = window.location.pathname;
-        if (p !== '/' && !p.endsWith('/') && p.indexOf('.') === -1) p += '/';
-        window.location.replace('https://loveeasytool.com' + p + window.location.search + window.location.hash);
+      if (typeof window !== 'undefined') {
+        if (window.location.hostname === 'www.loveeasytool.com' || window.location.hostname === 'eurotoolbox.ah5194851.workers.dev') {
+          var p = window.location.pathname;
+          if (p !== '/' && !p.endsWith('/') && p.indexOf('.') === -1) p += '/';
+          window.location.replace('https://loveeasytool.com' + p + window.location.search + window.location.hash);
+        } else if (window.location.pathname !== '/' && !window.location.pathname.endsWith('/') && window.location.pathname.indexOf('.') === -1) {
+          window.history.replaceState(null, '', window.location.pathname + '/' + window.location.search + window.location.hash);
+        }
       }
     </script>
   </head>

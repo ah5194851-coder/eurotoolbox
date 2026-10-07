@@ -80,6 +80,10 @@ export function Shell({ children }: { children: ReactNode }) {
         window.location.replace('https://loveeasytool.com' + pathname + window.location.search + window.location.hash);
         return;
       }
+      // Enforce trailing slash on address bar
+      if (window.location.pathname !== '/' && !window.location.pathname.endsWith('/') && !window.location.pathname.includes('.')) {
+        window.history.replaceState(null, '', window.location.pathname + '/' + window.location.search + window.location.hash);
+      }
       // Overlap redirect for image-tools -> image-compressor/
       if (window.location.pathname === '/tools/image-tools' || window.location.pathname === '/tools/image-tools/' || window.location.pathname === '/image-tools' || window.location.pathname === '/image-tools/') {
         window.location.replace('/tools/image-compressor/');
