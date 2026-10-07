@@ -158,42 +158,19 @@ function jsonLd(value: unknown) {
   return JSON.stringify(value).replace(/</g, '\\u003c');
 }
 
-function getGoogleApplicationCategory(category?: string): string {
-  switch ((category || '').toLowerCase()) {
-    case 'text':
-    case 'pdf':
-      return 'ProductivityApplication';
-    case 'work':
-      return 'BusinessApplication';
-    case 'files':
-      return 'DesignApplication';
-    case 'numbers':
-    case 'time':
-    case 'everyday':
-    default:
-      return 'UtilitiesApplication';
-  }
-}
-
-export function getJsonLd(path: string): unknown[] {
+export function getJsonLd(path: string): Record<string, unknown> {
   const page = getPageSeo(path);
   const cleanPath = path.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
   const canonical = absoluteUrl(page.canonicalPath);
 
-  const organizationSchema = {
-    '@context': 'https://schema.org',
+  const organizationEntity = {
     '@type': 'Organization',
     '@id': absoluteUrl('/#organization'),
     name: 'LoveEasyTool',
     url: absoluteUrl('/'),
-    logo: {
-      '@type': 'ImageObject',
-      url: absoluteUrl('/logo.png'),
-      width: 512,
-      height: 512,
-    },
-    image: OG_IMAGE_URL,
+    logo: absoluteUrl('/logo.png'),
     description: 'Free everyday tools for text, numbers, PDFs, files and time. Fast, private browser-based utilities.',
+    email: 'support@loveeasytool.com',
     founder: {
       '@type': 'Person',
       name: 'Ali Hassan',
@@ -201,21 +178,20 @@ export function getJsonLd(path: string): unknown[] {
     },
   };
 
-  const webSiteSchema = {
-    '@context': 'https://schema.org',
+  const webSiteEntity = {
     '@type': 'WebSite',
     '@id': absoluteUrl('/#website'),
     name: 'LoveEasyTool',
     alternateName: ['Love Easy Tool', 'LoveEasyTool.com'],
     url: absoluteUrl('/'),
     description: HOME_SEO.description,
-    publisher: {
-      '@id': absoluteUrl('/#organization'),
-    },
   };
 
   if (cleanPath === '/') {
-    return [webSiteSchema, organizationSchema];
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [webSiteEntity, organizationEntity],
+    };
   }
 
   // 1. Tool pages
@@ -225,189 +201,152 @@ export function getJsonLd(path: string): unknown[] {
     const seo = toolSeo[slug];
     const toolName = slug === 'cv-builder' ? 'Free CV Builder' : (tool?.name ?? slug);
     const toolDescription = seo.description || seo.answerSummary || tool?.description;
-    return [
+
+    const graph: unknown[] = [
       {
-        '@context': 'https://schema.org',
-        '@type': 'WebApplication',
-        '@id': `${canonical}#app`,
-        name: toolName,
-        description: toolDescription,
+        '@type': 'WebPage',
+        '@id': `${canonical}#webpage`,
         url: canonical,
-        applicationCategory: getGoogleApplicationCategory(tool?.category),
-        operatingSystem: 'Any',
-        browserRequirements: 'Requires JavaScript. Runs locally in web browser.',
-        image: OG_IMAGE_URL,
-        offers: {
-          '@type': 'Offer',
-          price: 0,
-          priceCurrency: 'USD',
+        name: page.title,
+        description: toolDescription,
+        inLanguage: 'en',
+        isPartOf: {
+          '@id': absoluteUrl('/#website'),
         },
-        author: {
-          '@type': 'Person',
-          name: 'Ali Hassan',
-          url: absoluteUrl('/about/'),
-        },
-        publisher: {
-          '@type': 'Organization',
-          '@id': absoluteUrl('/#organization'),
-          name: 'LoveEasyTool',
-          url: absoluteUrl('/'),
-          logo: {
-            '@type': 'ImageObject',
-            url: absoluteUrl('/logo.png'),
-            width: 512,
-            height: 512,
-          },
+        about: {
+          '@type': 'Thing',
+          name: toolName,
+          description: toolDescription,
         },
       },
       {
-        '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
+        '@id': `${canonical}#breadcrumb`,
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
           { '@type': 'ListItem', position: 2, name: tool?.category ? `${tool.category} Tools` : 'Tools', item: absoluteUrl(`/category/${tool?.category.toLowerCase() ?? 'tools'}/`) },
           { '@type': 'ListItem', position: 3, name: toolName, item: canonical },
         ],
       },
-      {
-        '@context': 'https://schema.org',
+    ];
+
+    if (seo.faq && seo.faq.length > 0) {
+      graph.push({
         '@type': 'FAQPage',
+        '@id': `${canonical}#faq`,
         mainEntity: seo.faq.map(([question, answer]) => ({
           '@type': 'Question',
           name: question,
           acceptedAnswer: { '@type': 'Answer', text: answer },
         })),
-      },
-      organizationSchema,
-    ];
+      });
+    }
+
+    graph.push(organizationEntity);
+    return {
+      '@context': 'https://schema.org',
+      '@graph': graph,
+    };
   }
 
   // Country-specific VAT calculator pages
   const countryVatSlug = cleanPath.replace(/^\/|\/$/g, '');
   if (COUNTRY_VAT_PAGES[countryVatSlug]) {
     const cData = COUNTRY_VAT_PAGES[countryVatSlug];
-    return [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'WebApplication',
-        '@id': `${canonical}#app`,
-        name: cData.h1,
-        description: cData.metaDescription,
-        url: canonical,
-        applicationCategory: 'UtilitiesApplication',
-        operatingSystem: 'Any',
-        browserRequirements: 'Requires JavaScript. Runs locally in web browser.',
-        image: OG_IMAGE_URL,
-        offers: {
-          '@type': 'Offer',
-          price: 0,
-          priceCurrency: cData.currencyCode,
-        },
-        author: {
-          '@type': 'Person',
-          name: 'Ali Hassan',
-          url: absoluteUrl('/about/'),
-        },
-        publisher: {
-          '@type': 'Organization',
-          '@id': absoluteUrl('/#organization'),
-          name: 'LoveEasyTool',
-          url: absoluteUrl('/'),
-          logo: {
-            '@type': 'ImageObject',
-            url: absoluteUrl('/logo.png'),
-            width: 512,
-            height: 512,
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': `${canonical}#webpage`,
+          url: canonical,
+          name: cData.metaTitle,
+          description: cData.metaDescription,
+          inLanguage: 'en',
+          isPartOf: {
+            '@id': absoluteUrl('/#website'),
+          },
+          about: {
+            '@type': 'Thing',
+            name: cData.h1,
+            description: cData.metaDescription,
           },
         },
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
-          { '@type': 'ListItem', position: 2, name: 'VAT Calculator', item: absoluteUrl('/tools/vat-calculator/') },
-          { '@type': 'ListItem', position: 3, name: cData.h1, item: canonical },
-        ],
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: cData.faqs.map(faq => ({
-          '@type': 'Question',
-          name: faq.question,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: faq.answer,
-          },
-        })),
-      },
-      organizationSchema,
-    ];
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${canonical}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+            { '@type': 'ListItem', position: 2, name: 'Number Tools', item: absoluteUrl('/category/numbers/') },
+            { '@type': 'ListItem', position: 3, name: 'VAT Calculator', item: absoluteUrl('/tools/vat-calculator/') },
+            { '@type': 'ListItem', position: 4, name: cData.h1, item: canonical },
+          ],
+        },
+        {
+          '@type': 'FAQPage',
+          '@id': `${canonical}#faq`,
+          mainEntity: cData.faqs.map(faq => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer,
+            },
+          })),
+        },
+        organizationEntity,
+      ],
+    };
   }
 
   // Dedicated Salary Calculator landing pages
   const salarySlug = cleanPath.replace(/^\/|\/$/g, '');
   if (SALARY_LANDING_PAGES[salarySlug]) {
     const sData = SALARY_LANDING_PAGES[salarySlug];
-    return [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'WebApplication',
-        '@id': `${canonical}#app`,
-        name: sData.h1,
-        description: sData.metaDescription,
-        url: canonical,
-        applicationCategory: 'BusinessApplication',
-        operatingSystem: 'Any',
-        browserRequirements: 'Requires JavaScript. Runs locally in web browser.',
-        image: OG_IMAGE_URL,
-        offers: {
-          '@type': 'Offer',
-          price: 0,
-          priceCurrency: 'USD',
-        },
-        author: {
-          '@type': 'Person',
-          name: 'Ali Hassan',
-          url: absoluteUrl('/about/'),
-        },
-        publisher: {
-          '@type': 'Organization',
-          '@id': absoluteUrl('/#organization'),
-          name: 'LoveEasyTool',
-          url: absoluteUrl('/'),
-          logo: {
-            '@type': 'ImageObject',
-            url: absoluteUrl('/logo.png'),
-            width: 512,
-            height: 512,
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': `${canonical}#webpage`,
+          url: canonical,
+          name: sData.metaTitle,
+          description: sData.metaDescription,
+          inLanguage: 'en',
+          isPartOf: {
+            '@id': absoluteUrl('/#website'),
+          },
+          about: {
+            '@type': 'Thing',
+            name: sData.h1,
+            description: sData.metaDescription,
           },
         },
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
-          { '@type': 'ListItem', position: 2, name: 'Salary Calculator', item: absoluteUrl('/tools/salary-calculator/') },
-          { '@type': 'ListItem', position: 3, name: sData.h1, item: canonical },
-        ],
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: sData.faqs.map(faq => ({
-          '@type': 'Question',
-          name: faq.question,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: faq.answer,
-          },
-        })),
-      },
-      organizationSchema,
-    ];
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${canonical}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+            { '@type': 'ListItem', position: 2, name: 'Work Tools', item: absoluteUrl('/category/work/') },
+            { '@type': 'ListItem', position: 3, name: 'Salary Calculator', item: absoluteUrl('/tools/salary-calculator/') },
+            { '@type': 'ListItem', position: 4, name: sData.h1, item: canonical },
+          ],
+        },
+        {
+          '@type': 'FAQPage',
+          '@id': `${canonical}#faq`,
+          mainEntity: sData.faqs.map(faq => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer,
+            },
+          })),
+        },
+        organizationEntity,
+      ],
+    };
   }
 
   // 2. Category pages
@@ -417,217 +356,221 @@ export function getJsonLd(path: string): unknown[] {
     const copy = CATEGORY_COPY[catKey];
     const categoryTools = tools.filter(t => t.category.toLowerCase() === catKey);
 
-    return [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'CollectionPage',
-        '@id': `${canonical}#webpage`,
-        url: canonical,
-        name: page.title,
-        description: page.description,
-        mainEntity: {
-          '@type': 'ItemList',
-          name: copy.name,
-          numberOfItems: categoryTools.length,
-          itemListElement: categoryTools.map((t, idx) => ({
-            '@type': 'ListItem',
-            position: idx + 1,
-            name: t.name,
-            url: absoluteUrl(getToolPath(t.slug)),
-          })),
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'CollectionPage',
+          '@id': `${canonical}#webpage`,
+          url: canonical,
+          name: page.title,
+          description: page.description,
+          inLanguage: 'en',
+          isPartOf: {
+            '@id': absoluteUrl('/#website'),
+          },
+          mainEntity: {
+            '@type': 'ItemList',
+            name: copy.name,
+            numberOfItems: categoryTools.length,
+            itemListElement: categoryTools.map((t, idx) => ({
+              '@type': 'ListItem',
+              position: idx + 1,
+              name: t.name,
+              item: absoluteUrl(getToolPath(t.slug)),
+            })),
+          },
         },
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
-          { '@type': 'ListItem', position: 2, name: copy.name, item: canonical },
-        ],
-      },
-      organizationSchema,
-    ];
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${canonical}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+            { '@type': 'ListItem', position: 2, name: copy.name, item: canonical },
+          ],
+        },
+        organizationEntity,
+      ],
+    };
   }
 
   // 3. About page
   if (cleanPath === '/about') {
-    return [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'AboutPage',
-        '@id': `${canonical}#webpage`,
-        url: canonical,
-        name: ABOUT_SEO.title,
-        description: ABOUT_SEO.description,
-        mainEntity: {
-          '@type': 'Organization',
-          '@id': absoluteUrl('/#organization'),
-          name: 'LoveEasyTool',
-          url: absoluteUrl('/'),
-          founder: {
-            '@type': 'Person',
-            name: 'Ali Hassan',
-            url: canonical,
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'AboutPage',
+          '@id': `${canonical}#webpage`,
+          url: canonical,
+          name: ABOUT_SEO.title,
+          description: ABOUT_SEO.description,
+          inLanguage: 'en',
+          isPartOf: {
+            '@id': absoluteUrl('/#website'),
+          },
+          mainEntity: {
+            '@id': absoluteUrl('/#organization'),
           },
         },
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
-          { '@type': 'ListItem', position: 2, name: 'About Us', item: canonical },
-        ],
-      },
-      organizationSchema,
-    ];
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${canonical}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+            { '@type': 'ListItem', position: 2, name: 'About Us', item: canonical },
+          ],
+        },
+        organizationEntity,
+      ],
+    };
   }
 
   // 4. Contact page
   if (cleanPath === '/contact') {
-    return [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'ContactPage',
-        '@id': `${canonical}#webpage`,
-        url: canonical,
-        name: CONTACT_SEO.title,
-        description: CONTACT_SEO.description,
-        mainEntity: {
-          '@type': 'Organization',
-          '@id': absoluteUrl('/#organization'),
-          name: 'LoveEasyTool',
-          url: absoluteUrl('/'),
-          contactPoint: {
-            '@type': 'ContactPoint',
-            contactType: 'Customer Support & Inquiries',
-            email: 'support@loveeasytool.com',
-            url: canonical,
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'ContactPage',
+          '@id': `${canonical}#webpage`,
+          url: canonical,
+          name: CONTACT_SEO.title,
+          description: CONTACT_SEO.description,
+          inLanguage: 'en',
+          isPartOf: {
+            '@id': absoluteUrl('/#website'),
+          },
+          mainEntity: {
+            '@id': absoluteUrl('/#organization'),
           },
         },
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
-          { '@type': 'ListItem', position: 2, name: 'Contact', item: canonical },
-        ],
-      },
-      organizationSchema,
-    ];
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${canonical}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+            { '@type': 'ListItem', position: 2, name: 'Contact', item: canonical },
+          ],
+        },
+        organizationEntity,
+      ],
+    };
   }
 
-  // 5. Privacy page (WebPage markup per Google guidelines prohibiting Article markup on legal policy pages)
+  // 5. Privacy page
   if (cleanPath === '/privacy') {
-    return [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'WebPage',
-        '@id': `${canonical}#webpage`,
-        name: PRIVACY_SEO.title,
-        description: PRIVACY_SEO.description,
-        url: canonical,
-        inLanguage: 'en',
-        isPartOf: {
-          '@type': 'WebSite',
-          '@id': absoluteUrl('/#website'),
-          name: 'LoveEasyTool',
-          url: absoluteUrl('/'),
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': `${canonical}#webpage`,
+          name: PRIVACY_SEO.title,
+          description: PRIVACY_SEO.description,
+          url: canonical,
+          inLanguage: 'en',
+          isPartOf: {
+            '@id': absoluteUrl('/#website'),
+          },
+          about: {
+            '@id': absoluteUrl('/#organization'),
+          },
         },
-        about: {
-          '@type': 'Organization',
-          '@id': absoluteUrl('/#organization'),
-          name: 'LoveEasyTool',
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${canonical}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+            { '@type': 'ListItem', position: 2, name: 'Privacy Policy', item: canonical },
+          ],
         },
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
-          { '@type': 'ListItem', position: 2, name: 'Privacy Policy', item: canonical },
-        ],
-      },
-      organizationSchema,
-    ];
+        organizationEntity,
+      ],
+    };
   }
 
-  // 6. Terms page (WebPage markup per Google guidelines prohibiting Article markup on terms of service)
+  // 6. Terms page
   if (cleanPath === '/terms') {
-    return [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'WebPage',
-        '@id': `${canonical}#webpage`,
-        name: TERMS_SEO.title,
-        description: TERMS_SEO.description,
-        url: canonical,
-        inLanguage: 'en',
-        isPartOf: {
-          '@type': 'WebSite',
-          '@id': absoluteUrl('/#website'),
-          name: 'LoveEasyTool',
-          url: absoluteUrl('/'),
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': `${canonical}#webpage`,
+          name: TERMS_SEO.title,
+          description: TERMS_SEO.description,
+          url: canonical,
+          inLanguage: 'en',
+          isPartOf: {
+            '@id': absoluteUrl('/#website'),
+          },
+          about: {
+            '@id': absoluteUrl('/#organization'),
+          },
         },
-        about: {
-          '@type': 'Organization',
-          '@id': absoluteUrl('/#organization'),
-          name: 'LoveEasyTool',
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${canonical}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+            { '@type': 'ListItem', position: 2, name: 'Terms of Service', item: canonical },
+          ],
         },
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
-          { '@type': 'ListItem', position: 2, name: 'Terms of Service', item: canonical },
-        ],
-      },
-      organizationSchema,
-    ];
+        organizationEntity,
+      ],
+    };
   }
 
   // 7. Books page
   if (cleanPath === '/books') {
-    return [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'CollectionPage',
-        '@id': `${canonical}#webpage`,
-        url: canonical,
-        name: BOOKS_SEO.title,
-        description: BOOKS_SEO.description,
-        author: {
-          '@type': 'Person',
-          name: 'Ali Hassan',
-          url: absoluteUrl('/about/'),
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'CollectionPage',
+          '@id': `${canonical}#webpage`,
+          url: canonical,
+          name: BOOKS_SEO.title,
+          description: BOOKS_SEO.description,
+          inLanguage: 'en',
+          isPartOf: {
+            '@id': absoluteUrl('/#website'),
+          },
+          author: {
+            '@type': 'Person',
+            name: 'Ali Hassan',
+            url: absoluteUrl('/about/'),
+          },
         },
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
-          { '@type': 'ListItem', position: 2, name: 'Books', item: canonical },
-        ],
-      },
-      organizationSchema,
-    ];
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${canonical}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+            { '@type': 'ListItem', position: 2, name: 'Books', item: canonical },
+          ],
+        },
+        organizationEntity,
+      ],
+    };
   }
 
   // Fallback for 404 or other generic pages
-  return [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      '@id': `${canonical}#webpage`,
-      url: canonical,
-      name: page.title,
-      description: page.description,
-    },
-    organizationSchema,
-  ];
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${canonical}#webpage`,
+        url: canonical,
+        name: page.title,
+        description: page.description,
+        inLanguage: 'en',
+      },
+      organizationEntity,
+    ],
+  };
 }
 
 export function renderHead(path: string) {
@@ -636,7 +579,7 @@ export function renderHead(path: string) {
   const robots = page.noindex
     ? 'noindex, follow'
     : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
-  const jsonScripts = getJsonLd(path).map(value => `<script type="application/ld+json">${jsonLd(value)}</script>`).join('\n    ');
+  const jsonScript = `<script type="application/ld+json">${jsonLd(getJsonLd(path))}</script>`;
   const keywordsTag = page.keywords ? `<meta name="keywords" content="${escapeHtml(page.keywords)}" />` : '';
   return [
     `<title>${escapeHtml(page.title)}</title>`,
@@ -665,7 +608,7 @@ export function renderHead(path: string) {
     `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`,
     `<meta name="twitter:image" content="${OG_IMAGE_URL}" />`,
     `<meta name="twitter:image:alt" content="${escapeHtml(OG_IMAGE_ALT)}" />`,
-    jsonScripts,
+    jsonScript,
   ].filter(Boolean).join('\n    ');
 }
 
@@ -720,15 +663,12 @@ export function updateDocumentHead(path: string) {
   }
   link.href = canonical;
 
-  // Sync structured data JSON-LD scripts in DOM
+  // Sync structured data JSON-LD script in DOM
   document.head.querySelectorAll('script[type="application/ld+json"]').forEach(node => node.remove());
-  const schemas = getJsonLd(path);
-  schemas.forEach(schema => {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = jsonLd(schema);
-    document.head.appendChild(script);
-  });
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.text = jsonLd(getJsonLd(path));
+  document.head.appendChild(script);
 }
 
 function escapeHtml(value: string) {
