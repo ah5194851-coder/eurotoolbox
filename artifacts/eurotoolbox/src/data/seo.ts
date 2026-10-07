@@ -1187,9 +1187,11 @@ export const toolSeo: Record<string, ToolSeo> = {
     steps: ['Enter your gross salary amount.', 'Select whether this is annual or monthly pay.', 'Specify your estimated total deduction percentage.', 'Review your net take-home pay breakdown.'],
     features: ['Annual, monthly, and weekly breakdown', 'Customizable deduction percentage', 'Private client-side calculation'],
     faq: [
-      ['Is this salary calculator free?', 'Yes, 100% free with no registration.'],
-      ['Does this calculator fetch local tax brackets automatically?', 'Because tax brackets vary widely by jurisdiction and personal circumstances, you enter your estimated total effective deduction percentage.'],
-      ['Are my salary numbers tracked or saved?', 'No. All calculations are executed locally in your browser memory and never stored.'],
+      ['How do I calculate monthly salary from an annual salary offer?', 'Divide the annual gross salary by 12. For example, an annual salary offer of $36,000 equals $36,000 ÷ 12 = $3,000 gross per month.'],
+      ['How do I calculate net take-home salary from gross salary?', 'Subtract your total deduction percentage from 100%, and multiply by your gross salary: Net Salary = Gross Salary × (1 − Deduction% ÷ 100). For example, with 20% deductions on $3,000 gross: $3,000 × 0.80 = $2,400 net take-home.'],
+      ['How do I convert an hourly wage into an annual salary?', 'Multiply your hourly rate by the hours worked per week, then multiply by weeks worked per year. For standard full-time hours (40 hours/week, 52 weeks): Hourly Rate × 2,080. For example, $15/hour × 40 × 52 = $31,200 annual gross.'],
+      ['Can I test multiple deduction rates like pension and income tax together?', 'Yes. You can enter your primary income tax percentage and enable the secondary deduction field to factor in employee pension, national insurance, or healthcare contributions. The calculator sums them up to your total effective deduction.'],
+      ['Are my salary numbers tracked or saved?', 'No. All calculations are executed 100% locally in your browser memory and never uploaded or stored anywhere.'],
     ],
   },
 };

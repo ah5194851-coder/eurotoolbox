@@ -2,6 +2,7 @@ import { SITE_URL, OG_IMAGE_URL, OG_IMAGE_WIDTH, OG_IMAGE_HEIGHT, OG_IMAGE_ALT }
 import { tools } from './App';
 import { toolSeo } from './data/seo';
 import { COUNTRY_VAT_PAGES } from './data/country-vat';
+import { SALARY_LANDING_PAGES } from './data/salary-landing-data';
 
 export type PageSeo = {
   title: string;
@@ -112,6 +113,17 @@ export function getPageSeo(path: string): PageSeo {
       canonicalPath: cData.canonicalPath,
       type: 'website',
       keywords: `${cData.countryName.toLowerCase()} vat calculator, ${cData.taxAbbr.toLowerCase()}, calculate vat, online vat tool, LoveEasyTool`,
+    };
+  }
+  const salarySlug = cleanPath.replace(/^\/|\/$/g, '');
+  if (SALARY_LANDING_PAGES[salarySlug]) {
+    const sData = SALARY_LANDING_PAGES[salarySlug];
+    return {
+      title: sData.metaTitle,
+      description: sData.metaDescription,
+      canonicalPath: sData.canonicalPath,
+      type: 'website',
+      keywords: `${sData.h1.toLowerCase()}, salary calculator, gross to net, take home pay, wage converter, LoveEasyTool`,
     };
   }
   const category = cleanPath.match(/^\/category\/([^/]+)\/?$/)?.[1];
@@ -322,6 +334,70 @@ export function getJsonLd(path: string): unknown[] {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
         mainEntity: cData.faqs.map(faq => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      },
+      organizationSchema,
+    ];
+  }
+
+  // Dedicated Salary Calculator landing pages
+  const salarySlug = cleanPath.replace(/^\/|\/$/g, '');
+  if (SALARY_LANDING_PAGES[salarySlug]) {
+    const sData = SALARY_LANDING_PAGES[salarySlug];
+    return [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        '@id': `${canonical}#app`,
+        name: sData.h1,
+        description: sData.metaDescription,
+        url: canonical,
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Any',
+        browserRequirements: 'Requires JavaScript. Runs locally in web browser.',
+        image: OG_IMAGE_URL,
+        offers: {
+          '@type': 'Offer',
+          price: 0,
+          priceCurrency: 'USD',
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Ali Hassan',
+          url: absoluteUrl('/about/'),
+        },
+        publisher: {
+          '@type': 'Organization',
+          '@id': absoluteUrl('/#organization'),
+          name: 'LoveEasyTool',
+          url: absoluteUrl('/'),
+          logo: {
+            '@type': 'ImageObject',
+            url: absoluteUrl('/logo.png'),
+            width: 512,
+            height: 512,
+          },
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+          { '@type': 'ListItem', position: 2, name: 'Salary Calculator', item: absoluteUrl('/tools/salary-calculator/') },
+          { '@type': 'ListItem', position: 3, name: sData.h1, item: canonical },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: sData.faqs.map(faq => ({
           '@type': 'Question',
           name: faq.question,
           acceptedAnswer: {

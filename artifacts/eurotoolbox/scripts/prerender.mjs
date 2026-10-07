@@ -78,6 +78,7 @@ ${tools.map(tool => `- [${tool.name}](${SITE_URL}/tools/${tool.slug}/): ${tool.d
 - [Everyday Tools](${SITE_URL}/category/everyday/): Unit converter, time-zone converter, currency reference converter
 - [Work Tools](${SITE_URL}/category/work/): Free CV builder, cover-letter generator, salary calculator
 - [International VAT Portals](${SITE_URL}/tools/vat-calculator/): Dedicated country calculators for UK (${SITE_URL}/uk-vat-calculator/), Germany (${SITE_URL}/germany-vat-calculator/), France (${SITE_URL}/france-vat-calculator/), Ireland (${SITE_URL}/ireland-vat-calculator/), UAE (${SITE_URL}/uae-vat-calculator/), and Saudi Arabia (${SITE_URL}/saudi-arabia-vat-calculator/)
+- [Salary & Payroll Portals](${SITE_URL}/tools/salary-calculator/): Dedicated calculators for Monthly Salary (${SITE_URL}/monthly-salary-calculator/), Hourly to Salary (${SITE_URL}/hourly-to-salary-calculator/), Annual to Monthly (${SITE_URL}/annual-to-monthly-salary-calculator/), Basic Salary (${SITE_URL}/basic-salary-calculator/), and Net Take-Home Pay (${SITE_URL}/net-salary-calculator/)
 - [Author & Books](${SITE_URL}/books/): Practical guides by Ali Hassan on AI, cybersecurity, remote work, and freelancing
 - [About Us & Privacy](${SITE_URL}/about/): Zero-upload client-side architecture and platform mission (${SITE_URL}/privacy/)
 

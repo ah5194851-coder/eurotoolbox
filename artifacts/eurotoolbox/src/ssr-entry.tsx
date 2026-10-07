@@ -13,6 +13,7 @@ import ContactPage from './contact-page';
 import TermsPage from './terms-page';
 import { ToolPage } from './tool-page';
 import CountryVatPage from './country-vat-page';
+import SalaryLandingPage from './salary-landing-page';
 import { categorySlugs, renderHead, absoluteUrl } from './seo';
 import { SITE_URL } from './site-config';
 import { tools } from './App';
@@ -28,6 +29,14 @@ export const COUNTRY_VAT_ROUTES = [
   '/saudi-arabia-vat-calculator/',
 ];
 
+export const SALARY_LANDING_ROUTES = [
+  '/monthly-salary-calculator/',
+  '/hourly-to-salary-calculator/',
+  '/annual-to-monthly-salary-calculator/',
+  '/basic-salary-calculator/',
+  '/net-salary-calculator/',
+];
+
 export const PRERENDER_ROUTES = [
   '/',
   '/about/',
@@ -38,6 +47,7 @@ export const PRERENDER_ROUTES = [
   ...categorySlugs.map(slug => `/category/${slug}/`),
   ...tools.map(tool => `/tools/${tool.slug}/`),
   ...COUNTRY_VAT_ROUTES,
+  ...SALARY_LANDING_ROUTES,
 ];
 export const SITEMAP_ROUTES = [
   '/',
@@ -49,6 +59,7 @@ export const SITEMAP_ROUTES = [
   ...categorySlugs.map(slug => `/category/${slug}/`),
   ...tools.map(tool => `/tools/${tool.slug}/`),
   ...COUNTRY_VAT_ROUTES,
+  ...SALARY_LANDING_ROUTES,
 ];
 
 export function renderRoute(path: string) {
@@ -81,6 +92,16 @@ export function renderRoute(path: string) {
             <Route path="/uae-vat-calculator/" component={() => <CountryVatPage countrySlug="uae-vat-calculator" />} />
             <Route path="/saudi-arabia-vat-calculator" component={() => <CountryVatPage countrySlug="saudi-arabia-vat-calculator" />} />
             <Route path="/saudi-arabia-vat-calculator/" component={() => <CountryVatPage countrySlug="saudi-arabia-vat-calculator" />} />
+            <Route path="/monthly-salary-calculator" component={() => <SalaryLandingPage slug="monthly-salary-calculator" />} />
+            <Route path="/monthly-salary-calculator/" component={() => <SalaryLandingPage slug="monthly-salary-calculator" />} />
+            <Route path="/hourly-to-salary-calculator" component={() => <SalaryLandingPage slug="hourly-to-salary-calculator" />} />
+            <Route path="/hourly-to-salary-calculator/" component={() => <SalaryLandingPage slug="hourly-to-salary-calculator" />} />
+            <Route path="/annual-to-monthly-salary-calculator" component={() => <SalaryLandingPage slug="annual-to-monthly-salary-calculator" />} />
+            <Route path="/annual-to-monthly-salary-calculator/" component={() => <SalaryLandingPage slug="annual-to-monthly-salary-calculator" />} />
+            <Route path="/basic-salary-calculator" component={() => <SalaryLandingPage slug="basic-salary-calculator" />} />
+            <Route path="/basic-salary-calculator/" component={() => <SalaryLandingPage slug="basic-salary-calculator" />} />
+            <Route path="/net-salary-calculator" component={() => <SalaryLandingPage slug="net-salary-calculator" />} />
+            <Route path="/net-salary-calculator/" component={() => <SalaryLandingPage slug="net-salary-calculator" />} />
             <Route path="/category/:category" component={CategoryPage} />
             <Route path="/category/:category/" component={CategoryPage} />
             <Route path="/tools/:tool" component={ToolPage} />

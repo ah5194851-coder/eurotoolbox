@@ -48,6 +48,7 @@ LoveEasyTool (https://loveeasytool.com) is an open web utility platform created 
 - [Everyday Tools](https://loveeasytool.com/category/everyday/): Unit converter, time-zone converter, currency reference converter
 - [Work Tools](https://loveeasytool.com/category/work/): Free CV builder, cover-letter generator, salary calculator
 - [International VAT Portals](https://loveeasytool.com/tools/vat-calculator/): Dedicated country calculators for UK (https://loveeasytool.com/uk-vat-calculator/), Germany (https://loveeasytool.com/germany-vat-calculator/), France (https://loveeasytool.com/france-vat-calculator/), Ireland (https://loveeasytool.com/ireland-vat-calculator/), UAE (https://loveeasytool.com/uae-vat-calculator/), and Saudi Arabia (https://loveeasytool.com/saudi-arabia-vat-calculator/)
+- [Salary & Payroll Portals](https://loveeasytool.com/tools/salary-calculator/): Dedicated calculators for Monthly Salary (https://loveeasytool.com/monthly-salary-calculator/), Hourly to Salary (https://loveeasytool.com/hourly-to-salary-calculator/), Annual to Monthly (https://loveeasytool.com/annual-to-monthly-salary-calculator/), Basic Salary (https://loveeasytool.com/basic-salary-calculator/), and Net Take-Home Pay (https://loveeasytool.com/net-salary-calculator/)
 - [Author & Books](https://loveeasytool.com/books/): Practical guides by Ali Hassan on AI, cybersecurity, remote work, and freelancing
 - [About Us & Privacy](https://loveeasytool.com/about/): Zero-upload client-side architecture and platform mission (https://loveeasytool.com/privacy/)
 

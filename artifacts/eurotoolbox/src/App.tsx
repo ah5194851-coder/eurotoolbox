@@ -22,6 +22,7 @@ const LazyAboutPage = lazy(() => import('./about-page'));
 const LazyContactPage = lazy(() => import('./contact-page'));
 const LazyTermsPage = lazy(() => import('./terms-page'));
 const LazyCountryVatPage = lazy(() => import('./country-vat-page'));
+const LazySalaryLandingPage = lazy(() => import('./salary-landing-page'));
 
 export type Tool = { slug: string; name: string; description: string; category: string; icon: ReactNode; color: string };
 export type { ToolSeo };
@@ -267,6 +268,36 @@ export function Shell({ children }: { children: ReactNode }) {
           </div>
         </div>
 
+        {/* Salary Calculators & Take-Home Pay Tools */}
+        <div className="mt-12 border-t border-border pt-10">
+          <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+            <div>
+              <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Career & Payroll Tools</p>
+              <h3 className="font-display text-base font-semibold text-foreground">Salary Calculators & Take-Home Tools</h3>
+            </div>
+            <Link href="/tools/salary-calculator/" className="text-xs font-semibold text-primary hover:underline">
+              Universal salary calculator →
+            </Link>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2 text-xs">
+            <Link href="/monthly-salary-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+              <span className="font-semibold text-foreground">Monthly Salary</span> <span className="text-muted-foreground font-mono-ui">(Gross to Net)</span>
+            </Link>
+            <Link href="/hourly-to-salary-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+              <span className="font-semibold text-foreground">Hourly to Salary</span> <span className="text-muted-foreground font-mono-ui">(Converter)</span>
+            </Link>
+            <Link href="/annual-to-monthly-salary-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+              <span className="font-semibold text-foreground">Annual to Monthly</span> <span className="text-muted-foreground font-mono-ui">(Pay Breakdown)</span>
+            </Link>
+            <Link href="/basic-salary-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+              <span className="font-semibold text-foreground">Basic Salary</span> <span className="text-muted-foreground font-mono-ui">(Allowances & Net)</span>
+            </Link>
+            <Link href="/net-salary-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+              <span className="font-semibold text-foreground">Net Salary</span> <span className="text-muted-foreground font-mono-ui">(Take-Home Pay)</span>
+            </Link>
+          </div>
+        </div>
+
         {/* Complete Tools Directory for Deep Internal Linking */}
         <div className="mt-12 border-t border-border pt-10">
           <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
@@ -308,7 +339,7 @@ function RouteLoading() {
 }
 
 function Router() {
-  return <ErrorBoundary><Suspense fallback={<RouteLoading />}><Switch><Route path="/" component={LazyHomePage} /><Route path="/about" component={LazyAboutPage} /><Route path="/about/" component={LazyAboutPage} /><Route path="/contact" component={LazyContactPage} /><Route path="/contact/" component={LazyContactPage} /><Route path="/terms" component={LazyTermsPage} /><Route path="/terms/" component={LazyTermsPage} /><Route path="/privacy" component={LazyPrivacyPage} /><Route path="/privacy/" component={LazyPrivacyPage} /><Route path="/books" component={LazyBooksPage} /><Route path="/books/" component={LazyBooksPage} /><Route path="/uk-vat-calculator" component={() => <LazyCountryVatPage countrySlug="uk-vat-calculator" />} /><Route path="/uk-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="uk-vat-calculator" />} /><Route path="/germany-vat-calculator" component={() => <LazyCountryVatPage countrySlug="germany-vat-calculator" />} /><Route path="/germany-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="germany-vat-calculator" />} /><Route path="/france-vat-calculator" component={() => <LazyCountryVatPage countrySlug="france-vat-calculator" />} /><Route path="/france-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="france-vat-calculator" />} /><Route path="/ireland-vat-calculator" component={() => <LazyCountryVatPage countrySlug="ireland-vat-calculator" />} /><Route path="/ireland-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="ireland-vat-calculator" />} /><Route path="/uae-vat-calculator" component={() => <LazyCountryVatPage countrySlug="uae-vat-calculator" />} /><Route path="/uae-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="uae-vat-calculator" />} /><Route path="/saudi-arabia-vat-calculator" component={() => <LazyCountryVatPage countrySlug="saudi-arabia-vat-calculator" />} /><Route path="/saudi-arabia-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="saudi-arabia-vat-calculator" />} /><Route path="/category/:category" component={LazyCategoryPage} /><Route path="/category/:category/" component={LazyCategoryPage} /><Route path="/tools/:tool" component={LazyToolPage} /><Route path="/tools/:tool/" component={LazyToolPage} /><Route path="/:tool" component={LazyToolPage} /><Route path="/:tool/" component={LazyToolPage} /><Route component={NotFound} /></Switch></Suspense></ErrorBoundary>;
+  return <ErrorBoundary><Suspense fallback={<RouteLoading />}><Switch><Route path="/" component={LazyHomePage} /><Route path="/about" component={LazyAboutPage} /><Route path="/about/" component={LazyAboutPage} /><Route path="/contact" component={LazyContactPage} /><Route path="/contact/" component={LazyContactPage} /><Route path="/terms" component={LazyTermsPage} /><Route path="/terms/" component={LazyTermsPage} /><Route path="/privacy" component={LazyPrivacyPage} /><Route path="/privacy/" component={LazyPrivacyPage} /><Route path="/books" component={LazyBooksPage} /><Route path="/books/" component={LazyBooksPage} /><Route path="/uk-vat-calculator" component={() => <LazyCountryVatPage countrySlug="uk-vat-calculator" />} /><Route path="/uk-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="uk-vat-calculator" />} /><Route path="/germany-vat-calculator" component={() => <LazyCountryVatPage countrySlug="germany-vat-calculator" />} /><Route path="/germany-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="germany-vat-calculator" />} /><Route path="/france-vat-calculator" component={() => <LazyCountryVatPage countrySlug="france-vat-calculator" />} /><Route path="/france-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="france-vat-calculator" />} /><Route path="/ireland-vat-calculator" component={() => <LazyCountryVatPage countrySlug="ireland-vat-calculator" />} /><Route path="/ireland-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="ireland-vat-calculator" />} /><Route path="/uae-vat-calculator" component={() => <LazyCountryVatPage countrySlug="uae-vat-calculator" />} /><Route path="/uae-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="uae-vat-calculator" />} /><Route path="/saudi-arabia-vat-calculator" component={() => <LazyCountryVatPage countrySlug="saudi-arabia-vat-calculator" />} /><Route path="/saudi-arabia-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="saudi-arabia-vat-calculator" />} /><Route path="/monthly-salary-calculator" component={() => <LazySalaryLandingPage slug="monthly-salary-calculator" />} /><Route path="/monthly-salary-calculator/" component={() => <LazySalaryLandingPage slug="monthly-salary-calculator" />} /><Route path="/hourly-to-salary-calculator" component={() => <LazySalaryLandingPage slug="hourly-to-salary-calculator" />} /><Route path="/hourly-to-salary-calculator/" component={() => <LazySalaryLandingPage slug="hourly-to-salary-calculator" />} /><Route path="/annual-to-monthly-salary-calculator" component={() => <LazySalaryLandingPage slug="annual-to-monthly-salary-calculator" />} /><Route path="/annual-to-monthly-salary-calculator/" component={() => <LazySalaryLandingPage slug="annual-to-monthly-salary-calculator" />} /><Route path="/basic-salary-calculator" component={() => <LazySalaryLandingPage slug="basic-salary-calculator" />} /><Route path="/basic-salary-calculator/" component={() => <LazySalaryLandingPage slug="basic-salary-calculator" />} /><Route path="/net-salary-calculator" component={() => <LazySalaryLandingPage slug="net-salary-calculator" />} /><Route path="/net-salary-calculator/" component={() => <LazySalaryLandingPage slug="net-salary-calculator" />} /><Route path="/category/:category" component={LazyCategoryPage} /><Route path="/category/:category/" component={LazyCategoryPage} /><Route path="/tools/:tool" component={LazyToolPage} /><Route path="/tools/:tool/" component={LazyToolPage} /><Route path="/:tool" component={LazyToolPage} /><Route path="/:tool/" component={LazyToolPage} /><Route component={NotFound} /></Switch></Suspense></ErrorBoundary>;
 }
 
 function App() {
