@@ -47,6 +47,7 @@ LoveEasyTool (https://loveeasytool.com) is an open web utility platform created 
 - [Time Tools](https://loveeasytool.com/category/time/): Date calculator
 - [Everyday Tools](https://loveeasytool.com/category/everyday/): Unit converter, time-zone converter, currency reference converter
 - [Work Tools](https://loveeasytool.com/category/work/): Free CV builder, cover-letter generator, salary calculator
+- [International VAT Portals](https://loveeasytool.com/tools/vat-calculator/): Dedicated country calculators for UK (https://loveeasytool.com/uk-vat-calculator/), Germany (https://loveeasytool.com/germany-vat-calculator/), France (https://loveeasytool.com/france-vat-calculator/), Ireland (https://loveeasytool.com/ireland-vat-calculator/), UAE (https://loveeasytool.com/uae-vat-calculator/), and Saudi Arabia (https://loveeasytool.com/saudi-arabia-vat-calculator/)
 - [Author & Books](https://loveeasytool.com/books/): Practical guides by Ali Hassan on AI, cybersecurity, remote work, and freelancing
 - [About Us & Privacy](https://loveeasytool.com/about/): Zero-upload client-side architecture and platform mission (https://loveeasytool.com/privacy/)
 

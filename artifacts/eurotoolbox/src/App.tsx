@@ -21,6 +21,7 @@ const LazyBooksPage = lazy(() => import('./books-page'));
 const LazyAboutPage = lazy(() => import('./about-page'));
 const LazyContactPage = lazy(() => import('./contact-page'));
 const LazyTermsPage = lazy(() => import('./terms-page'));
+const LazyCountryVatPage = lazy(() => import('./country-vat-page'));
 
 export type Tool = { slug: string; name: string; description: string; category: string; icon: ReactNode; color: string };
 export type { ToolSeo };
@@ -233,6 +234,39 @@ export function Shell({ children }: { children: ReactNode }) {
           </div>
         </div>
 
+        {/* VAT Calculators by Country */}
+        <div className="mt-12 border-t border-border pt-10">
+          <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+            <div>
+              <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">International Tax Tools</p>
+              <h3 className="font-display text-base font-semibold text-foreground">VAT Calculators by Country</h3>
+            </div>
+            <Link href="/tools/vat-calculator/" className="text-xs font-semibold text-primary hover:underline">
+              Universal VAT calculator →
+            </Link>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2 text-xs">
+            <Link href="/uk-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+              <span className="font-semibold text-foreground">UK VAT</span> <span className="text-muted-foreground font-mono-ui">(20%)</span>
+            </Link>
+            <Link href="/germany-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+              <span className="font-semibold text-foreground">Germany MwSt</span> <span className="text-muted-foreground font-mono-ui">(19%)</span>
+            </Link>
+            <Link href="/france-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+              <span className="font-semibold text-foreground">France TVA</span> <span className="text-muted-foreground font-mono-ui">(20%)</span>
+            </Link>
+            <Link href="/ireland-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+              <span className="font-semibold text-foreground">Ireland VAT</span> <span className="text-muted-foreground font-mono-ui">(23%)</span>
+            </Link>
+            <Link href="/uae-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+              <span className="font-semibold text-foreground">UAE VAT</span> <span className="text-muted-foreground font-mono-ui">(5%)</span>
+            </Link>
+            <Link href="/saudi-arabia-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+              <span className="font-semibold text-foreground">Saudi Arabia VAT</span> <span className="text-muted-foreground font-mono-ui">(15%)</span>
+            </Link>
+          </div>
+        </div>
+
         {/* Complete Tools Directory for Deep Internal Linking */}
         <div className="mt-12 border-t border-border pt-10">
           <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
@@ -274,7 +308,7 @@ function RouteLoading() {
 }
 
 function Router() {
-  return <ErrorBoundary><Suspense fallback={<RouteLoading />}><Switch><Route path="/" component={LazyHomePage} /><Route path="/about" component={LazyAboutPage} /><Route path="/about/" component={LazyAboutPage} /><Route path="/contact" component={LazyContactPage} /><Route path="/contact/" component={LazyContactPage} /><Route path="/terms" component={LazyTermsPage} /><Route path="/terms/" component={LazyTermsPage} /><Route path="/privacy" component={LazyPrivacyPage} /><Route path="/privacy/" component={LazyPrivacyPage} /><Route path="/books" component={LazyBooksPage} /><Route path="/books/" component={LazyBooksPage} /><Route path="/category/:category" component={LazyCategoryPage} /><Route path="/category/:category/" component={LazyCategoryPage} /><Route path="/tools/:tool" component={LazyToolPage} /><Route path="/tools/:tool/" component={LazyToolPage} /><Route path="/:tool" component={LazyToolPage} /><Route path="/:tool/" component={LazyToolPage} /><Route component={NotFound} /></Switch></Suspense></ErrorBoundary>;
+  return <ErrorBoundary><Suspense fallback={<RouteLoading />}><Switch><Route path="/" component={LazyHomePage} /><Route path="/about" component={LazyAboutPage} /><Route path="/about/" component={LazyAboutPage} /><Route path="/contact" component={LazyContactPage} /><Route path="/contact/" component={LazyContactPage} /><Route path="/terms" component={LazyTermsPage} /><Route path="/terms/" component={LazyTermsPage} /><Route path="/privacy" component={LazyPrivacyPage} /><Route path="/privacy/" component={LazyPrivacyPage} /><Route path="/books" component={LazyBooksPage} /><Route path="/books/" component={LazyBooksPage} /><Route path="/uk-vat-calculator" component={() => <LazyCountryVatPage countrySlug="uk-vat-calculator" />} /><Route path="/uk-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="uk-vat-calculator" />} /><Route path="/germany-vat-calculator" component={() => <LazyCountryVatPage countrySlug="germany-vat-calculator" />} /><Route path="/germany-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="germany-vat-calculator" />} /><Route path="/france-vat-calculator" component={() => <LazyCountryVatPage countrySlug="france-vat-calculator" />} /><Route path="/france-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="france-vat-calculator" />} /><Route path="/ireland-vat-calculator" component={() => <LazyCountryVatPage countrySlug="ireland-vat-calculator" />} /><Route path="/ireland-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="ireland-vat-calculator" />} /><Route path="/uae-vat-calculator" component={() => <LazyCountryVatPage countrySlug="uae-vat-calculator" />} /><Route path="/uae-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="uae-vat-calculator" />} /><Route path="/saudi-arabia-vat-calculator" component={() => <LazyCountryVatPage countrySlug="saudi-arabia-vat-calculator" />} /><Route path="/saudi-arabia-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="saudi-arabia-vat-calculator" />} /><Route path="/category/:category" component={LazyCategoryPage} /><Route path="/category/:category/" component={LazyCategoryPage} /><Route path="/tools/:tool" component={LazyToolPage} /><Route path="/tools/:tool/" component={LazyToolPage} /><Route path="/:tool" component={LazyToolPage} /><Route path="/:tool/" component={LazyToolPage} /><Route component={NotFound} /></Switch></Suspense></ErrorBoundary>;
 }
 
 function App() {

@@ -77,6 +77,7 @@ ${tools.map(tool => `- [${tool.name}](${SITE_URL}/tools/${tool.slug}/): ${tool.d
 - [Time Tools](${SITE_URL}/category/time/): Date calculator
 - [Everyday Tools](${SITE_URL}/category/everyday/): Unit converter, time-zone converter, currency reference converter
 - [Work Tools](${SITE_URL}/category/work/): Free CV builder, cover-letter generator, salary calculator
+- [International VAT Portals](${SITE_URL}/tools/vat-calculator/): Dedicated country calculators for UK (${SITE_URL}/uk-vat-calculator/), Germany (${SITE_URL}/germany-vat-calculator/), France (${SITE_URL}/france-vat-calculator/), Ireland (${SITE_URL}/ireland-vat-calculator/), UAE (${SITE_URL}/uae-vat-calculator/), and Saudi Arabia (${SITE_URL}/saudi-arabia-vat-calculator/)
 - [Author & Books](${SITE_URL}/books/): Practical guides by Ali Hassan on AI, cybersecurity, remote work, and freelancing
 - [About Us & Privacy](${SITE_URL}/about/): Zero-upload client-side architecture and platform mission (${SITE_URL}/privacy/)
 

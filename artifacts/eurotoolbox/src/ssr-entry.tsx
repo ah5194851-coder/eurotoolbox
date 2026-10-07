@@ -12,11 +12,21 @@ import AboutPage from './about-page';
 import ContactPage from './contact-page';
 import TermsPage from './terms-page';
 import { ToolPage } from './tool-page';
+import CountryVatPage from './country-vat-page';
 import { categorySlugs, renderHead, absoluteUrl } from './seo';
 import { SITE_URL } from './site-config';
 import { tools } from './App';
 
 export { renderHead, absoluteUrl, SITE_URL, tools };
+
+export const COUNTRY_VAT_ROUTES = [
+  '/uk-vat-calculator/',
+  '/germany-vat-calculator/',
+  '/france-vat-calculator/',
+  '/ireland-vat-calculator/',
+  '/uae-vat-calculator/',
+  '/saudi-arabia-vat-calculator/',
+];
 
 export const PRERENDER_ROUTES = [
   '/',
@@ -27,6 +37,7 @@ export const PRERENDER_ROUTES = [
   '/books/',
   ...categorySlugs.map(slug => `/category/${slug}/`),
   ...tools.map(tool => `/tools/${tool.slug}/`),
+  ...COUNTRY_VAT_ROUTES,
 ];
 export const SITEMAP_ROUTES = [
   '/',
@@ -37,6 +48,7 @@ export const SITEMAP_ROUTES = [
   '/books/',
   ...categorySlugs.map(slug => `/category/${slug}/`),
   ...tools.map(tool => `/tools/${tool.slug}/`),
+  ...COUNTRY_VAT_ROUTES,
 ];
 
 export function renderRoute(path: string) {
@@ -57,6 +69,18 @@ export function renderRoute(path: string) {
             <Route path="/privacy/" component={PrivacyPage} />
             <Route path="/books" component={BooksPage} />
             <Route path="/books/" component={BooksPage} />
+            <Route path="/uk-vat-calculator" component={() => <CountryVatPage countrySlug="uk-vat-calculator" />} />
+            <Route path="/uk-vat-calculator/" component={() => <CountryVatPage countrySlug="uk-vat-calculator" />} />
+            <Route path="/germany-vat-calculator" component={() => <CountryVatPage countrySlug="germany-vat-calculator" />} />
+            <Route path="/germany-vat-calculator/" component={() => <CountryVatPage countrySlug="germany-vat-calculator" />} />
+            <Route path="/france-vat-calculator" component={() => <CountryVatPage countrySlug="france-vat-calculator" />} />
+            <Route path="/france-vat-calculator/" component={() => <CountryVatPage countrySlug="france-vat-calculator" />} />
+            <Route path="/ireland-vat-calculator" component={() => <CountryVatPage countrySlug="ireland-vat-calculator" />} />
+            <Route path="/ireland-vat-calculator/" component={() => <CountryVatPage countrySlug="ireland-vat-calculator" />} />
+            <Route path="/uae-vat-calculator" component={() => <CountryVatPage countrySlug="uae-vat-calculator" />} />
+            <Route path="/uae-vat-calculator/" component={() => <CountryVatPage countrySlug="uae-vat-calculator" />} />
+            <Route path="/saudi-arabia-vat-calculator" component={() => <CountryVatPage countrySlug="saudi-arabia-vat-calculator" />} />
+            <Route path="/saudi-arabia-vat-calculator/" component={() => <CountryVatPage countrySlug="saudi-arabia-vat-calculator" />} />
             <Route path="/category/:category" component={CategoryPage} />
             <Route path="/category/:category/" component={CategoryPage} />
             <Route path="/tools/:tool" component={ToolPage} />
