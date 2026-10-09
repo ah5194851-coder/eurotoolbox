@@ -558,10 +558,29 @@ export function SalaryCalculator({
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-primary hover:underline"
             >
-              Verify on official government site <ExternalLink size={11} />
+              {countryConfig.sourceAuthority} <ExternalLink size={11} />
             </a>
           )}
         </div>
+      </div>
+
+      {/* Visible Note Under Result */}
+      <div className="rounded-xl border border-primary/25 bg-primary/[.04] p-4 text-xs text-foreground">
+        <p className="flex flex-wrap items-center gap-1.5 leading-relaxed">
+          <span>Rates for tax year <strong>{countryConfig.taxYear}</strong>. Estimates only. </span>
+          {countryConfig.officialSourceUrl && country !== 'CUSTOM' ? (
+            <a
+              href={countryConfig.officialSourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-primary underline hover:text-primary/80 inline-flex items-center gap-1"
+            >
+              Check the official government site for your exact figures <ExternalLink size={12} />
+            </a>
+          ) : (
+            <span>Check the official government site for your exact figures.</span>
+          )}
+        </p>
       </div>
 
       {/* Mandatory Disclaimer */}
