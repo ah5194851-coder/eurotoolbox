@@ -211,6 +211,21 @@ export function CountryVatLinksList() {
           </Link>
         ))}
       </div>
+
+      <div className="mt-6 pt-5 border-t border-border/60 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+        <span className="font-semibold text-foreground">Related Compensation & Tax Tools:</span>
+        <Link href="/tools/salary-calculator/" className="hover:text-primary hover:underline font-medium">
+          Salary Calculator (Gross to Net Pay)
+        </Link>
+        <span>·</span>
+        <Link href="/tools/percentage-calculator/" className="hover:text-primary hover:underline">
+          Percentage Calculator
+        </Link>
+        <span>·</span>
+        <Link href="/tools/loan-calculator/" className="hover:text-primary hover:underline">
+          Loan Calculator
+        </Link>
+      </div>
     </div>
   );
 }

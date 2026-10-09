@@ -134,7 +134,7 @@ export function getPageSeo(path: string): PageSeo {
       ...toolSeo[slug],
       canonicalPath: getToolPath(slug),
       type: 'website',
-      keywords: `${toolSeo[slug].title.split(':')[0].toLowerCase()}, free online tool, private tool, browser processing, LoveEasyTool`,
+      keywords: slug === 'salary-calculator' ? undefined : `${toolSeo[slug].title.split(':')[0].toLowerCase()}, free online tool, private tool, browser processing, LoveEasyTool`,
     };
   }
   return notFoundSeo(cleanPath);
@@ -219,6 +219,32 @@ export function getJsonLd(path: string): Record<string, unknown> {
         ],
       },
     ];
+
+    if (slug === 'salary-calculator') {
+      graph.push({
+        '@type': 'WebApplication',
+        '@id': `${canonical}#software`,
+        name: 'Salary Calculator – Gross to Net Pay',
+        url: canonical,
+        applicationCategory: 'FinanceApplication',
+        operatingSystem: 'All',
+        browserRequirements: 'Requires JavaScript. Requires HTML5.',
+        description: 'Free salary calculator to convert gross to net pay with income tax and social insurance deductions across UK, US, Canada, Australia, Germany, Poland, Pakistan, India, and custom rates.',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+        },
+        featureList: [
+          'Gross to net take-home pay conversion',
+          'Progressive income tax bands for UK, US, Canada, Australia, Germany, Poland, Pakistan, and India',
+          'Employee social security and National Insurance withholdings',
+          'Full breakdown per year, month, week, day, and hour',
+          'Interactive salary allocation visual',
+          '100% private client-side processing',
+        ],
+      });
+    }
 
     if (seo.faq && seo.faq.length > 0) {
       graph.push({
@@ -543,7 +569,8 @@ export function renderHead(path: string) {
     ? 'noindex, follow'
     : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
   const jsonScript = `<script type="application/ld+json">${jsonLd(getJsonLd(path))}</script>`;
-  const keywordsTag = page.keywords ? `<meta name="keywords" content="${escapeHtml(page.keywords)}" />` : '';
+  const isSalaryCalculator = page.canonicalPath === '/tools/salary-calculator/';
+  const keywordsTag = (page.keywords && !isSalaryCalculator) ? `<meta name="keywords" content="${escapeHtml(page.keywords)}" />` : '';
   return [
     `<title>${escapeHtml(page.title)}</title>`,
     `<meta name="description" content="${escapeHtml(page.description)}" />`,
@@ -606,6 +633,12 @@ export function updateDocumentHead(path: string) {
     'meta[name="twitter:image"]': OG_IMAGE_URL,
     'meta[name="twitter:image:alt"]': OG_IMAGE_ALT,
   };
+
+  if (page.canonicalPath === '/tools/salary-calculator/') {
+    delete tags['meta[name="keywords"]'];
+    const kwTag = document.head.querySelector('meta[name="keywords"]');
+    if (kwTag) kwTag.remove();
+  }
   Object.entries(tags).forEach(([selector, content]) => {
     const attribute = selector.includes('property=') ? 'property' : 'name';
     const value = selector.match(/["']([^"']+)["']/)?.[1];

@@ -9,7 +9,7 @@ export default function Home() {
   const [search, setSearch] = useState('');
   const query = search.toLowerCase().trim();
   const filtered = tools.filter(t => {
-    const matchesCategory = active === 'All tools' || t.category === active;
+    const matchesCategory = active === 'All tools' || t.category === active || (active === 'Numbers' && t.slug === 'salary-calculator');
     if (!matchesCategory) return false;
     if (!query) return true;
     if (t.name.toLowerCase().includes(query) || t.description.toLowerCase().includes(query)) return true;
@@ -34,7 +34,7 @@ export default function Home() {
         <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
           {[
             { name: 'Text Tools', slug: 'text', count: '5 tools', desc: 'Words, case, cleaning' },
-            { name: 'Number Tools', slug: 'numbers', count: '6 tools', desc: 'Percentages, VAT, loans' },
+            { name: 'Number Tools', slug: 'numbers', count: '7 tools', desc: 'Percentages, VAT, salary' },
             { name: 'File Utilities', slug: 'files', count: '6 tools', desc: 'Compress, resize, WebP' },
             { name: 'PDF Tools', slug: 'pdf', count: '7 tools', desc: 'Merge, split, extract' },
             { name: 'Time Tools', slug: 'time', count: '1 tool', desc: 'Date math & differences' },
@@ -71,8 +71,8 @@ export default function Home() {
         <h2 className="mt-2 font-display text-4xl font-semibold tracking-tight">Popular right now across our knowledge base.</h2>
         <p className="mt-2 text-sm text-muted-foreground max-w-xl">Everyday workhorses for students, freelancers, and business owners.</p>
       </div>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {['word-counter', 'merge-pdf', 'image-compressor', 'vat-calculator', 'percentage-calculator', 'cv-builder'].map(slug => {
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {['salary-calculator', 'vat-calculator', 'percentage-calculator', 'word-counter', 'merge-pdf', 'image-compressor', 'cv-builder'].map(slug => {
           const t = tools.find(x => x.slug === slug)!;
           return (
             <Link key={slug} href={`/tools/${slug}/`} data-testid={`link-popular-${slug}`} className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-1 hover:border-primary hover:shadow-md">

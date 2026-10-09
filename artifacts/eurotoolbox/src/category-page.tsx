@@ -8,7 +8,7 @@ import NotFound from '@/pages/not-found';
 
 const ALL_CATEGORIES = [
   { name: 'Text Tools', slug: 'text', count: '5 tools', desc: 'Word counting, case formatting, deduplication, and whitespace cleaning.' },
-  { name: 'Number Calculators', slug: 'numbers', count: '6 tools', desc: 'Percentages, discounts, VAT, loans, BMI, and exact age calculations.' },
+  { name: 'Number Calculators', slug: 'numbers', count: '7 tools', desc: 'Percentages, discounts, VAT, salary, loans, BMI, and exact age calculations.' },
   { name: 'File Utilities', slug: 'files', count: '6 tools', desc: 'In-browser image compression, resizing, WebP, JPG, and PNG conversion.' },
   { name: 'PDF Tools', slug: 'pdf', count: '7 tools', desc: 'Merge, split, compress, PDF to Word text extractor, and PDF to JPG.' },
   { name: 'Time Tools', slug: 'time', count: '1 tool', desc: 'Date difference calculations and calendar duration planning.' },
@@ -29,7 +29,7 @@ export default function CategoryPage() {
   const { category: slug = '' } = useParams<{ category: string }>();
   const page = getCategorySeo(slug);
   const categoryName = categories.find(category => category.toLowerCase() === slug)?.replace(/ tools$/i, '');
-  const filtered = tools.filter(tool => tool.category.toLowerCase() === slug);
+  const filtered = tools.filter(tool => tool.category.toLowerCase() === slug || (slug === 'numbers' && tool.slug === 'salary-calculator'));
   const otherCategories = ALL_CATEGORIES.filter(c => c.slug !== slug);
   const featuredOtherTools = CROSS_CATEGORY_FEATURED.filter(t => t.category.toLowerCase() !== slug).slice(0, 4);
 
