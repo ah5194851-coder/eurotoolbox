@@ -414,7 +414,7 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
         defaultRatePct: 0.0,
         annualAmount: 4440, // 1% of statutory minimum wage (Rs 370/month = Rs 4,440/year) - VERIFY on fbr.gov.pk
         lastVerified: 'October 2026',
-        description: 'Statutory employee EOBI contribution: Rs 370/month (Rs 4,440/year) based on statutory minimum wage baseline (last verified: October 2026; VERIFY on fbr.gov.pk).',
+        description: 'Statutory employee EOBI contribution: Rs 370/month (Rs 4,440/year) based on statutory minimum wage baseline.',
       },
     ],
     incomeTaxName: 'Income Tax (Salaried Individuals - FBR)',
@@ -422,7 +422,7 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     // Country-appropriate benchmark salaries: monthly PKR 100k, 150k, 200k, 300k, 500k (yearly equivalents)
     commonSalaries: [1200000, 1800000, 2400000, 3600000, 6000000],
     notes:
-      'Salaried individuals tax slabs: 0% up to Rs 600k; 5% from 600k-1.2M; Rs 30k + 15% from 1.2M-2.2M; Rs 180k + 25% from 2.2M-3.2M; Rs 430k + 30% from 3.2M-4.1M; Rs 700k + 35% above Rs 4.1M. A 10% high-earner surcharge applies on computed tax for taxable income exceeding Rs 10 million (VERIFY on fbr.gov.pk). Employee EOBI is Rs 370/month (Rs 4,440/year; last verified October 2026 — VERIFY on fbr.gov.pk). Estimated using published statutory rates, tax year FY 2026–27. Always confirm with the official source.',
+      'Salaried individuals tax slabs: 0% up to Rs 600k; 5% from 600k-1.2M; Rs 30k + 15% from 1.2M-2.2M; Rs 180k + 25% from 2.2M-3.2M; Rs 430k + 30% from 3.2M-4.1M; Rs 700k + 35% above Rs 4.1M. A 10% high-earner surcharge applies on computed tax for taxable income exceeding Rs 10 million. Employee EOBI is Rs 370/month (Rs 4,440/year). Estimated using published statutory rates, tax year FY 2026–27. Always confirm with the official source.',
   },
 
   IN: {

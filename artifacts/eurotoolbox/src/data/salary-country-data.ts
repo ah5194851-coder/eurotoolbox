@@ -179,7 +179,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     metaTitle: "Pakistan Salary Calculator FY 2026–27 – FBR Tax on Salary (Free)",
     metaDescription: "Free Pakistan salary tax calculator for FY 2026–27. Sourced from FBR tax slabs for salaried individuals with take-home pay per month and year.",
     h1: "Pakistan Salary Calculator FY 2026–27 (FBR Salaried Slabs)",
-    intro: "Calculate your estimated net salary and FBR income tax deductions in Pakistan for Fiscal Year 2026–27 (1 July 2026 – 30 June 2027). Under published Federal Board of Revenue (FBR) salaried tax slabs, individuals earning up to PKR 600,000 annually enjoy zero tax liability. Progressively higher tiers are taxed at 5%, 15%, 25%, 30%, and 35%, with a 10% high-earner surcharge applying on computed tax for taxable earnings exceeding PKR 10 million. Statutory employee EOBI pension deductions (PKR 370/month; PKR 4,440/year; last verified October 2026; VERIFY on fbr.gov.pk) are included. Estimated using published statutory rates, tax year FY 2026–27. Always confirm with the official source.",
+    intro: "Calculate your estimated net salary and FBR income tax deductions in Pakistan for Fiscal Year 2026–27 (1 July 2026 – 30 June 2027). Under published Federal Board of Revenue (FBR) salaried tax slabs, individuals earning up to PKR 600,000 annually enjoy zero tax liability. Progressively higher tiers are taxed at 5%, 15%, 25%, 30%, and 35%, with a 10% high-earner surcharge applying on computed tax for taxable earnings exceeding PKR 10 million. Statutory employee EOBI pension deductions (PKR 370/month; PKR 4,440/year) are included. Estimated using published statutory rates, tax year FY 2026–27. Always confirm with the official source.",
     faqList: [
       [
         "What is the tax-exempt salary slab in Pakistan for FY 2026–27?",
@@ -187,11 +187,11 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
       ],
       [
         "What are the progressive tax rates and high-earner surcharges for salaried individuals?",
-        "Annual earnings between PKR 600,001 and 1,200,000 are taxed at 5% on the excess. Income from PKR 1.2M to 2.2M is taxed at PKR 30,000 plus 15%, scaling up to 35% on income exceeding PKR 4.1M. A 10% high-earner surcharge applies to the computed tax on taxable income exceeding PKR 10,000,000 (VERIFY on fbr.gov.pk).",
+        "Annual earnings between PKR 600,001 and 1,200,000 are taxed at 5% on the excess. Income from PKR 1.2M to 2.2M is taxed at PKR 30,000 plus 15%, scaling up to 35% on income exceeding PKR 4.1M. A 10% high-earner surcharge applies to the computed tax on taxable income exceeding PKR 10,000,000.",
       ],
       [
         "What is the employee EOBI contribution in Pakistan?",
-        "The Employees' Old-Age Benefits Institution (EOBI) employee share is set at 1% of the statutory minimum wage, amounting to PKR 370 per month (PKR 4,440 annually) for eligible private-sector employees (last verified: October 2026; VERIFY on fbr.gov.pk).",
+        "The Employees' Old-Age Benefits Institution (EOBI) employee share is set at 1% of the statutory minimum wage, amounting to PKR 370 per month (PKR 4,440 annually) for eligible private-sector employees.",
       ],
     ],
   },
