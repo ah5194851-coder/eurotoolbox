@@ -47,10 +47,62 @@ for (const route of PRERENDER_ROUTES) {
 const notFoundBody = renderRoute('/404');
 await writeFile(resolve(publicDir, '404.html'), documentFor('/404', notFoundBody));
 
+import { stat } from 'node:fs/promises';
+
+function getRouteSourceFile(route) {
+  if (route.startsWith('/tools/salary-calculator/') && route !== '/tools/salary-calculator/') {
+    return resolve(root, 'src/data/salary-country-data.ts');
+  }
+  if ([
+    '/monthly-salary-calculator/',
+    '/hourly-to-salary-calculator/',
+    '/annual-to-monthly-salary-calculator/',
+    '/basic-salary-calculator/',
+    '/net-salary-calculator/'
+  ].includes(route)) {
+    return resolve(root, 'src/data/salary-landing-data.ts');
+  }
+  if (route === '/tools/salary-calculator/') {
+    return resolve(root, 'src/components/salary-calculator.tsx');
+  }
+  if (route.endsWith('-vat-calculator/')) {
+    return resolve(root, 'src/data/country-vat.ts');
+  }
+  if (route.startsWith('/tools/')) {
+    const slug = route.replace(/^\/tools\/|\/$/g, '');
+    return resolve(root, 'src/tool-page.tsx');
+  }
+  if (route.startsWith('/category/')) {
+    return resolve(root, 'src/data/category-guides.ts');
+  }
+  if (route === '/about/') return resolve(root, 'src/about-page.tsx');
+  if (route === '/contact/') return resolve(root, 'src/contact-page.tsx');
+  if (route === '/terms/') return resolve(root, 'src/terms-page.tsx');
+  if (route === '/privacy/') return resolve(root, 'src/privacy-page.tsx');
+  if (route === '/books/') return resolve(root, 'src/books-page.tsx');
+  return resolve(root, 'src/home-page.tsx');
+}
+
+async function getRouteLastmod(route) {
+  try {
+    const sourcePath = getRouteSourceFile(route);
+    const fileStat = await stat(sourcePath);
+    return fileStat.mtime.toISOString().slice(0, 10);
+  } catch {
+    return today;
+  }
+}
+
 const crawlRoutes = SITEMAP_ROUTES;
+const routeEntries = await Promise.all(
+  crawlRoutes.map(async (route) => {
+    const lastmod = await getRouteLastmod(route);
+    return `  <url><loc>${absoluteUrl(route)}</loc><lastmod>${lastmod}</lastmod></url>`;
+  })
+);
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${crawlRoutes.map(route => `  <url><loc>${absoluteUrl(route)}</loc><lastmod>${today}</lastmod></url>`).join('\n')}
+${routeEntries.join('\n')}
 </urlset>
 `;
 const robots = `User-agent: *

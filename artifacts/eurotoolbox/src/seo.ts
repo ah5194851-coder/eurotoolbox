@@ -136,7 +136,7 @@ export function getPageSeo(path: string): PageSeo {
       description: sData.metaDescription,
       canonicalPath: sData.canonicalPath,
       type: 'website',
-      keywords: `${sData.h1.toLowerCase()}, salary calculator, gross to net, take home pay, wage converter, LoveEasyTool`,
+      keywords: undefined,
     };
   }
   const category = cleanPath.match(/^\/category\/([^/]+)\/?$/)?.[1];
@@ -710,7 +710,10 @@ export function updateDocumentHead(path: string) {
     'meta[name="twitter:image:alt"]': OG_IMAGE_ALT,
   };
 
-  if (page.canonicalPath === '/tools/salary-calculator/') {
+  const isSalaryPage = page.canonicalPath === '/tools/salary-calculator/' ||
+    Object.values(SALARY_LANDING_PAGES).some(p => p.canonicalPath === page.canonicalPath);
+
+  if (isSalaryPage || !page.keywords) {
     delete tags['meta[name="keywords"]'];
     const kwTag = document.head.querySelector('meta[name="keywords"]');
     if (kwTag) kwTag.remove();
