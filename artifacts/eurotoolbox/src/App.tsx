@@ -61,7 +61,7 @@ export const tools: Tool[] = [
   { slug: 'currency-converter', name: 'Currency reference converter', description: 'Compare currencies with transparent static reference rates.', category: 'Everyday', icon: <BadgeEuro />, color: 'yellow' },
   { slug: 'cv-builder', name: 'CV builder', description: 'Write a clean, printable CV with a live preview.', category: 'Work', icon: <FileText />, color: 'blue' },
   { slug: 'cover-letter-generator', name: 'Cover-letter generator', description: 'Turn a few details into a focused first draft.', category: 'Work', icon: <BookOpen />, color: 'teal' },
-  { slug: 'salary-calculator', name: 'Salary calculator', description: 'Estimate take-home pay after a percentage deduction.', category: 'Work', icon: <BadgeEuro />, color: 'yellow' },
+  { slug: 'salary-calculator', name: 'Salary calculator', description: 'Real gross-to-net take-home pay calculator with published statutory tax and social contribution rates for 15 countries plus a custom mode.', category: 'Work', icon: <BadgeEuro />, color: 'yellow' },
 ];
 
 export const categories = ['All tools', 'Text', 'Numbers', 'Files', 'PDF', 'Time', 'Everyday', 'Work'];
@@ -253,22 +253,22 @@ export function Shell({ children }: { children: ReactNode }) {
           </div>
           <div className="mt-4 flex flex-wrap gap-2 text-xs">
             <Link href="/uk-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
-              <span className="font-semibold text-foreground">UK VAT</span> <span className="text-muted-foreground font-mono-ui">(20%)</span>
+              <span className="mr-1.5">🇬🇧</span><span className="font-semibold text-foreground">UK VAT</span> <span className="text-muted-foreground font-mono-ui">(20%)</span>
             </Link>
             <Link href="/germany-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
-              <span className="font-semibold text-foreground">Germany MwSt</span> <span className="text-muted-foreground font-mono-ui">(19%)</span>
+              <span className="mr-1.5">🇩🇪</span><span className="font-semibold text-foreground">Germany MwSt</span> <span className="text-muted-foreground font-mono-ui">(19%)</span>
             </Link>
             <Link href="/france-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
-              <span className="font-semibold text-foreground">France TVA</span> <span className="text-muted-foreground font-mono-ui">(20%)</span>
+              <span className="mr-1.5">🇫🇷</span><span className="font-semibold text-foreground">France TVA</span> <span className="text-muted-foreground font-mono-ui">(20%)</span>
             </Link>
             <Link href="/ireland-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
-              <span className="font-semibold text-foreground">Ireland VAT</span> <span className="text-muted-foreground font-mono-ui">(23%)</span>
+              <span className="mr-1.5">🇮🇪</span><span className="font-semibold text-foreground">Ireland VAT</span> <span className="text-muted-foreground font-mono-ui">(23%)</span>
             </Link>
             <Link href="/uae-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
-              <span className="font-semibold text-foreground">UAE VAT</span> <span className="text-muted-foreground font-mono-ui">(5%)</span>
+              <span className="mr-1.5">🇦🇪</span><span className="font-semibold text-foreground">UAE VAT</span> <span className="text-muted-foreground font-mono-ui">(5%)</span>
             </Link>
             <Link href="/saudi-arabia-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
-              <span className="font-semibold text-foreground">Saudi Arabia VAT</span> <span className="text-muted-foreground font-mono-ui">(15%)</span>
+              <span className="mr-1.5">🇸🇦</span><span className="font-semibold text-foreground">Saudi Arabia VAT</span> <span className="text-muted-foreground font-mono-ui">(15%)</span>
             </Link>
           </div>
         </div>
@@ -299,6 +299,55 @@ export function Shell({ children }: { children: ReactNode }) {
             </Link>
             <Link href="/net-salary-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
               <span className="font-semibold text-foreground">Net Salary</span> <span className="text-muted-foreground font-mono-ui">(Take-Home Pay)</span>
+            </Link>
+          </div>
+
+          {/* Dedicated Country Salary Calculators with Flag Emojis */}
+          <div className="mt-4 flex flex-wrap gap-2 text-xs">
+            <Link href="/tools/salary-calculator/uk/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇬🇧</span><span className="font-medium text-foreground">UK Salary</span>
+            </Link>
+            <Link href="/tools/salary-calculator/united-states/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇺🇸</span><span className="font-medium text-foreground">US Salary</span>
+            </Link>
+            <Link href="/tools/salary-calculator/canada/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇨🇦</span><span className="font-medium text-foreground">Canada</span>
+            </Link>
+            <Link href="/tools/salary-calculator/australia/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇦🇺</span><span className="font-medium text-foreground">Australia</span>
+            </Link>
+            <Link href="/tools/salary-calculator/germany/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇩🇪</span><span className="font-medium text-foreground">Germany</span>
+            </Link>
+            <Link href="/tools/salary-calculator/poland/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇵🇱</span><span className="font-medium text-foreground">Poland</span>
+            </Link>
+            <Link href="/tools/salary-calculator/pakistan/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇵🇰</span><span className="font-medium text-foreground">Pakistan</span>
+            </Link>
+            <Link href="/tools/salary-calculator/india/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇮🇳</span><span className="font-medium text-foreground">India</span>
+            </Link>
+            <Link href="/tools/salary-calculator/uae/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇦🇪</span><span className="font-medium text-foreground">UAE</span>
+            </Link>
+            <Link href="/tools/salary-calculator/saudi-arabia/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇸🇦</span><span className="font-medium text-foreground">Saudi Arabia</span>
+            </Link>
+            <Link href="/tools/salary-calculator/ireland/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇮🇪</span><span className="font-medium text-foreground">Ireland</span>
+            </Link>
+            <Link href="/tools/salary-calculator/new-zealand/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇳🇿</span><span className="font-medium text-foreground">New Zealand</span>
+            </Link>
+            <Link href="/tools/salary-calculator/singapore/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇸🇬</span><span className="font-medium text-foreground">Singapore</span>
+            </Link>
+            <Link href="/tools/salary-calculator/netherlands/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇳🇱</span><span className="font-medium text-foreground">Netherlands</span>
+            </Link>
+            <Link href="/tools/salary-calculator/south-africa/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+              <span>🇿🇦</span><span className="font-medium text-foreground">South Africa</span>
             </Link>
           </div>
         </div>

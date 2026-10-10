@@ -147,7 +147,7 @@ export function SalaryLandingPage({ slug }: SalaryLandingPageProps) {
                     Example {index + 1}
                   </span>
                   <span className="rounded bg-secondary/70 px-2 py-0.5 text-[10px] font-bold text-secondary-foreground">
-                    Verified
+                    Estimated
                   </span>
                 </div>
                 <h3 className="mt-2.5 font-display text-lg font-semibold text-foreground">{ex.title}</h3>

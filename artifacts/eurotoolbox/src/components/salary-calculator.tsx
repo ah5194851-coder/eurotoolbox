@@ -256,7 +256,7 @@ export function SalaryCalculator({
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor={countrySelectId} className="block text-xs font-semibold text-foreground mb-1.5">
-            Country & Tax Authority (15 Verified Global Systems)
+            Country & Tax Authority (15 Countries + Custom Mode)
           </label>
           <select
             id={countrySelectId}
@@ -265,7 +265,7 @@ export function SalaryCalculator({
             onChange={e => handleCountrySelect(e.target.value as SupportedCountryCode)}
             className="w-full rounded-xl border border-input bg-background px-3.5 py-2.5 text-sm font-semibold text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15"
           >
-            <optgroup label="Verified Tax Regimes (Official 2026 Statutory Rules)">
+            <optgroup label="Supported Countries (Published Statutory Rates)">
               {VERIFIED_COUNTRY_IDS.map(cId => {
                 const cfg = COUNTRIES_CONFIG[cId];
                 return (

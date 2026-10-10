@@ -12,26 +12,28 @@ import {
   ChevronDown, HelpCircle, Layers, TrendingUp, DollarSign
 } from 'lucide-react';
 
+const COUNTRY_NAMES_LIST_TEXT = VERIFIED_COUNTRY_IDS.map(id => COUNTRIES_CONFIG[id].name).join(', ');
+
 export const SALARY_FAQ_LIST: readonly [string, string][] = [
   [
     'What is the difference between gross salary and net salary?',
-    'Gross salary represents your total compensation package before any compulsory or voluntary payroll deductions are taken out by your employer. Net salary, commonly referred to as take-home pay, is the actual liquid amount deposited into your personal bank account on payday. The gap between the two figures consists of statutory income taxes, employee social insurance contributions, and any optional workplace deductions.',
+    'Gross salary represents your total compensation package before any compulsory statutory or voluntary payroll deductions are taken out by your employer. Net salary, commonly referred to as take-home pay, is the actual liquid amount deposited into your personal bank account on payday. The gap between the two figures consists of statutory income taxes, employee social insurance contributions, and any optional workplace deductions.',
   ],
   [
     'How is income tax deducted from my paycheck?',
-    'Income tax is deducted at source through automated payroll systems such as PAYE in the UK or withholding in the United States. Tax authorities divide your annual earnings into progressive tax brackets, meaning each tier of income is taxed only at its corresponding marginal rate. Any initial tax-free personal allowance or standard deduction is subtracted first, ensuring lower earners keep a larger portion of their initial wages.',
+    'Income tax is deducted at source through automated payroll systems such as PAYE in the UK and Ireland, withholding in the United States and Canada, or Lohnsteuer in Germany. Tax authorities divide your annual earnings into progressive tax brackets, meaning each tier of income is taxed only at its corresponding marginal rate. Any initial tax-free personal allowance or standard deduction is subtracted first, ensuring lower earners keep a larger portion of their foundational wages.',
   ],
   [
     'How do you calculate hourly and weekly pay from an annual salary?',
-    'To calculate weekly pay, divide your gross annual salary by 52 weeks, rather than multiplying by an arbitrary 4 weeks per month. To derive your hourly rate, divide that weekly figure by your contracted hours worked per week, such as the standard full-time baseline of 40 hours. This simple two-step conversion yields an accurate baseline of 2,080 annual working hours for standard employment.',
+    'To calculate weekly pay, divide your gross annual salary by 52 weeks, rather than multiplying by an arbitrary 4 weeks per month. To derive your hourly rate, divide that weekly figure by your contracted hours worked per week, such as the standard full-time baseline of 40 hours. This conversion yields an accurate baseline of 2,080 annual working hours for standard full-time employment.',
   ],
   [
     'How accurate is this salary calculator?',
-    'This calculator applies verified statutory progressive tax bands and employee social contributions for each supported country, providing reliable planning estimates. However, actual paychecks can vary slightly due to individualized tax codes, pre-tax deductions like salary sacrifice pensions, and year-to-date adjustments. For binding payroll obligations, always refer to your official employer payslip or a certified accountant.',
+    'This calculator is estimated using published statutory rates from official national revenue authorities for the applicable tax year. However, actual paychecks can vary slightly due to individualized tax codes, pre-tax salary sacrifice deductions (like retirement plans or pensions), regional state or municipal taxes, and year-to-date adjustments. Always confirm with the official source and your formal employer payslip.',
   ],
   [
     'Does this calculation include workplace pensions or student loans?',
-    'The standard country models focus specifically on statutory government income taxes and mandatory employee social insurance contributions like UK National Insurance or US FICA. They do not automatically include optional workplace pension schemes, student loan repayments, or company healthcare plans unless you use the Custom % mode. To factor in additional regular deductions, you can switch to the Custom % tab to model your complete payroll structure.',
+    'The standard country models focus specifically on statutory government income taxes and mandatory employee social insurance contributions (such as UK National Insurance, US FICA, or German Sozialversicherung). They do not automatically include optional workplace pension schemes, student loan repayments, or company healthcare plans unless you use the custom mode. To factor in additional regular deductions, switch to the "Any other country (custom)" option.',
   ],
   [
     'Why does my official payslip differ from this calculator?',
@@ -43,21 +45,104 @@ export const SALARY_FAQ_LIST: readonly [string, string][] = [
   ],
   [
     'Which countries are currently supported by this tool?',
-    'The calculator currently provides built-in progressive tax and social contribution rules for the United Kingdom, United States, Canada, Australia, Germany, Poland, Pakistan, and India. Additionally, a versatile "Custom %" mode allows users from any country worldwide to calculate take-home pay using their own flat deduction rates. We regularly verify and update tax thresholds to ensure alignment with the latest national revenue service guidelines.',
+    `The calculator provides built-in progressive tax and social contribution rules estimated from published statutory rates for 15 countries: ${COUNTRY_NAMES_LIST_TEXT}. Additionally, an "Any other country (custom)" mode with a searchable world currency picker allows users from any nation worldwide to enter their own flat percentage or up to 5 progressive tax bands. Results are estimated using published statutory rates; always confirm with the official source.`,
   ],
 ];
 
+interface HowNetSalaryCalculatedSectionProps {
+  countryCode?: SupportedCountryCode;
+}
+
 /**
- * 1. How is Net Salary Calculated Section
+ * 1. How is Net Salary Calculated Section (Country-specific worked example)
  */
-export function HowNetSalaryCalculatedSection() {
+export function HowNetSalaryCalculatedSection({
+  countryCode = 'UK',
+}: HowNetSalaryCalculatedSectionProps) {
+  const cfg = COUNTRIES_CONFIG[countryCode] || COUNTRIES_CONFIG.UK;
+  const sym = cfg.currencySymbol;
+  // Choose country-appropriate sample salary (e.g. index 2 or 1 of commonSalaries)
+  const sampleGross = cfg.commonSalaries[2] || cfg.commonSalaries[1] || 50000;
+  const res = calculateSalaryBreakdown(sampleGross, countryCode);
+
+  const fmtInt = (n: number) => n.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  const fmtDec = (n: number) => n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  // Determine country-specific allowance explanation for Step 1
+  let step1Desc = '';
+  let step1Example = '';
+
+  if (countryCode === 'US') {
+    const stdDed = cfg.standardAllowance || 15000;
+    const taxableBase = Math.max(0, sampleGross - stdDed);
+    step1Desc = `Subtract the single filer standard deduction (${sym}${fmtInt(stdDed)} from official IRS published statutory rates for ${cfg.taxYear}) from gross salary.`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} − ${sym}${fmtInt(stdDed)} = ${sym}${fmtInt(taxableBase)} taxable base`;
+  } else if (countryCode === 'UK') {
+    const pa = cfg.standardAllowance || 12570;
+    const taxableBase = Math.max(0, sampleGross - pa);
+    step1Desc = `Subtract the statutory tax-free Personal Allowance (${sym}${fmtInt(pa)} from official HMRC published rates for ${cfg.taxYear}) from gross salary.`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} − ${sym}${fmtInt(pa)} = ${sym}${fmtInt(taxableBase)} taxable base`;
+  } else if (countryCode === 'CA') {
+    const bpa = cfg.standardAllowance || 16125;
+    step1Desc = `Apply the statutory Basic Personal Amount (${sym}${fmtInt(bpa)} from CRA published rates for ${cfg.taxYear}) as a non-refundable 15% federal tax credit.`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} gross salary assessed against progressive federal brackets with ${sym}${fmtInt(bpa)} basic personal credit`;
+  } else if (countryCode === 'AU') {
+    const thresh = cfg.standardAllowance || 18200;
+    const taxableBase = Math.max(0, sampleGross - thresh);
+    step1Desc = `Apply the legislated statutory tax-free threshold (${sym}${fmtInt(thresh)} from published ATO Stage 3 rates for ${cfg.taxYear}) to gross salary.`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} − ${sym}${fmtInt(thresh)} = ${sym}${fmtInt(taxableBase)} taxable in higher brackets`;
+  } else if (countryCode === 'DE') {
+    const gfb = cfg.standardAllowance || 12096;
+    const taxableBase = Math.max(0, sampleGross - gfb);
+    step1Desc = `Subtract the statutory Grundfreibetrag (${sym}${fmtInt(gfb)} from published BMF schedules for ${cfg.taxYear}) from gross annual salary.`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} − ${sym}${fmtInt(gfb)} = ${sym}${fmtInt(taxableBase)} taxable base`;
+  } else if (countryCode === 'PL') {
+    const kwota = cfg.standardAllowance || 30000;
+    step1Desc = `Apply the ${sym}${fmtInt(kwota)} Kwota wolna od podatku allowance against progressive tax liability after statutory employee ZUS deductions.`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} gross salary with ${sym}${fmtInt(kwota)} tax-free threshold`;
+  } else if (countryCode === 'PK') {
+    const exemptSlab = cfg.standardAllowance || 600000;
+    const taxableBase = Math.max(0, sampleGross - exemptSlab);
+    step1Desc = `Apply the statutory zero-tax exemption slab (${sym}${fmtInt(exemptSlab)} from published FBR salaried tax schedules for ${cfg.taxYear}).`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} gross: first ${sym}${fmtInt(exemptSlab)} is 0% tax, ${sym}${fmtInt(taxableBase)} taxed under progressive slabs`;
+  } else if (countryCode === 'IN') {
+    const stdDed = cfg.standardAllowance || 75000;
+    const taxableBase = Math.max(0, sampleGross - stdDed);
+    step1Desc = `Subtract the Section 115BAC New Tax Regime standard deduction (${sym}${fmtInt(stdDed)} from published Income Tax Dept rates for ${cfg.taxYear}) from gross CTC.`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} − ${sym}${fmtInt(stdDed)} = ${sym}${fmtInt(taxableBase)} taxable base`;
+  } else if (countryCode === 'UAE' || countryCode === 'SA') {
+    step1Desc = `In ${cfg.name}, employment income is subject to 0% statutory personal income tax. The entire gross wage is exempt from personal income taxes.`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} gross salary = 0% statutory income tax withholding`;
+  } else if (countryCode === 'IE') {
+    step1Desc = `Calculate statutory income tax using the single standard rate cut-off point (€44,000 at 20%) and apply standard personal and PAYE tax credits (€4,000 total).`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} evaluated against standard rate cut-off and statutory credits`;
+  } else if (countryCode === 'NZ') {
+    const thresh = cfg.standardAllowance || 15600;
+    step1Desc = `Apply statutory marginal tax brackets published by Inland Revenue (IRD) for ${cfg.taxYear}, starting at 10.5% on the first ${sym}${fmtInt(thresh)}.`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} assessed progressively through IRD tax brackets and ACC earner levy`;
+  } else if (countryCode === 'SG') {
+    const thresh = cfg.standardAllowance || 20000;
+    step1Desc = `Apply the statutory 0% tax-free slab on the first ${sym}${fmtInt(thresh)} under published IRAS resident tax brackets.`;
+    step1Example = `Example: First ${sym}${fmtInt(thresh)} is 0% tax; remaining ${sym}${fmtInt(Math.max(0, sampleGross - thresh))} subject to marginal rates`;
+  } else if (countryCode === 'NL') {
+    step1Desc = `Apply Box 1 published tax brackets and calculate statutory general (heffingskorting) and labour (arbeidskorting) tax credits for ${cfg.taxYear}.`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} assessed under Box 1 combined tax & national insurance rates with statutory credits`;
+  } else if (countryCode === 'ZA') {
+    const thresh = cfg.standardAllowance || 95750;
+    step1Desc = `Apply SARS progressive income tax brackets (18%–45%) and subtract the statutory primary tax rebate (R17,235, giving an effective tax-free threshold of ${sym}${fmtInt(thresh)}).`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} assessed under SARS statutory brackets and primary rebate`;
+  } else {
+    step1Desc = `Apply published statutory tax allowances and progressive exemption thresholds for ${cfg.name} (${cfg.taxYear}).`;
+    step1Example = `Example: ${sym}${fmtInt(sampleGross)} gross salary analyzed under ${cfg.taxYear} statutory rates`;
+  }
+
   return (
     <section className="mt-14 rounded-2xl border border-border bg-card p-6 sm:p-8">
       <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
         <div>
           <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Formula & Methodology</p>
           <h2 className="mt-1 font-display text-2xl font-semibold text-foreground">
-            How is Net Salary Calculated?
+            How is Net Salary Calculated in {cfg.name}?
           </h2>
         </div>
         <span className="text-xs text-muted-foreground flex items-center gap-1.5 font-mono-ui">
@@ -66,7 +151,7 @@ export function HowNetSalaryCalculatedSection() {
       </div>
 
       <p className="mt-3 text-sm leading-7 text-muted-foreground">
-        Net salary represents the actual cash you retain after all mandatory statutory deductions are subtracted from your gross compensation. Calculating take-home pay involves three sequential steps:
+        Net salary represents the liquid take-home pay you retain after mandatory statutory withholdings are deducted from your gross compensation. Calculating take-home pay involves three sequential steps:
       </p>
 
       {/* Core Formula Box */}
@@ -75,7 +160,7 @@ export function HowNetSalaryCalculatedSection() {
           The Fundamental Take-Home Equation
         </p>
         <div className="font-mono-ui text-base sm:text-lg font-bold text-foreground">
-          Net Pay = Gross Salary − (Income Tax + Social Security / National Insurance + Other Statutory Deductions)
+          Net Pay = Gross Salary − ({cfg.incomeTaxName} + {cfg.socialContributionName})
         </div>
       </div>
 
@@ -87,41 +172,45 @@ export function HowNetSalaryCalculatedSection() {
             <h3 className="font-display text-sm font-semibold text-foreground">Determine Taxable Base</h3>
           </div>
           <p className="mt-2 text-xs leading-6 text-muted-foreground">
-            Subtract tax-free allowances (such as the UK £12,570 Personal Allowance or US $14,600 Standard Deduction) from gross income.
+            {step1Desc}
           </p>
           <div className="mt-3 rounded bg-muted/50 p-2 font-mono-ui text-[11px] text-foreground">
-            Example: £45,000 − £12,570 = <strong>£32,430 taxable</strong>
+            {step1Example}
           </div>
         </div>
 
         <div className="rounded-xl border border-border bg-background/80 p-4">
           <div className="flex items-center gap-2">
             <span className="grid h-6 w-6 place-items-center rounded-full bg-primary text-primary-foreground text-xs font-mono-ui font-bold">2</span>
-            <h3 className="font-display text-sm font-semibold text-foreground">Apply Marginal Tax Bands</h3>
+            <h3 className="font-display text-sm font-semibold text-foreground">Calculate Statutory Deductions</h3>
           </div>
           <p className="mt-2 text-xs leading-6 text-muted-foreground">
-            Multiply each slice of taxable income by its statutory marginal rate (e.g., 20% basic rate) and calculate social insurance.
+            Apply statutory marginal brackets and employee social contribution rates published for {cfg.taxYear}.
           </p>
-          <div className="mt-3 rounded bg-muted/50 p-2 font-mono-ui text-[11px] text-foreground">
-            Income Tax (20%): <strong>£6,486.00</strong><br />
-            National Insurance (8%): <strong>£2,594.40</strong>
+          <div className="mt-3 rounded bg-muted/50 p-2 font-mono-ui text-[11px] text-foreground space-y-1">
+            <div>{cfg.incomeTaxName}: <strong>{sym}{fmtDec(res.incomeTaxAnnual)}</strong></div>
+            <div>{cfg.socialContributionName}: <strong>{sym}{fmtDec(res.socialContributionAnnual)}</strong></div>
           </div>
         </div>
 
         <div className="rounded-xl border border-border bg-background/80 p-4">
           <div className="flex items-center gap-2">
             <span className="grid h-6 w-6 place-items-center rounded-full bg-primary text-primary-foreground text-xs font-mono-ui font-bold">3</span>
-            <h3 className="font-display text-sm font-semibold text-foreground">Deduct & Calculate Net</h3>
+            <h3 className="font-display text-sm font-semibold text-foreground">Deduct & Compute Take-Home</h3>
           </div>
           <p className="mt-2 text-xs leading-6 text-muted-foreground">
-            Subtract all withholdings from gross salary to arrive at net annual, monthly, and weekly figures.
+            Subtract all withholdings from gross salary to determine spendable cash per year and month.
           </p>
-          <div className="mt-3 rounded bg-muted/50 p-2 font-mono-ui text-[11px] text-foreground font-bold text-primary">
-            Net Annual: <strong>£35,919.60</strong><br />
-            Net Monthly: <strong>£2,993.30</strong>
+          <div className="mt-3 rounded bg-muted/50 p-2 font-mono-ui text-[11px] text-foreground font-bold text-primary space-y-1">
+            <div>Net Annual: <strong>{sym}{fmtDec(res.netPayAnnual)}</strong></div>
+            <div>Net Monthly: <strong>{sym}{fmtDec(res.netPayMonthly)}</strong></div>
           </div>
         </div>
       </div>
+
+      <p className="mt-4 text-[11px] text-muted-foreground">
+        * Estimated using published statutory rates, tax year {cfg.taxYear}. Always confirm with the official source ({cfg.sourceAuthority}).
+      </p>
     </section>
   );
 }
@@ -137,7 +226,7 @@ export function GrossVsNetSalarySection() {
         Gross vs Net Salary: Understanding the Key Differences
       </h2>
       <p className="mt-3 text-sm leading-7 text-muted-foreground">
-        When negotiating job offers or budgeting for monthly living expenses, confusing gross salary with net take-home pay is one of the most common and costly financial mistakes. Here is how the two concepts compare:
+        When negotiating job offers or budgeting for monthly living expenses, confusing gross salary with net take-home pay is one of the most common financial mistakes. Here is how the two concepts compare:
       </p>
 
       <div className="mt-6 grid gap-6 md:grid-cols-2">
@@ -171,7 +260,7 @@ export function GrossVsNetSalarySection() {
             <span className="font-mono-ui text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">Spendable</span>
           </div>
           <p className="mt-2 text-xs leading-6 text-muted-foreground">
-            The liquid cash balance actually transferred to your bank account on payday after every mandatory and voluntary withholding.
+            The liquid cash balance actually transferred to your bank account on payday after mandatory statutory and voluntary withholdings.
           </p>
           <ul className="mt-4 space-y-2 text-xs text-muted-foreground">
             <li className="flex items-start gap-2">
@@ -180,11 +269,11 @@ export function GrossVsNetSalarySection() {
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle2 size={14} className="text-accent shrink-0 mt-0.5" />
-              <span><strong>Accounts for Progressive Tax:</strong> Reflects the exact marginal bands and social welfare rates in your country of employment.</span>
+              <span><strong>Reflects Personal Circumstances:</strong> Incorporates your tax credits, marital status deductions, pension contributions, and local tax rules.</span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle2 size={14} className="text-accent shrink-0 mt-0.5" />
-              <span><strong>Subject to Deductions:</strong> Reduced by income tax, social insurance, student loans, and company healthcare contributions.</span>
+              <span><strong>True Comparison Metric:</strong> The only reliable baseline when comparing job opportunities across different countries or states.</span>
             </li>
           </ul>
         </div>
@@ -193,22 +282,28 @@ export function GrossVsNetSalarySection() {
   );
 }
 
+interface SalaryExamplesTableSectionProps {
+  country?: SupportedCountryCode;
+  lockCountry?: boolean;
+}
+
 /**
- * 3. Examples Table of Net Pay for Common Salaries in the Selected Country
+ * 3. Examples Table of Net Pay for Common Salaries (Precomputed build-time safe)
  */
-export function SalaryExamplesTableSection() {
-  const [selectedCountry, setSelectedCountry] = useState<SupportedCountryCode>('UK');
-  const countryConfig = COUNTRIES_CONFIG[selectedCountry] || COUNTRIES_CONFIG.UK;
+export function SalaryExamplesTableSection({
+  country: propCountry,
+  lockCountry = false,
+}: SalaryExamplesTableSectionProps = {}) {
+  const [selectedCountry, setSelectedCountry] = useState<SupportedCountryCode>(propCountry || 'UK');
+  const activeCountry = lockCountry && propCountry ? propCountry : selectedCountry;
+  const countryConfig = COUNTRIES_CONFIG[activeCountry] || COUNTRIES_CONFIG.UK;
   const sym = countryConfig.currencySymbol;
 
   const fmt = (n: number) => n.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
+  // Correct calculation passing gross (number) and activeCountry (string code)
   const rows = countryConfig.commonSalaries.map(gross => {
-    const res = calculateSalaryBreakdown({
-      grossAmount: gross,
-      period: 'Annual',
-      country: selectedCountry,
-    });
+    const res = calculateSalaryBreakdown(gross, activeCountry);
     return {
       gross,
       monthlyGross: res.grossMonthly,
@@ -224,39 +319,42 @@ export function SalaryExamplesTableSection() {
   const countryKeys = VERIFIED_COUNTRY_IDS;
 
   return (
-    <section className="mt-14 rounded-2xl border border-border bg-card p-6 sm:p-8">
+    <section className="mt-14 rounded-2xl border border-border bg-card p-6 sm:p-8" id="benchmark-salaries-table">
       <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <div>
           <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Benchmark Figures</p>
           <h2 className="mt-1 font-display text-2xl font-semibold text-foreground">
-            Net Pay Examples for Common Salaries
+            Net Pay Examples for Common Salaries in {countryConfig.name}
           </h2>
         </div>
         <p className="text-xs text-muted-foreground">
-          Select a country tab to inspect verified benchmark salaries
+          Estimated using published statutory rates, tax year {countryConfig.taxYear}. Always confirm with the official source.
         </p>
       </div>
 
-      {/* Country Selector Tabs */}
-      <div className="mt-5 flex flex-wrap gap-1.5 border-b border-border pb-3">
-        {countryKeys.map(cKey => {
-          const cfg = COUNTRIES_CONFIG[cKey];
-          return (
-            <button
-              key={cKey}
-              type="button"
-              onClick={() => setSelectedCountry(cKey)}
-              className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                selectedCountry === cKey
-                  ? 'bg-primary text-primary-foreground shadow-2xs'
-                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-              }`}
-            >
-              {cfg.countryName}
-            </button>
-          );
-        })}
-      </div>
+      {/* Country Selector Tabs (Only if not locked to single country) */}
+      {!lockCountry && (
+        <div className="mt-5 flex flex-wrap gap-1.5 border-b border-border pb-3">
+          {countryKeys.map(cKey => {
+            const cfg = COUNTRIES_CONFIG[cKey];
+            return (
+              <button
+                key={cKey}
+                type="button"
+                onClick={() => setSelectedCountry(cKey)}
+                className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition flex items-center gap-1.5 ${
+                  activeCountry === cKey
+                    ? 'bg-primary text-primary-foreground shadow-2xs'
+                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                }`}
+              >
+                <span>{cfg.flagEmoji}</span>
+                <span>{cfg.name}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* Examples Data Table */}
       <div className="mt-5 overflow-x-auto">
@@ -280,27 +378,34 @@ export function SalaryExamplesTableSection() {
                 <td className="py-2.5 px-3 text-muted-foreground">{sym}{fmt(row.monthlyGross)}</td>
                 <td className="py-2.5 px-3 text-accent">{sym}{fmt(row.incomeTax)}</td>
                 <td className="py-2.5 px-3 text-destructive">{sym}{fmt(row.social)}</td>
-                <td className="py-2.5 px-3 text-foreground">{sym}{fmt(row.totalDeductions)}</td>
-                <td className="py-2.5 px-3 font-bold text-primary">{sym}{fmt(row.netAnnual)}</td>
-                <td className="py-2.5 px-3 font-bold text-primary">{sym}{fmt(row.netMonthly)}</td>
-                <td className="py-2.5 px-3 text-right font-semibold">{row.effectiveRate.toFixed(1)}%</td>
+                <td className="py-2.5 px-3 text-foreground font-semibold">{sym}{fmt(row.totalDeductions)}</td>
+                <td className="py-2.5 px-3 text-primary font-bold">{sym}{fmt(row.netAnnual)}</td>
+                <td className="py-2.5 px-3 text-primary font-bold">{sym}{fmt(row.netMonthly)}</td>
+                <td className="py-2.5 px-3 text-right text-muted-foreground">{row.effectiveRate.toFixed(1)}%</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <p className="mt-3 text-[11px] text-muted-foreground italic">
-        * Estimates based on verified single filer rates for {countryConfig.countryName} ({countryConfig.taxYear}). Excludes non-statutory pre-tax employer salary sacrifice and optional pensions.
-      </p>
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-[11px] text-muted-foreground">
+        <span>Authority: <strong className="text-foreground">{countryConfig.sourceAuthority}</strong></span>
+        <a
+          href={countryConfig.officialSourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-primary hover:underline font-semibold"
+        >
+          <span>Official Source Rates</span>
+          <ArrowRight size={11} />
+        </a>
+      </div>
     </section>
   );
 }
 
-
 /**
- * Dedicated Country Portals Showcase Block
- * Links to each verified country page /tools/salary-calculator/<country-slug>/
+ * Dedicated Country Portals Showcase Block (Flag emojis displayed)
  */
 export function VerifiedCountryPortalsBlock() {
   const countryPages = Object.values(SALARY_COUNTRY_PAGES);
@@ -311,15 +416,15 @@ export function VerifiedCountryPortalsBlock() {
         <div>
           <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Global Coverage</p>
           <h2 className="font-display text-xl font-semibold text-foreground">
-            Dedicated Country Salary Calculators
+            Country Salary Portals
           </h2>
         </div>
         <span className="font-mono-ui text-xs text-muted-foreground">
-          15 Verified Global Economies
+          Estimated using published statutory rates. Always confirm with the official source.
         </span>
       </div>
       <p className="text-xs text-muted-foreground mb-4">
-        Each country portal features country-specific statutory tax bands, social insurance rules, official government source links, and tailored worked examples:
+        Explore dedicated salary calculators for 15 major world economies, featuring statutory tax brackets, social contributions, and worked examples:
       </p>
       <div className="grid gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {countryPages.map(c => (
@@ -328,8 +433,8 @@ export function VerifiedCountryPortalsBlock() {
             href={c.canonicalPath}
             className="group flex items-center justify-between rounded-xl border border-border/80 bg-background px-3 py-2.5 transition hover:border-primary hover:shadow-2xs"
           >
-            <div className="flex items-center gap-1.5 truncate">
-              <span className="text-sm">🌐</span>
+            <div className="flex items-center gap-2 truncate">
+              <span className="text-base shrink-0">{c.flagEmoji}</span>
               <span className="text-xs font-semibold text-foreground group-hover:text-primary transition truncate">
                 {c.countryName}
               </span>
@@ -343,7 +448,7 @@ export function VerifiedCountryPortalsBlock() {
 }
 
 /**
- * 4. About this Utility (400-600 words, no keyword stuffing)
+ * 4. About this Utility (Consistent country count from taxConfig, no claims of verified)
  */
 export function AboutSalaryUtilitySection() {
   return (
@@ -357,16 +462,10 @@ export function AboutSalaryUtilitySection() {
           Evaluating employment offers, renegotiating compensation, or organizing a household budget all require an accurate understanding of what gross compensation translates to in spendable cash. Advertised job salaries are almost universally quoted in gross figures—the total monetary amount an employer agrees to disburse before mandatory statutory withholdings. However, the money that actually lands in your bank account on payday is your net salary. The difference between these two figures is determined by progressive income tax brackets, compulsory social welfare insurance, retirement schemes, and localized statutory levies.
         </p>
         <p>
-          The LoveEasyTool Salary Calculator provides an instant, transparent, and private way to convert gross wages into net take-home compensation across multiple national payroll frameworks. Instead of relying on a crude flat percentage deduction, this tool implements the actual progressive tax brackets and mandatory employee contributions established by national revenue authorities, including HM Revenue & Customs in the United Kingdom, the Internal Revenue Service in the United States, the Canada Revenue Agency, the Australian Taxation Office, and the Bundesfinanzministerium in Germany. Each jurisdiction operates its own set of personal allowances, standard deductions, and progressive tiers, meaning higher slices of income are taxed at higher marginal rates while foundational earnings remain shielded.
+          The LoveEasyTool Salary Calculator provides an instant, transparent, and private way to convert gross wages into net take-home compensation across multiple national payroll frameworks. Instead of relying on a crude flat percentage deduction, this tool implements published statutory tax brackets and mandatory employee contributions established by national revenue authorities across 15 countries: {COUNTRY_NAMES_LIST_TEXT}. For any other jurisdiction worldwide, a flexible custom mode with an ISO 4217 currency selector allows modeling custom flat or progressive tax tiers.
         </p>
         <p>
-          Understanding the difference between your marginal tax bracket and your effective tax rate is one of the most critical aspects of personal financial literacy. Your marginal rate represents the tax percentage paid on the last dollar or pound earned, whereas your effective rate reflects the blended percentage of your total income paid across all brackets. Many workers mistakenly believe that crossing into a higher tax bracket reduces their total take-home pay, failing to realize that only the earnings above that specific threshold are subject to the elevated rate. Our comprehensive breakdowns clarify this arithmetic by showing your true effective tax rate alongside detailed line-item deductions.
-        </p>
-        <p>
-          Beyond annual figures, this calculator delivers a full breakdown across every relevant planning timeframe, including monthly, weekly, daily, and hourly equivalents. This granular visibility helps individuals assess hourly wage offers against annual compensation packages, compare employment contracts across different countries, and identify how much of each pay increment is absorbed by progressive taxation versus actual net gain. For users residing in countries outside our pre-configured models, our flexible custom percentage mode allows complete freedom to simulate flat tax rules and secondary insurance deductions.
-        </p>
-        <p>
-          Importantly, LoveEasyTool operates entirely on a local-first, zero-upload architecture. Your salary details, compensation history, and financial calculations are processed exclusively within your device browser memory. Nothing is transmitted to external servers, saved in cloud databases, or tracked by user accounts. You can calculate compensation packages with complete confidence that your personal financial details remain strictly confidential.
+          Each jurisdiction operates its own set of personal allowances, standard deductions, and progressive tiers, meaning higher slices of income are taxed at higher marginal rates while foundational earnings remain shielded. Every calculation runs client-side in your browser with zero data retention or tracking. All figures are estimated using published statutory rates for the applicable tax year; always confirm with the official national revenue authority.
         </p>
       </div>
     </section>
@@ -374,29 +473,34 @@ export function AboutSalaryUtilitySection() {
 }
 
 /**
- * 5. Frequently Asked Questions (8 Questions, each 2-4 sentences)
+ * 5. Salary Calculator FAQ Section
  */
 export function SalaryFaqSection() {
   return (
     <section className="mt-14 rounded-2xl border border-border bg-card p-6 sm:p-8">
-      <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+      <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center mb-6">
         <div>
-          <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Questions & Answers</p>
-          <h2 className="mt-1 font-display text-2xl font-semibold text-foreground">
+          <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Common Inquiries</p>
+          <h2 className="font-display text-2xl font-semibold text-foreground">
             Frequently Asked Questions
           </h2>
         </div>
-        <span className="text-xs text-muted-foreground">8 comprehensive payroll answers</span>
+        <span className="font-mono-ui text-xs text-muted-foreground">
+          Clear, Practical Salary Answers
+        </span>
       </div>
 
-      <div className="mt-6 divide-y divide-border/60">
-        {SALARY_FAQ_LIST.map(([question, answer], index) => (
-          <details key={question} className="group py-4 first:pt-0 last:pb-0" open={index === 0}>
-            <summary className="flex cursor-pointer items-center justify-between font-display text-base font-semibold text-foreground list-none">
+      <div className="divide-y divide-border/80">
+        {SALARY_FAQ_LIST.map(([question, answer], idx) => (
+          <details key={idx} className="group py-4 transition-all">
+            <summary className="flex cursor-pointer items-center justify-between text-left font-display text-base font-semibold text-foreground transition hover:text-primary">
               <span>{question}</span>
-              <ChevronDown size={18} className="text-muted-foreground transition-transform duration-200 group-open:rotate-180" />
+              <ChevronDown
+                size={18}
+                className="shrink-0 text-muted-foreground transition duration-200 group-open:rotate-180"
+              />
             </summary>
-            <p className="mt-3 text-sm leading-7 text-muted-foreground">
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               {answer}
             </p>
           </details>
@@ -408,7 +512,6 @@ export function SalaryFaqSection() {
 
 /**
  * 6. Related Calculators Block (Internal Linking)
- * Links to: Percentage, VAT, Loan, Discount, CV Builder
  */
 export function RelatedCalculatorsBlock() {
   const related = [

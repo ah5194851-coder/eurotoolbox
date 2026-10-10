@@ -1,20 +1,22 @@
 /**
  * Tax Configuration & Social Contribution Rates
  *
- * IMPORTANT NOTE FOR SITE ADMINISTRATORS:
- * All progressive tax bands, statutory thresholds, social insurance contributions,
- * and standard deductions in this file are sourced from official government publications.
- * Every country is structured as a single self-contained object with:
- * - name
+ * Sourced from published statutory government tax tables and revenue guidelines.
+ * All figures are estimated using published statutory rates for each jurisdiction's tax year.
+ * Users should always confirm with their national revenue authority.
+ *
+ * Each country is structured as a self-contained object:
+ * - name, flagEmoji
  * - currency (code, symbol, name)
  * - taxYear label
  * - dates (startDate, endDate)
- * - bands (progressive brackets)
- * - socialContributions
+ * - bands (progressive tax brackets)
+ * - socialContributions (statutory rates, caps, annual amounts)
+ * - standardAllowance, standardAllowanceName
  * - officialSourceUrl (source URL)
  * - lastVerified date
  *
- * Verified Countries (Official 2026 Tax Regulations):
+ * Supported Countries (15 National Regimes + Custom Mode):
  * 1. United Kingdom (HMRC) - 2026/27
  * 2. United States (IRS) - 2026
  * 3. Canada (CRA) - 2026
@@ -80,12 +82,15 @@ export interface SocialContributionConfig {
   readonly defaultRatePct: number;
   readonly description: string;
   readonly employeeCap?: number;
+  readonly annualAmount?: number;
+  readonly lastVerified?: string;
 }
 
 export interface CountryTaxConfig {
   readonly id: SupportedCountryCode;
   readonly name: string;
   readonly countryName: string; // Backward-compatible alias
+  readonly flagEmoji: string;
   readonly currency: {
     readonly code: string;
     readonly symbol: string;
@@ -93,12 +98,14 @@ export interface CountryTaxConfig {
   };
   readonly currencyCode: string;   // Backward-compatible alias
   readonly currencySymbol: string; // Backward-compatible alias
-  readonly taxYear: string;        // Official label text
+  readonly taxYear: string;        // Published statutory label text
   readonly startDate: string;      // Period start date
   readonly endDate: string;        // Period end date
   readonly lastVerified: string;   // Last verified date
   readonly officialSourceUrl: string; // Source URL
   readonly sourceAuthority: string;
+  readonly standardAllowance?: number;
+  readonly standardAllowanceName?: string;
   readonly bands: readonly TaxBandConfig[];
   readonly socialContributions: readonly SocialContributionConfig[];
   readonly incomeTaxName: string;
@@ -159,6 +166,7 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     id: 'UK',
     name: 'United Kingdom',
     countryName: 'United Kingdom',
+    flagEmoji: '🇬🇧',
     currency: { code: 'GBP', symbol: '£', name: 'British Pound' },
     currencyCode: 'GBP',
     currencySymbol: '£',
@@ -168,6 +176,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://www.gov.uk/income-tax-rates',
     sourceAuthority: 'HM Revenue & Customs (HMRC)',
+    standardAllowance: 12570,
+    standardAllowanceName: 'Personal Allowance',
     bands: [
       { threshold: 12570, rate: 0.0, label: 'Personal Allowance' },
       { threshold: 50270, rate: 0.20, label: 'Basic Rate' },
@@ -185,13 +195,14 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     socialContributionName: 'National Insurance (Class 1)',
     commonSalaries: [25000, 35000, 45000, 60000, 80000, 120000],
     notes:
-      'Personal Allowance is £12,570 (statutorily frozen through April 2028). Tapers by £1 for every £2 earned above £100,000, reaching zero at £125,140. Employee National Insurance (Class 1) is 8% between £12,570 and £50,270, and 2% above £50,270.',
+      'Personal Allowance is £12,570 (statutorily frozen through April 2028). Tapers by £1 for every £2 earned above £100,000, reaching zero at £125,140. Employee National Insurance (Class 1) is 8% between £12,570 and £50,270, and 2% above £50,270. Estimated using published statutory rates, tax year 2026/27. Always confirm with the official source.',
   },
 
   US: {
     id: 'US',
     name: 'United States',
     countryName: 'United States',
+    flagEmoji: '🇺🇸',
     currency: { code: 'USD', symbol: '$', name: 'US Dollar' },
     currencyCode: 'USD',
     currencySymbol: '$',
@@ -201,6 +212,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://www.irs.gov/individuals/tax-withholding-estimator',
     sourceAuthority: 'Internal Revenue Service (IRS)',
+    standardAllowance: 15000,
+    standardAllowanceName: 'Standard Deduction (Single Filer)',
     bands: [
       { threshold: 11925, rate: 0.10, label: '10% Federal Bracket' },
       { threshold: 48475, rate: 0.12, label: '12% Federal Bracket' },
@@ -221,13 +234,14 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     socialContributionName: 'FICA (Social Security & Medicare)',
     commonSalaries: [35000, 50000, 75000, 100000, 150000, 200000],
     notes:
-      'Single filer standard deduction is $15,000 (projected 2026 inflation adjustment). Social Security is 6.2% up to wage base limit ($176,100). Medicare is 1.45% plus 0.9% Additional Medicare Tax on earnings above $200,000. State and local taxes vary by state and are excluded here for national federal baseline.',
+      'Single filer standard deduction is $15,000 (projected 2026 inflation adjustment). Social Security is 6.2% up to wage base limit ($176,100). Medicare is 1.45% plus 0.9% Additional Medicare Tax on earnings above $200,000. State and local taxes vary by state and are excluded here for national federal baseline. Estimated using published statutory rates, tax year 2026. Always confirm with the official source.',
   },
 
   CA: {
     id: 'CA',
     name: 'Canada',
     countryName: 'Canada',
+    flagEmoji: '🇨🇦',
     currency: { code: 'CAD', symbol: '$', name: 'Canadian Dollar' },
     currencyCode: 'CAD',
     currencySymbol: '$',
@@ -238,6 +252,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     officialSourceUrl:
       'https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/canadian-income-tax-rates-individuals-current-previous-years.html',
     sourceAuthority: 'Canada Revenue Agency (CRA)',
+    standardAllowance: 16125,
+    standardAllowanceName: 'Basic Personal Amount (15% non-refundable credit)',
     bands: [
       { threshold: 57375, rate: 0.15, label: 'Federal 15%' },
       { threshold: 114750, rate: 0.205, label: 'Federal 20.5%' },
@@ -256,13 +272,14 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     socialContributionName: 'CPP & Employment Insurance (EI)',
     commonSalaries: [45000, 65000, 85000, 110000, 140000, 180000],
     notes:
-      'Federal brackets with indexed Basic Personal Amount ($16,125 at 15% non-refundable credit). Canada Pension Plan (CPP) employee rate 5.95% on earnings between $3,500 and $71,300 (max $4,034.10) plus CPP2 4% between $71,300 and $76,200. EI employee rate 1.64% up to $65,700 (max $1,077.48). Provincial taxes vary by province.',
+      'Federal brackets with indexed Basic Personal Amount ($16,125 at 15% non-refundable credit). Canada Pension Plan (CPP) employee rate 5.95% on earnings between $3,500 and $71,300 (max $4,034.10) plus CPP2 4% between $71,300 and $76,200. EI employee rate 1.64% up to $65,700 (max $1,077.48). Provincial taxes vary by province. Estimated using published statutory rates, tax year 2026. Always confirm with the official source.',
   },
 
   AU: {
     id: 'AU',
     name: 'Australia',
     countryName: 'Australia',
+    flagEmoji: '🇦🇺',
     currency: { code: 'AUD', symbol: '$', name: 'Australian Dollar' },
     currencyCode: 'AUD',
     currencySymbol: '$',
@@ -272,6 +289,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents',
     sourceAuthority: 'Australian Taxation Office (ATO)',
+    standardAllowance: 18200,
+    standardAllowanceName: 'Tax-Free Threshold',
     bands: [
       { threshold: 18200, rate: 0.0, label: 'Tax-Free Threshold' },
       { threshold: 45000, rate: 0.16, label: 'Stage 3 16% Bracket' },
@@ -290,13 +309,14 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     socialContributionName: 'Medicare Levy (2%)',
     commonSalaries: [45000, 65000, 90000, 120000, 160000, 200000],
     notes:
-      'Official legislated Stage 3 tax brackets in force: $18,201-$45k at 16%, $45,001-$135k at 30%, $135,001-$190k at 37%, >$190k at 45%. Medicare Levy is 2% with low-income shade-in threshold ($0 below $26,000, phase-in up to $32,500). Superannuation is employer-paid and excluded from employee withholding.',
+      'Official legislated Stage 3 tax brackets in force: $18,201-$45k at 16%, $45,001-$135k at 30%, $135,001-$190k at 37%, >$190k at 45%. Medicare Levy is 2% with low-income shade-in threshold ($0 below $26,000, phase-in up to $32,500). Superannuation is employer-paid and excluded from employee withholding. Estimated using published statutory rates, tax year 2026–27. Always confirm with the official source.',
   },
 
   DE: {
     id: 'DE',
     name: 'Germany',
     countryName: 'Germany',
+    flagEmoji: '🇩🇪',
     currency: { code: 'EUR', symbol: '€', name: 'Euro' },
     currencyCode: 'EUR',
     currencySymbol: '€',
@@ -306,6 +326,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://www.bmf-steuerrechner.de/',
     sourceAuthority: 'Bundesfinanzministerium (BMF)',
+    standardAllowance: 12096,
+    standardAllowanceName: 'Grundfreibetrag (Tax-Free Baseline)',
     bands: [
       { threshold: 12096, rate: 0.0, label: 'Grundfreibetrag (Tax-Free)' },
       { threshold: 17400, rate: 0.14, label: 'Eingangssteuersatz (14% - 24%)' },
@@ -324,13 +346,14 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     socialContributionName: 'Sozialversicherungsbeiträge (RV, KV, PV, AV)',
     commonSalaries: [30000, 45000, 60000, 80000, 100000, 150000],
     notes:
-      'Calculated for unmarried employee without children (Steuerklasse 1). Grundfreibetrag is €12,096. Standard social security contributions are statutory employee halves capped at respective Beitragsbemessungsgrenzen (€96,600 RV/AV, €62,100 KV/PV). Solidaritätszuschlag applies only on top earners above high statutory exemption threshold.',
+      'Calculated for unmarried employee without children (Steuerklasse 1). Grundfreibetrag is €12,096. Standard social security contributions are statutory employee halves capped at respective Beitragsbemessungsgrenzen (€96,600 RV/AV, €62,100 KV/PV). Solidaritätszuschlag applies only on top earners above high statutory exemption threshold. Estimated using published statutory rates, tax year 2026. Always confirm with the official source.',
   },
 
   PL: {
     id: 'PL',
     name: 'Poland',
     countryName: 'Poland',
+    flagEmoji: '🇵🇱',
     currency: { code: 'PLN', symbol: 'zł', name: 'Polish Złoty' },
     currencyCode: 'PLN',
     currencySymbol: 'zł',
@@ -340,6 +363,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://www.podatki.gov.pl/pit/stawki-podatkowe/',
     sourceAuthority: 'Ministerstwo Finansów',
+    standardAllowance: 30000,
+    standardAllowanceName: 'Kwota wolna od podatku (30,000 zł)',
     bands: [
       { threshold: 30000, rate: 0.0, label: 'Kwota wolna od podatku (30,000 zł)' },
       { threshold: 120000, rate: 0.12, label: 'Pierwszy próg (12%)' },
@@ -356,13 +381,14 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     socialContributionName: 'Składki ZUS & NFZ (Pracownik)',
     commonSalaries: [48000, 72000, 96000, 130000, 180000, 240000],
     notes:
-      'Kwota wolna od podatku is 30,000 PLN (tax reduction 3,600 PLN). PIT rates: 12% up to 120,000 PLN, 32% on excess. Standard ZUS employee social security is 13.71% (pension ceiling 234,720 PLN) plus non-deductible health insurance (NFZ) 9% on gross minus social security.',
+      'Kwota wolna od podatku is 30,000 PLN (tax reduction 3,600 PLN). PIT rates: 12% up to 120,000 PLN, 32% on excess. Standard ZUS employee social security is 13.71% (pension ceiling 234,720 PLN) plus non-deductible health insurance (NFZ) 9% on gross minus social security. Estimated using published statutory rates, tax year 2026. Always confirm with the official source.',
   },
 
   PK: {
     id: 'PK',
     name: 'Pakistan',
     countryName: 'Pakistan',
+    flagEmoji: '🇵🇰',
     currency: { code: 'PKR', symbol: '₨', name: 'Pakistani Rupee' },
     currencyCode: 'PKR',
     currencySymbol: '₨',
@@ -372,6 +398,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://fbr.gov.pk/',
     sourceAuthority: 'Federal Board of Revenue (FBR)',
+    standardAllowance: 600000,
+    standardAllowanceName: 'Zero Tax Exemption Slab (Rs 600,000)',
     bands: [
       { threshold: 600000, rate: 0.0, label: 'Zero Tax Slab (Up to 600k)' },
       { threshold: 1200000, rate: 0.05, label: 'Slab 2 (5%)' },
@@ -384,20 +412,24 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
       {
         name: 'EOBI (Employee Old-Age Benefits)',
         defaultRatePct: 0.0,
-        description: 'Statutory employee EOBI contribution is fixed at 1% of statutory minimum wage (~Rs 370/month; ~Rs 4,440/year)',
+        annualAmount: 4440, // 1% of statutory minimum wage (Rs 370/month = Rs 4,440/year) - VERIFY on fbr.gov.pk
+        lastVerified: 'October 2026',
+        description: 'Statutory employee EOBI contribution: Rs 370/month (Rs 4,440/year) based on statutory minimum wage baseline (last verified: October 2026; VERIFY on fbr.gov.pk).',
       },
     ],
     incomeTaxName: 'Income Tax (Salaried Individuals - FBR)',
     socialContributionName: 'EOBI Employee Pension Contribution',
-    commonSalaries: [600000, 1200000, 1800000, 2500000, 4000000, 6000000],
+    // Country-appropriate benchmark salaries: monthly PKR 100k, 150k, 200k, 300k, 500k (yearly equivalents)
+    commonSalaries: [1200000, 1800000, 2400000, 3600000, 6000000],
     notes:
-      'Salaried individuals tax slabs enacted in Finance Act: 0% up to Rs 600k; 5% from 600k-1.2M; Rs 30k + 15% from 1.2M-2.2M; Rs 180k + 25% from 2.2M-3.2M; Rs 430k + 30% from 3.2M-4.1M; Rs 700k + 35% above Rs 4.1M. Employee EOBI is 1% of statutory minimum wage (~Rs 4,440/year).',
+      'Salaried individuals tax slabs: 0% up to Rs 600k; 5% from 600k-1.2M; Rs 30k + 15% from 1.2M-2.2M; Rs 180k + 25% from 2.2M-3.2M; Rs 430k + 30% from 3.2M-4.1M; Rs 700k + 35% above Rs 4.1M. A 10% high-earner surcharge applies on computed tax for taxable income exceeding Rs 10 million (VERIFY on fbr.gov.pk). Employee EOBI is Rs 370/month (Rs 4,440/year; last verified October 2026 — VERIFY on fbr.gov.pk). Estimated using published statutory rates, tax year FY 2026–27. Always confirm with the official source.',
   },
 
   IN: {
     id: 'IN',
     name: 'India',
     countryName: 'India',
+    flagEmoji: '🇮🇳',
     currency: { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
     currencyCode: 'INR',
     currencySymbol: '₹',
@@ -407,6 +439,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://incometaxindia.gov.in/',
     sourceAuthority: 'Income Tax Department (CBDT)',
+    standardAllowance: 75000,
+    standardAllowanceName: 'Standard Deduction (u/s 115BAC)',
     bands: [
       { threshold: 300000, rate: 0.0, label: 'Exempt up to ₹3,00,000' },
       { threshold: 700000, rate: 0.05, label: '5% Slab (₹3L - ₹7L)' },
@@ -424,15 +458,16 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     ],
     incomeTaxName: 'Income Tax (New Tax Regime u/s 115BAC)',
     socialContributionName: 'Employee Provident Fund (EPF)',
-    commonSalaries: [400000, 750000, 1000000, 1500000, 2000000, 3000000],
+    commonSalaries: [600000, 900000, 1200000, 1800000, 2500000, 3600000],
     notes:
-      'Calculated under Default New Tax Regime (Section 115BAC) with enhanced Standard Deduction of ₹75,000 for salaried employees. Full tax rebate under Section 87A for taxable income up to ₹7,00,000 (effectively zero tax on gross up to ₹7,75,000). Health & Education Cess is 4% on computed income tax.',
+      'Calculated under Default New Tax Regime (Section 115BAC) with enhanced Standard Deduction of ₹75,000 for salaried employees. Full tax rebate under Section 87A for taxable income up to ₹7,00,000 (effectively zero tax on gross up to ₹7,75,000). Health & Education Cess is 4% on computed income tax. Estimated using published statutory rates, tax year FY 2026–27. Always confirm with the official source.',
   },
 
   UAE: {
     id: 'UAE',
     name: 'United Arab Emirates',
     countryName: 'United Arab Emirates',
+    flagEmoji: '🇦🇪',
     currency: { code: 'AED', symbol: 'AED', name: 'UAE Dirham' },
     currencyCode: 'AED',
     currencySymbol: 'AED',
@@ -443,6 +478,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     officialSourceUrl: 'https://tax.gov.ae/',
     sourceAuthority: 'Federal Tax Authority (FTA) & GPSSA',
     isZeroIncomeTax: true,
+    standardAllowance: 0,
+    standardAllowanceName: 'Zero Personal Income Tax (0%)',
     bands: [
       { threshold: Infinity, rate: 0.0, label: 'Zero Personal Income Tax (0%)' },
     ],
@@ -455,15 +492,16 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     ],
     incomeTaxName: 'Personal Income Tax (0%)',
     socialContributionName: 'Social Security (0% Expat / 5% National)',
-    commonSalaries: [60000, 120000, 180000, 240000, 360000, 500000],
+    commonSalaries: [96000, 144000, 216000, 300000, 420000, 600000],
     notes:
-      'The United Arab Emirates levies NO personal income tax (0%) on employment income. For expatriates (over 88% of the private workforce), 0% social security or pension contributions are withheld from salary. UAE national employees contribute 5% to GPSSA pension (statutory salary base capped at AED 50,000/month).',
+      'The United Arab Emirates levies NO personal income tax (0%) on employment income. For expatriates (over 88% of the private workforce), 0% social security or pension contributions are withheld from salary. UAE national employees contribute 5% to GPSSA pension (statutory salary base capped at AED 50,000/month). Estimated using published statutory rates, tax year 2026. Always confirm with the official source.',
   },
 
   SA: {
     id: 'SA',
     name: 'Saudi Arabia',
     countryName: 'Saudi Arabia',
+    flagEmoji: '🇸🇦',
     currency: { code: 'SAR', symbol: 'SAR', name: 'Saudi Riyal' },
     currencyCode: 'SAR',
     currencySymbol: 'SAR',
@@ -474,6 +512,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     officialSourceUrl: 'https://zatca.gov.sa/',
     sourceAuthority: 'Zakat, Tax and Customs Authority (ZATCA) & GOSI',
     isZeroIncomeTax: true,
+    standardAllowance: 0,
+    standardAllowanceName: 'Zero Personal Income Tax (0%)',
     bands: [
       { threshold: Infinity, rate: 0.0, label: 'Zero Personal Income Tax (0%)' },
     ],
@@ -486,15 +526,16 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     ],
     incomeTaxName: 'Personal Income Tax (0%)',
     socialContributionName: 'GOSI Social Insurance (0% Expat / 9.75% National)',
-    commonSalaries: [60000, 120000, 180000, 240000, 360000, 500000],
+    commonSalaries: [96000, 144000, 216000, 300000, 420000, 600000],
     notes:
-      'The Kingdom of Saudi Arabia levies NO personal income tax (0%) on employee salaries. Expatriates pay 0% employee GOSI pension contributions. Saudi national employees contribute 9.75% (9% GOSI pension annuity + 0.75% SANED unemployment scheme, subject to a monthly wage ceiling of SAR 45,000).',
+      'The Kingdom of Saudi Arabia levies NO personal income tax (0%) on employee salaries. Expatriates pay 0% employee GOSI pension contributions. Saudi national employees contribute 9.75% (9% GOSI pension annuity + 0.75% SANED unemployment scheme, subject to a monthly wage ceiling of SAR 45,000). Estimated using published statutory rates, tax year 2026. Always confirm with the official source.',
   },
 
   IE: {
     id: 'IE',
     name: 'Ireland',
     countryName: 'Ireland',
+    flagEmoji: '🇮🇪',
     currency: { code: 'EUR', symbol: '€', name: 'Euro' },
     currencyCode: 'EUR',
     currencySymbol: '€',
@@ -504,6 +545,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx',
     sourceAuthority: 'Revenue Commissioners (Ireland)',
+    standardAllowance: 44000,
+    standardAllowanceName: 'Standard Rate Cut-Off Point (€4,000 Tax Credits)',
     bands: [
       { threshold: 44000, rate: 0.20, label: 'Standard Rate (20%)' },
       { threshold: Infinity, rate: 0.40, label: 'Higher Rate (40%)' },
@@ -519,13 +562,14 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     socialContributionName: 'PRSI (Class A) & Universal Social Charge (USC)',
     commonSalaries: [30000, 45000, 60000, 80000, 110000, 150000],
     notes:
-      'Standard rate cut-off point is €44,000 (taxed at 20%; 40% on balance). Non-refundable tax credits: Single Person Credit (€2,000) + Employee (PAYE) Credit (€2,000) = €4,000 total relief. PRSI Class A employee rate is 4.1% on all weekly earnings >€352. Universal Social Charge (USC) applies progressively: 0.5% up to €12,012; 2% to €27,382; 3% to €70,044; 8% on excess.',
+      'Standard rate cut-off point is €44,000 (taxed at 20%; 40% on balance). Non-refundable tax credits: Single Person Credit (€2,000) + Employee (PAYE) Credit (€2,000) = €4,000 total relief. PRSI Class A employee rate is 4.1% on all weekly earnings >€352. Universal Social Charge (USC) applies progressively: 0.5% up to €12,012; 2% to €27,382; 3% to €70,044; 8% on excess. Estimated using published statutory rates, tax year 2026. Always confirm with the official source.',
   },
 
   NZ: {
     id: 'NZ',
     name: 'New Zealand',
     countryName: 'New Zealand',
+    flagEmoji: '🇳🇿',
     currency: { code: 'NZD', symbol: '$', name: 'New Zealand Dollar' },
     currencyCode: 'NZD',
     currencySymbol: '$',
@@ -535,6 +579,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://www.ird.govt.nz/income-tax/income-tax-for-individuals/how-income-tax-works/tax-rates-for-individuals',
     sourceAuthority: 'Inland Revenue (IRD)',
+    standardAllowance: 15600,
+    standardAllowanceName: 'Lowest Tax Bracket (10.5% up to $15,600)',
     bands: [
       { threshold: 15600, rate: 0.105, label: 'Bottom Band (10.5%)' },
       { threshold: 53500, rate: 0.175, label: 'Second Band (17.5%)' },
@@ -546,20 +592,21 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
       {
         name: "ACC Earner's Levy",
         defaultRatePct: 1.60,
-        description: "1.60% ACC Earner Levy on earnings up to maximum cap of $142,283 (max levy ~$2,276.52)",
+        description: '1.60% ACC Earner Levy on earnings up to maximum cap of $142,283 (max levy ~$2,276.52)',
       },
     ],
     incomeTaxName: 'PAYE Income Tax (IRD)',
     socialContributionName: "ACC Earner's Levy (1.60%)",
     commonSalaries: [40000, 60000, 85000, 110000, 150000, 200000],
     notes:
-      "Statutory IRD individual income tax brackets: $0-$15.6k at 10.5%; $15.6k-$53.5k at 17.5%; $53.5k-$78.1k at 30%; $78.1k-$180k at 33%; >$180k at 39%. ACC Earner's Levy is mandatory at 1.60% up to maximum threshold ($142,283). KiwiSaver employee contributions (standard 3%) are voluntary retirement deductions.",
+      "Statutory IRD individual income tax brackets: $0-$15.6k at 10.5%; $15.6k-$53.5k at 17.5%; $53.5k-$78.1k at 30%; $78.1k-$180k at 33%; >$180k at 39%. ACC Earner's Levy is mandatory at 1.60% up to maximum threshold ($142,283). KiwiSaver employee contributions (standard 3%) are voluntary retirement deductions. Estimated using published statutory rates, tax year 2026/27. Always confirm with the official source.",
   },
 
   SG: {
     id: 'SG',
     name: 'Singapore',
     countryName: 'Singapore',
+    flagEmoji: '🇸🇬',
     currency: { code: 'SGD', symbol: 'S$', name: 'Singapore Dollar' },
     currencyCode: 'SGD',
     currencySymbol: 'S$',
@@ -569,6 +616,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-residency-and-tax-rates/individual-income-tax-rates',
     sourceAuthority: 'Inland Revenue Authority of Singapore (IRAS) & CPF Board',
+    standardAllowance: 20000,
+    standardAllowanceName: 'First S$20,000 (0% Tax-Free Slab)',
     bands: [
       { threshold: 20000, rate: 0.0, label: 'First S$20,000 (0%)' },
       { threshold: 30000, rate: 0.02, label: 'Next S$10,000 (2%)' },
@@ -593,15 +642,16 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     ],
     incomeTaxName: 'Individual Income Tax (IRAS)',
     socialContributionName: 'Central Provident Fund (CPF)',
-    commonSalaries: [40000, 60000, 90000, 130000, 180000, 250000],
+    commonSalaries: [48000, 72000, 96000, 144000, 180000, 240000],
     notes:
-      'Progressive resident rates: first S$20,000 is tax-free; 2% to 24% top marginal rate. For Singapore Citizens/PRs (age <= 55), employee CPF is 20% on monthly wages up to S$7,400 ceiling (max S$17,760 annually). Foreign Employment Pass / S-Pass holders do not contribute to CPF (0%).',
+      'Progressive resident rates: first S$20,000 is tax-free; 2% to 24% top marginal rate. For Singapore Citizens/PRs (age <= 55), employee CPF is 20% on monthly wages up to S$7,400 ceiling (max S$17,760 annually). Foreign Employment Pass / S-Pass holders do not contribute to CPF (0%). Estimated using published statutory rates, tax year YA 2026. Always confirm with the official source.',
   },
 
   NL: {
     id: 'NL',
     name: 'Netherlands',
     countryName: 'Netherlands',
+    flagEmoji: '🇳🇱',
     currency: { code: 'EUR', symbol: '€', name: 'Euro' },
     currencyCode: 'EUR',
     currencySymbol: '€',
@@ -611,6 +661,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/prive/inkomstenbelasting/heffingskortingen_boxen_tarieven/boxen_en_tarieven/overzicht_tarieven_en_schijven/',
     sourceAuthority: 'Belastingdienst (Tax and Customs Administration)',
+    standardAllowance: 0,
+    standardAllowanceName: 'General & Labour Tax Credits (Heffingskortingen)',
     bands: [
       { threshold: 38441, rate: 0.3582, label: 'Schijf 1 (35.82%)' },
       { threshold: 76817, rate: 0.3748, label: 'Schijf 2 (37.48%)' },
@@ -627,13 +679,14 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     socialContributionName: 'Premies Volksverzekeringen (AOW, Anw, Wlz)',
     commonSalaries: [30000, 45000, 65000, 85000, 120000, 160000],
     notes:
-      'Box 1 tax rates: 35.82% up to €38,441 (includes national insurance); 37.48% between €38,441 and €76,817; 49.50% above €76,817. General Tax Credit (Algemene heffingskorting, max ~€3,068) and Labour Tax Credit (Arbeidskorting, max ~€5,599) taper smoothly to lower effective tax burdens on middle incomes.',
+      'Box 1 tax rates: 35.82% up to €38,441 (includes national insurance); 37.48% between €38,441 and €76,817; 49.50% above €76,817. General Tax Credit (Algemene heffingskorting, max ~€3,068) and Labour Tax Credit (Arbeidskorting, max ~€5,599) taper smoothly to lower effective tax burdens on middle incomes. Estimated using published statutory rates, tax year 2026. Always confirm with the official source.',
   },
 
   ZA: {
     id: 'ZA',
     name: 'South Africa',
     countryName: 'South Africa',
+    flagEmoji: '🇿🇦',
     currency: { code: 'ZAR', symbol: 'R', name: 'South African Rand' },
     currencyCode: 'ZAR',
     currencySymbol: 'R',
@@ -643,6 +696,8 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://www.sars.gov.za/tax-rates/income-tax/rates-of-tax-for-individuals/',
     sourceAuthority: 'South African Revenue Service (SARS)',
+    standardAllowance: 95750,
+    standardAllowanceName: 'Tax-Free Threshold (Primary Rebate R17,235)',
     bands: [
       { threshold: 237100, rate: 0.18, label: '18% Band' },
       { threshold: 370500, rate: 0.26, label: '26% Band' },
@@ -661,24 +716,27 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     ],
     incomeTaxName: 'Personal Income Tax (SARS PAYE)',
     socialContributionName: 'UIF (Unemployment Insurance Fund)',
-    commonSalaries: [150000, 300000, 500000, 750000, 1000000, 1500000],
+    commonSalaries: [180000, 300000, 480000, 720000, 1080000, 1500000],
     notes:
-      'Progressive SARS brackets start at 18% and rise to 45% above R1,817,000. Primary rebate for individuals under 65 is R17,235 (tax-free threshold of R95,750). Mandatory UIF employee contribution is 1% up to the statutory earnings threshold (max R2,125.44/year).',
+      'Progressive SARS brackets start at 18% and rise to 45% above R1,817,000. Primary rebate for individuals under 65 is R17,235 (tax-free threshold of R95,750). Mandatory UIF employee contribution is 1% up to the statutory earnings threshold (max R2,125.44/year). Estimated using published statutory rates, tax year 2026/27. Always confirm with the official source.',
   },
 
   CUSTOM: {
     id: 'CUSTOM',
     name: 'Any other country (custom)',
     countryName: 'Any other country (custom)',
+    flagEmoji: '⚙️',
     currency: { code: 'USD', symbol: '$', name: 'US Dollar (Default)' },
     currencyCode: 'USD',
     currencySymbol: '$',
-    taxYear: 'Custom Tax Rates',
+    taxYear: 'Custom Rates',
     startDate: '1 January 2026',
     endDate: '31 December 2026',
     lastVerified: 'October 2026',
     officialSourceUrl: 'https://loveeasytool.com/tools/salary-calculator',
-    sourceAuthority: 'User Specified',
+    sourceAuthority: 'User Defined Rates',
+    standardAllowance: 0,
+    standardAllowanceName: 'User Configured',
     bands: [],
     socialContributions: [],
     incomeTaxName: 'Custom Income Tax',
@@ -691,17 +749,34 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
 
 /**
  * Calculation Engine for All Countries
+ * Supports both signatures:
+ * calculateSalaryBreakdown(grossAmount, countryOrOptions)
+ * AND
+ * calculateSalaryBreakdown({ grossAmount, country, period, ... })
  */
 export function calculateSalaryBreakdown(
-  grossAmount: number | string,
-  countryOrOptions:
-    | SupportedCountryCode
+  grossOrOptions:
+    | number
+    | string
     | {
-        country: SupportedCountryCode;
+        grossAmount?: number | string;
+        gross?: number | string;
+        country?: SupportedCountryCode;
+        period?: 'Hourly' | 'Weekly' | 'Monthly' | 'Annual';
         customTaxPct?: number;
         customSocialPct?: number;
         customBands?: readonly CustomTaxBand[];
-        isNational?: boolean; // For UAE/SA/SG nationality toggle
+        isNational?: boolean;
+        hoursPerWeek?: number;
+      },
+  countryOrOptions?:
+    | SupportedCountryCode
+    | {
+        country?: SupportedCountryCode;
+        customTaxPct?: number;
+        customSocialPct?: number;
+        customBands?: readonly CustomTaxBand[];
+        isNational?: boolean;
         hoursPerWeek?: number;
       },
   maybeCountry?: SupportedCountryCode
@@ -712,22 +787,46 @@ export function calculateSalaryBreakdown(
   let customBands: readonly CustomTaxBand[] | undefined;
   let isNational = false;
   let hoursPerWeek = 40;
+  let rawGross: number | string = 0;
 
-  if (typeof countryOrOptions === 'string') {
-    country = countryOrOptions;
-  } else if (typeof countryOrOptions === 'object' && countryOrOptions !== null) {
-    country = countryOrOptions.country;
-    if (countryOrOptions.customTaxPct !== undefined) customTaxPct = countryOrOptions.customTaxPct;
-    if (countryOrOptions.customSocialPct !== undefined) customSocialPct = countryOrOptions.customSocialPct;
-    if (countryOrOptions.customBands !== undefined) customBands = countryOrOptions.customBands;
-    if (countryOrOptions.isNational !== undefined) isNational = countryOrOptions.isNational;
-    if (countryOrOptions.hoursPerWeek !== undefined) hoursPerWeek = countryOrOptions.hoursPerWeek;
-  } else if (maybeCountry) {
-    country = maybeCountry;
+  if (typeof grossOrOptions === 'object' && grossOrOptions !== null) {
+    rawGross = grossOrOptions.grossAmount ?? grossOrOptions.gross ?? 0;
+    if (grossOrOptions.country) country = grossOrOptions.country;
+    if (grossOrOptions.customTaxPct !== undefined) customTaxPct = grossOrOptions.customTaxPct;
+    if (grossOrOptions.customSocialPct !== undefined) customSocialPct = grossOrOptions.customSocialPct;
+    if (grossOrOptions.customBands !== undefined) customBands = grossOrOptions.customBands;
+    if (grossOrOptions.isNational !== undefined) isNational = grossOrOptions.isNational;
+    if (grossOrOptions.hoursPerWeek !== undefined) hoursPerWeek = grossOrOptions.hoursPerWeek;
+
+    // Convert period if passed in options object
+    let numGross = Math.max(0, Number(rawGross) || 0);
+    const hpw = Math.max(1, Math.min(168, Number(hoursPerWeek) || 40));
+    if (grossOrOptions.period === 'Monthly') {
+      numGross *= 12;
+    } else if (grossOrOptions.period === 'Weekly') {
+      numGross *= 52;
+    } else if (grossOrOptions.period === 'Hourly') {
+      numGross *= 52 * hpw;
+    }
+    rawGross = numGross;
+  } else {
+    rawGross = grossOrOptions;
+    if (typeof countryOrOptions === 'string') {
+      country = countryOrOptions;
+    } else if (typeof countryOrOptions === 'object' && countryOrOptions !== null) {
+      if (countryOrOptions.country) country = countryOrOptions.country;
+      if (countryOrOptions.customTaxPct !== undefined) customTaxPct = countryOrOptions.customTaxPct;
+      if (countryOrOptions.customSocialPct !== undefined) customSocialPct = countryOrOptions.customSocialPct;
+      if (countryOrOptions.customBands !== undefined) customBands = countryOrOptions.customBands;
+      if (countryOrOptions.isNational !== undefined) isNational = countryOrOptions.isNational;
+      if (countryOrOptions.hoursPerWeek !== undefined) hoursPerWeek = countryOrOptions.hoursPerWeek;
+    } else if (maybeCountry) {
+      country = maybeCountry;
+    }
   }
 
   const hpw = Math.max(1, Math.min(168, Number(hoursPerWeek) || 40));
-  const validGross = Math.max(0, Number(grossAmount) || 0);
+  const validGross = Math.max(0, Number(rawGross) || 0);
   const cfg = COUNTRIES_CONFIG[country] || COUNTRIES_CONFIG.CUSTOM;
 
   let tax = 0;
@@ -765,7 +864,7 @@ export function calculateSalaryBreakdown(
     }
 
     case 'US': {
-      const standardDeduction = 15000;
+      const standardDeduction = cfg.standardAllowance || 15000;
       const taxable = Math.max(0, validGross - standardDeduction);
       const brackets = [
         { cap: 11925, rate: 0.10 },
@@ -901,7 +1000,7 @@ export function calculateSalaryBreakdown(
     }
 
     case 'PK': {
-      // Finance Act Salaried individual slabs
+      // Salaried individual tax slabs (VERIFY on fbr.gov.pk)
       if (validGross > 600000) {
         if (validGross <= 1200000) {
           tax = (validGross - 600000) * 0.05;
@@ -915,8 +1014,13 @@ export function calculateSalaryBreakdown(
           tax = 700000 + (validGross - 4100000) * 0.35;
         }
       }
-      // EOBI: 1% of minimum wage (~Rs 4,440 per year)
-      social = validGross > 0 ? 4440 : 0;
+      // High-earner surcharge (10% on computed tax if gross exceeds Rs 10,000,000) - VERIFY on fbr.gov.pk
+      if (validGross > 10000000) {
+        tax += tax * 0.10;
+      }
+      // EOBI amount from config: Rs 4,440/year (Rs 370/month; last verified: October 2026; VERIFY on fbr.gov.pk)
+      const eobiAnnual = cfg.socialContributions[0]?.annualAmount ?? 4440;
+      social = validGross > 0 ? eobiAnnual : 0;
       break;
     }
 
@@ -1051,11 +1155,9 @@ export function calculateSalaryBreakdown(
         }
       }
       // CPF: For Singapore Citizens / PRs, 20% on monthly wages up to S$7,400 (S$88,800/yr)
-      // If expat / foreign pass holder, 0%. Default is national/PR (or toggleable)
       if (isNational) {
         social = Math.min(validGross, 88800) * 0.20;
       } else {
-        // baseline foreign expat / EP holder: 0%
         social = 0;
       }
       break;

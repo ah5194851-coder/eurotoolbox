@@ -37,7 +37,7 @@ LoveEasyTool (https://loveeasytool.com) is an open web utility platform created 
 - [Currency reference converter](https://loveeasytool.com/tools/currency-converter/): Compare currencies with transparent static reference rates.
 - [CV builder](https://loveeasytool.com/tools/cv-builder/): Write a clean, printable CV with a live preview.
 - [Cover-letter generator](https://loveeasytool.com/tools/cover-letter-generator/): Turn a few details into a focused first draft.
-- [Salary calculator](https://loveeasytool.com/tools/salary-calculator/): Estimate take-home pay after a percentage deduction.
+- [Salary calculator](https://loveeasytool.com/tools/salary-calculator/): Real gross-to-net take-home pay calculator with published statutory tax and social contribution rates for 15 countries plus a custom mode.
 
 ## Categories & Knowledge Clusters
 - [Text Tools](https://loveeasytool.com/category/text/): Word counter, character counter, case converter, text cleaner, duplicate line remover

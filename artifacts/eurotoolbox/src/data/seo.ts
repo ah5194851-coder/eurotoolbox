@@ -1,3 +1,5 @@
+import { COUNTRIES_CONFIG, VERIFIED_COUNTRY_IDS } from './tax-config';
+
 export type ToolUseCase = {
   title: string;
   description: string;
@@ -1170,42 +1172,42 @@ export const toolSeo: Record<string, ToolSeo> = {
     description: 'Free salary calculator: convert gross to net pay with tax and deductions per year, month, week and hour. No sign-up, fully private.',
     heading: 'Salary Calculator – Gross to Net Pay',
     intro: 'Free salary calculator: convert gross to net pay with tax and deductions per year, month, week and hour. No sign-up, fully private.',
-    answerSummary: 'LoveEasyTool Salary Calculator is a free in-browser take-home pay estimator that converts gross wages into net earnings using verified progressive tax bands and employee social contributions for the UK, US, Canada, Australia, Germany, Poland, Pakistan, and India. All calculations run 100% locally in your browser with zero data storage.',
+    answerSummary: `LoveEasyTool Salary Calculator is a free in-browser take-home pay estimator that converts gross wages into net earnings using published statutory rates for 15 countries: ${VERIFIED_COUNTRY_IDS.map(id => COUNTRIES_CONFIG[id].name).join(', ')}, plus a custom mode for any other country with all world currencies. Estimated using published statutory rates; always confirm with the official source. All calculations run 100% locally in your browser with zero data storage.`,
     facts: {
       pricing: '100% Free',
       authRequired: 'None',
       executionEnvironment: 'Client-side JavaScript in browser memory',
       dataPrivacy: '100% Private (zero data storage or server uploads)',
-      supportedFormatsAndLimits: 'Annual, monthly, weekly, or hourly wage figures across 8 countries and custom %',
+      supportedFormatsAndLimits: `Annual, monthly, weekly, or hourly wage figures across 15 countries (${VERIFIED_COUNTRY_IDS.map(id => COUNTRIES_CONFIG[id].name).join(', ')}) plus custom mode`,
     },
-    longDescription: 'Evaluating employment offers, renegotiating compensation, or organizing a household budget all require an accurate understanding of what gross compensation translates to in spendable cash. The LoveEasyTool Salary Calculator provides an instant, transparent, and private way to convert gross wages into net take-home compensation across multiple national payroll frameworks. Instead of relying on a crude flat percentage deduction, this tool implements the actual progressive tax brackets and mandatory employee contributions established by national revenue authorities.',
+    longDescription: `Evaluating employment offers, renegotiating compensation, or organizing a household budget all require an accurate understanding of what gross compensation translates to in spendable cash. The LoveEasyTool Salary Calculator provides an instant, transparent, and private way to convert gross wages into net take-home compensation across multiple national payroll frameworks. Instead of relying on a crude flat percentage deduction, this tool implements published statutory tax brackets and mandatory employee contributions established by national revenue authorities across 15 countries: ${VERIFIED_COUNTRY_IDS.map(id => COUNTRIES_CONFIG[id].name).join(', ')}, plus a flexible custom mode for any other country worldwide. All figures are estimated using published statutory rates; always confirm with the official source.`,
     useCases: [
       { title: 'Evaluating Job Offers', description: 'Translate offered gross annual salaries into realistic monthly cash flow.' },
       { title: 'Household Budgeting', description: 'Calculate reliable monthly take-home figures to plan rent, savings, and investments.' },
-      { title: 'International Relocation Comparison', description: 'Compare take-home compensation across the UK, US, Canada, Australia, Germany, Poland, Pakistan, and India.' },
+      { title: 'International Relocation Comparison', description: `Compare take-home compensation across 15 countries (${VERIFIED_COUNTRY_IDS.map(id => COUNTRIES_CONFIG[id].name).join(', ')}) plus custom mode.` },
     ],
     steps: [
-      'Select your country from the dropdown (UK, US, Canada, Australia, Germany, Poland, Pakistan, India, or Custom %).',
+      `Select your country from the dropdown (15 countries supported: ${VERIFIED_COUNTRY_IDS.map(id => COUNTRIES_CONFIG[id].name).join(', ')}, or Any other country (custom)).`,
       'Enter your gross salary amount and choose your payment frequency (Yearly, Monthly, Weekly, Hourly).',
       'Optionally adjust your weekly working hours baseline (default 40 hours).',
       'Inspect your net take-home pay, line-item deductions, allocation visual, and timeframe breakdown table.',
     ],
     features: [
-      'Verified progressive tax bands and social insurance',
+      'Published statutory progressive tax bands and employee social contributions',
       'Full breakdown across year, month, week, day, and hour',
       'Visual salary allocation stacked distribution',
       'One-click Print and Copy formatted result',
       '100% client-side calculation with zero data storage',
     ],
     faq: [
-      ['What is the difference between gross salary and net salary?', 'Gross salary represents your total compensation package before any compulsory or voluntary payroll deductions are taken out by your employer. Net salary, commonly referred to as take-home pay, is the actual liquid amount deposited into your personal bank account on payday. The gap between the two figures consists of statutory income taxes, employee social insurance contributions, and any optional workplace deductions.'],
+      ['What is the difference between gross salary and net salary?', 'Gross salary represents your total compensation package before any compulsory statutory or voluntary payroll deductions are taken out by your employer. Net salary, commonly referred to as take-home pay, is the actual liquid amount deposited into your personal bank account on payday. The gap between the two figures consists of statutory income taxes, employee social insurance contributions, and any optional workplace deductions.'],
       ['How is income tax deducted from my paycheck?', 'Income tax is deducted at source through automated payroll systems such as PAYE in the UK or withholding in the United States. Tax authorities divide your annual earnings into progressive tax brackets, meaning each tier of income is taxed only at its corresponding marginal rate. Any initial tax-free personal allowance or standard deduction is subtracted first, ensuring lower earners keep a larger portion of their initial wages.'],
       ['How do you calculate hourly and weekly pay from an annual salary?', 'To calculate weekly pay, divide your gross annual salary by 52 weeks, rather than multiplying by an arbitrary 4 weeks per month. To derive your hourly rate, divide that weekly figure by your contracted hours worked per week, such as the standard full-time baseline of 40 hours. This simple two-step conversion yields an accurate baseline of 2,080 annual working hours for standard employment.'],
-      ['How accurate is this salary calculator?', 'This calculator applies verified statutory progressive tax bands and employee social contributions for each supported country, providing reliable planning estimates. However, actual paychecks can vary slightly due to individualized tax codes, pre-tax deductions like salary sacrifice pensions, and year-to-date adjustments. For binding payroll obligations, always refer to your official employer payslip or a certified accountant.'],
-      ['Does this calculation include workplace pensions or student loans?', 'The standard country models focus specifically on statutory government income taxes and mandatory employee social insurance contributions like UK National Insurance or US FICA. They do not automatically include optional workplace pension schemes, student loan repayments, or company healthcare plans unless you use the Custom % mode. To factor in additional regular deductions, you can switch to the Custom % tab to model your complete payroll structure.'],
+      ['How accurate is this salary calculator?', 'This calculator is estimated using published statutory rates from official national revenue authorities for the applicable tax year. However, actual paychecks can vary slightly due to individualized tax codes, pre-tax deductions like salary sacrifice pensions, and year-to-date adjustments. Always confirm with the official source and your formal employer payslip.'],
+      ['Does this calculation include workplace pensions or student loans?', 'The standard country models focus specifically on statutory government income taxes and mandatory employee social insurance contributions like UK National Insurance or US FICA. They do not automatically include optional workplace pension schemes, student loan repayments, or company healthcare plans unless you use the custom mode. To factor in additional regular deductions, you can switch to the "Any other country (custom)" option to model your complete payroll structure.'],
       ['Why does my official payslip differ from this calculator?', 'Your official payslip accounts for unique personal factors such as cumulative tax codes, mid-year salary changes, company benefits-in-kind, and localized regional taxes. In countries like the US, Canada, or Germany, regional state taxes, church taxes, or varying health insurer surcharges can create minor discrepancies from federal baseline rates. Furthermore, overtime pay and non-standard pay periods can introduce slight differences in monthly payroll withholdings.'],
       ['Is any of my personal salary or financial data stored online?', 'No, your financial figures are never stored, transmitted, or tracked on any remote server. Every calculation runs entirely in your local browser tab using client-side JavaScript, protecting your privacy. When you close or refresh your browser tab, all entered compensation numbers are instantly purged from your device memory.'],
-      ['Which countries are currently supported by this tool?', 'The calculator currently provides built-in progressive tax and social contribution rules for the United Kingdom, United States, Canada, Australia, Germany, Poland, Pakistan, and India. Additionally, a versatile "Custom %" mode allows users from any country worldwide to calculate take-home pay using their own flat deduction rates. We regularly verify and update tax thresholds to ensure alignment with the latest national revenue service guidelines.'],
+      ['Which countries are currently supported by this tool?', `The calculator provides built-in progressive tax and social contribution rules estimated from published statutory rates for 15 countries: ${VERIFIED_COUNTRY_IDS.map(id => COUNTRIES_CONFIG[id].name).join(', ')}. Additionally, an "Any other country (custom)" mode with a searchable world currency selector allows users from any jurisdiction worldwide to enter their own flat percentage or progressive tax bands. Results are estimated using published statutory rates; always confirm with the official source.`],
     ],
   },
 };

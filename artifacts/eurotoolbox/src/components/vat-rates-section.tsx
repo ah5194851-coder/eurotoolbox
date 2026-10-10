@@ -165,12 +165,12 @@ export function VatWorkedExamples() {
 
 export function CountryVatLinksList() {
   const countryLinks = [
-    { name: 'UK VAT Calculator', path: '/uk-vat-calculator/', rate: '20% VAT', desc: 'HMRC standard and reduced tax rates in GBP (£)' },
-    { name: 'Germany VAT Calculator', path: '/germany-vat-calculator/', rate: '19% MwSt', desc: 'Mehrwertsteuer & USt standard rates in EUR (€)' },
-    { name: 'France VAT Calculator', path: '/france-vat-calculator/', rate: '20% TVA', desc: 'Taxe sur la valeur ajoutée rates in EUR (€)' },
-    { name: 'Ireland VAT Calculator', path: '/ireland-vat-calculator/', rate: '23% VAT', desc: 'Irish Revenue standard and reduced rates in EUR (€)' },
-    { name: 'UAE VAT Calculator', path: '/uae-vat-calculator/', rate: '5% VAT', desc: 'Federal Tax Authority standard rate in AED' },
-    { name: 'Saudi Arabia VAT Calculator', path: '/saudi-arabia-vat-calculator/', rate: '15% VAT', desc: 'ZATCA standard rate in Saudi Riyals (SAR)' },
+    { flag: '🇬🇧', name: 'UK VAT Calculator', path: '/uk-vat-calculator/', rate: '20% VAT', desc: 'HMRC standard and reduced tax rates in GBP (£)' },
+    { flag: '🇩🇪', name: 'Germany MwSt Calculator', path: '/germany-vat-calculator/', rate: '19% MwSt', desc: 'Mehrwertsteuer & USt standard rates in EUR (€)' },
+    { flag: '🇫🇷', name: 'France TVA Calculator', path: '/france-vat-calculator/', rate: '20% TVA', desc: 'Taxe sur la valeur ajoutée rates in EUR (€)' },
+    { flag: '🇮🇪', name: 'Ireland VAT Calculator', path: '/ireland-vat-calculator/', rate: '23% VAT', desc: 'Irish Revenue standard and reduced rates in EUR (€)' },
+    { flag: '🇦🇪', name: 'UAE VAT Calculator', path: '/uae-vat-calculator/', rate: '5% VAT', desc: 'Federal Tax Authority standard rate in AED' },
+    { flag: '🇸🇦', name: 'Saudi Arabia VAT Calculator', path: '/saudi-arabia-vat-calculator/', rate: '15% VAT', desc: 'ZATCA standard rate in Saudi Riyals (SAR)' },
   ];
 
   return (
@@ -194,8 +194,9 @@ export function CountryVatLinksList() {
           >
             <div>
               <div className="flex items-center justify-between">
-                <span className="font-display text-sm font-semibold text-foreground group-hover:text-primary transition">
-                  {link.name}
+                <span className="font-display text-sm font-semibold text-foreground group-hover:text-primary transition inline-flex items-center gap-1.5">
+                  <span className="text-base">{link.flag}</span>
+                  <span>{link.name}</span>
                 </span>
                 <span className="font-mono-ui text-[10px] font-bold text-accent bg-accent/10 px-2 py-0.5 rounded">
                   {link.rate}
