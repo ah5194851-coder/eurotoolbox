@@ -3,6 +3,7 @@ import { tools } from './App';
 import { toolSeo } from './data/seo';
 import { COUNTRY_VAT_PAGES } from './data/country-vat';
 import { SALARY_LANDING_PAGES } from './data/salary-landing-data';
+import { SALARY_COUNTRY_PAGES } from './data/salary-country-data';
 
 export type PageSeo = {
   title: string;
@@ -104,6 +105,18 @@ export function getPageSeo(path: string): PageSeo {
   if (cleanPath === '/about/') return ABOUT_SEO;
   if (cleanPath === '/contact/') return CONTACT_SEO;
   if (cleanPath === '/terms/') return TERMS_SEO;
+  // Dedicated country salary calculator pages: /tools/salary-calculator/<slug>/
+  const countrySalaryMatch = cleanPath.match(/^\/tools\/salary-calculator\/([^/]+)\/?$/)?.[1];
+  if (countrySalaryMatch && SALARY_COUNTRY_PAGES[countrySalaryMatch]) {
+    const cpData = SALARY_COUNTRY_PAGES[countrySalaryMatch];
+    return {
+      title: cpData.metaTitle,
+      description: cpData.metaDescription,
+      canonicalPath: cpData.canonicalPath,
+      type: "website",
+    };
+  }
+
   const countryVatSlug = cleanPath.replace(/^\/|\/$/g, '');
   if (COUNTRY_VAT_PAGES[countryVatSlug]) {
     const cData = COUNTRY_VAT_PAGES[countryVatSlug];
@@ -347,6 +360,69 @@ export function getJsonLd(path: string): Record<string, unknown> {
             acceptedAnswer: {
               '@type': 'Answer',
               text: faq.answer,
+            },
+          })),
+        },
+        organizationEntity,
+      ],
+    };
+  }
+
+  // Country-specific Salary Calculator pages
+  const countrySalarySlug = cleanPath.match(/^\/tools\/salary-calculator\/([^/]+)$/)?.[1];
+  if (countrySalarySlug && SALARY_COUNTRY_PAGES[countrySalarySlug]) {
+    const cpData = SALARY_COUNTRY_PAGES[countrySalarySlug];
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': `${canonical}#webpage`,
+          url: canonical,
+          name: cpData.metaTitle,
+          description: cpData.metaDescription,
+          inLanguage: 'en',
+          isPartOf: {
+            '@id': absoluteUrl('/#website'),
+          },
+          breadcrumb: {
+            '@id': `${canonical}#breadcrumb`,
+          },
+        },
+        {
+          '@type': 'WebApplication',
+          '@id': `${canonical}#software`,
+          name: cpData.h1,
+          url: canonical,
+          applicationCategory: 'FinanceApplication',
+          operatingSystem: 'All',
+          browserRequirements: 'Requires JavaScript. Requires HTML5.',
+          description: cpData.metaDescription,
+          offers: {
+            '@type': 'Offer',
+            price: '0',
+            priceCurrency: 'USD',
+          },
+        },
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${canonical}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+            { '@type': 'ListItem', position: 2, name: 'Work Tools', item: absoluteUrl('/category/work/') },
+            { '@type': 'ListItem', position: 3, name: 'Salary Calculator', item: absoluteUrl('/tools/salary-calculator/') },
+            { '@type': 'ListItem', position: 4, name: cpData.countryName, item: canonical },
+          ],
+        },
+        {
+          '@type': 'FAQPage',
+          '@id': `${canonical}#faq`,
+          mainEntity: cpData.faqList.map(([question, answer]) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: answer,
             },
           })),
         },

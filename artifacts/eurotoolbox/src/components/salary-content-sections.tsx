@@ -1,7 +1,9 @@
+import { SALARY_COUNTRY_PAGES } from '../data/salary-country-data';
 import { useState } from 'react';
 import { Link } from 'wouter';
 import {
   COUNTRIES_CONFIG,
+  VERIFIED_COUNTRY_IDS,
   calculateSalaryBreakdown,
   type SupportedCountryCode,
 } from '../data/tax-config';
@@ -219,7 +221,7 @@ export function SalaryExamplesTableSection() {
     };
   });
 
-  const countryKeys: SupportedCountryCode[] = ['UK', 'US', 'CA', 'AU', 'DE', 'PL', 'PK', 'IN'];
+  const countryKeys = VERIFIED_COUNTRY_IDS;
 
   return (
     <section className="mt-14 rounded-2xl border border-border bg-card p-6 sm:p-8">
@@ -291,6 +293,51 @@ export function SalaryExamplesTableSection() {
       <p className="mt-3 text-[11px] text-muted-foreground italic">
         * Estimates based on verified single filer rates for {countryConfig.countryName} ({countryConfig.taxYear}). Excludes non-statutory pre-tax employer salary sacrifice and optional pensions.
       </p>
+    </section>
+  );
+}
+
+
+/**
+ * Dedicated Country Portals Showcase Block
+ * Links to each verified country page /tools/salary-calculator/<country-slug>/
+ */
+export function VerifiedCountryPortalsBlock() {
+  const countryPages = Object.values(SALARY_COUNTRY_PAGES);
+
+  return (
+    <section className="mt-14 rounded-2xl border border-border bg-card p-6 sm:p-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+        <div>
+          <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Global Coverage</p>
+          <h2 className="font-display text-xl font-semibold text-foreground">
+            Dedicated Country Salary Calculators
+          </h2>
+        </div>
+        <span className="font-mono-ui text-xs text-muted-foreground">
+          15 Verified Global Economies
+        </span>
+      </div>
+      <p className="text-xs text-muted-foreground mb-4">
+        Each country portal features country-specific statutory tax bands, social insurance rules, official government source links, and tailored worked examples:
+      </p>
+      <div className="grid gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        {countryPages.map(c => (
+          <Link
+            key={c.slug}
+            href={c.canonicalPath}
+            className="group flex items-center justify-between rounded-xl border border-border/80 bg-background px-3 py-2.5 transition hover:border-primary hover:shadow-2xs"
+          >
+            <div className="flex items-center gap-1.5 truncate">
+              <span className="text-sm">🌐</span>
+              <span className="text-xs font-semibold text-foreground group-hover:text-primary transition truncate">
+                {c.countryName}
+              </span>
+            </div>
+            <ArrowRight size={12} className="text-muted-foreground group-hover:text-primary transition shrink-0 ml-1" />
+          </Link>
+        ))}
+      </div>
     </section>
   );
 }
