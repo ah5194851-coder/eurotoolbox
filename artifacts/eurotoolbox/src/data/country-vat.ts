@@ -200,12 +200,16 @@ export interface CountryVatPageData {
   };
   workedExamples: [WorkedVatExample, WorkedVatExample];
   faqs: { question: string; answer: string }[];
+  /** Update this date whenever the page content or tax rates change. */
+  lastUpdated?: string;
 }
 
 export const COUNTRY_VAT_PAGES: Record<string, CountryVatPageData> = {
   'uk-vat-calculator': {
     slug: 'uk-vat-calculator',
     canonicalPath: '/uk-vat-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     countryName: 'United Kingdom',
     taxName: 'Value Added Tax',
     taxAbbr: 'VAT',
@@ -275,6 +279,8 @@ export const COUNTRY_VAT_PAGES: Record<string, CountryVatPageData> = {
   'germany-vat-calculator': {
     slug: 'germany-vat-calculator',
     canonicalPath: '/germany-vat-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     countryName: 'Germany',
     taxName: 'Mehrwertsteuer (MwSt) / Umsatzsteuer (USt)',
     taxAbbr: 'MwSt',
@@ -344,6 +350,8 @@ export const COUNTRY_VAT_PAGES: Record<string, CountryVatPageData> = {
   'france-vat-calculator': {
     slug: 'france-vat-calculator',
     canonicalPath: '/france-vat-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     countryName: 'France',
     taxName: 'Taxe sur la valeur ajoutée (TVA)',
     taxAbbr: 'TVA',
@@ -413,6 +421,8 @@ export const COUNTRY_VAT_PAGES: Record<string, CountryVatPageData> = {
   'ireland-vat-calculator': {
     slug: 'ireland-vat-calculator',
     canonicalPath: '/ireland-vat-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     countryName: 'Ireland',
     taxName: 'Value Added Tax',
     taxAbbr: 'VAT',
@@ -482,6 +492,8 @@ export const COUNTRY_VAT_PAGES: Record<string, CountryVatPageData> = {
   'uae-vat-calculator': {
     slug: 'uae-vat-calculator',
     canonicalPath: '/uae-vat-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     countryName: 'United Arab Emirates',
     taxName: 'Value Added Tax',
     taxAbbr: 'VAT',
@@ -551,6 +563,8 @@ export const COUNTRY_VAT_PAGES: Record<string, CountryVatPageData> = {
   'saudi-arabia-vat-calculator': {
     slug: 'saudi-arabia-vat-calculator',
     canonicalPath: '/saudi-arabia-vat-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     countryName: 'Saudi Arabia',
     taxName: 'Value Added Tax',
     taxAbbr: 'VAT',

@@ -4,6 +4,8 @@ import { toolSeo } from './data/seo';
 import { COUNTRY_VAT_PAGES } from './data/country-vat';
 import { SALARY_LANDING_PAGES } from './data/salary-landing-data';
 import { SALARY_COUNTRY_PAGES } from './data/salary-country-data';
+import { PERCENTAGE_LANDING_PAGES } from './data/percentage-landing-data';
+import { CATEGORY_GUIDES } from './data/category-guides';
 
 export type PageSeo = {
   title: string;
@@ -139,6 +141,17 @@ export function getPageSeo(path: string): PageSeo {
       keywords: undefined,
     };
   }
+  const percentageSlug = cleanPath.replace(/^\/|\/$/g, '');
+  if (PERCENTAGE_LANDING_PAGES[percentageSlug]) {
+    const pData = PERCENTAGE_LANDING_PAGES[percentageSlug];
+    return {
+      title: pData.metaTitle,
+      description: pData.metaDescription,
+      canonicalPath: pData.canonicalPath.replace(/\/+$/, ''),
+      type: 'website',
+      keywords: undefined,
+    };
+  }
   const category = cleanPath.match(/^\/category\/([^/]+)$/)?.[1];
   if (category) return getCategorySeo(category) ?? notFoundSeo(cleanPath);
   const slug = cleanPath.match(/^(?:\/tools|)\/([^/]+)$/)?.[1];
@@ -151,6 +164,48 @@ export function getPageSeo(path: string): PageSeo {
     };
   }
   return notFoundSeo(cleanPath);
+}
+
+export function getRouteLastUpdated(route: string): string | undefined {
+  const clean = route === '/' ? '/' : route.replace(/\/+$/, '');
+
+  // 1. Dedicated country salary calculator pages: /tools/salary-calculator/<slug>
+  const countrySalaryMatch = clean.match(/^\/tools\/salary-calculator\/([^/]+)$/)?.[1];
+  if (countrySalaryMatch && SALARY_COUNTRY_PAGES[countrySalaryMatch]) {
+    return SALARY_COUNTRY_PAGES[countrySalaryMatch].lastUpdated;
+  }
+
+  // 2. 5 satellite salary pages
+  const salaryLandingSlug = clean.replace(/^\/|\/$/g, '');
+  if (SALARY_LANDING_PAGES[salaryLandingSlug]) {
+    return SALARY_LANDING_PAGES[salaryLandingSlug].lastUpdated;
+  }
+
+  // 3. VAT country pages
+  const countryVatSlug = clean.replace(/^\/|\/$/g, '');
+  if (COUNTRY_VAT_PAGES[countryVatSlug]) {
+    return COUNTRY_VAT_PAGES[countryVatSlug].lastUpdated;
+  }
+
+  // 4. Percentage landing pages
+  const percentageSlug = clean.replace(/^\/|\/$/g, '');
+  if (PERCENTAGE_LANDING_PAGES[percentageSlug]) {
+    return PERCENTAGE_LANDING_PAGES[percentageSlug].lastUpdated;
+  }
+
+  // 5. Category pages
+  const categoryMatch = clean.match(/^\/category\/([^/]+)$/)?.[1];
+  if (categoryMatch && CATEGORY_GUIDES[categoryMatch]) {
+    return CATEGORY_GUIDES[categoryMatch].lastUpdated;
+  }
+
+  // 6. Tool pages
+  const slug = clean.match(/^(?:\/tools|)\/([^/]+)$/)?.[1];
+  if (slug && toolSeo[slug]) {
+    return toolSeo[slug].lastUpdated;
+  }
+
+  return undefined;
 }
 
 export function notFoundSeo(path = '/404'): PageSeo {

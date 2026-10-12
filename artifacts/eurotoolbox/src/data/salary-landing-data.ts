@@ -61,12 +61,16 @@ export interface SalaryLandingPageData {
   coreGuideText: string[];
   workedExamples: SalaryWorkedExample[];
   faqs: { question: string; answer: string }[];
+  /** Update this date whenever the page content or tax rates change. */
+  lastUpdated?: string;
 }
 
 export const SALARY_LANDING_PAGES: Record<string, SalaryLandingPageData> = {
   'monthly-salary-calculator': {
     slug: 'monthly-salary-calculator',
     canonicalPath: '/monthly-salary-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-10-12',
     metaTitle: 'Monthly Salary Calculator – Gross Monthly to Net Take-Home Pay',
     metaDescription: 'Calculate monthly salary after tax and statutory deductions. Estimate take-home pay from your monthly gross income across published tax brackets.',
     h1: 'Monthly Salary Calculator (Gross Monthly to Net)',
@@ -131,6 +135,8 @@ export const SALARY_LANDING_PAGES: Record<string, SalaryLandingPageData> = {
   'hourly-to-salary-calculator': {
     slug: 'hourly-to-salary-calculator',
     canonicalPath: '/hourly-to-salary-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-10-12',
     metaTitle: 'Hourly to Salary Calculator – Convert Hourly Wage to Weekly & Annual Pay',
     metaDescription: 'Convert hourly wage to weekly, monthly, and annual salary. Calculate total gross earnings and estimated take-home pay based on your work schedule.',
     h1: 'Hourly to Salary Calculator (Hourly Rate to Weekly, Monthly & Yearly Pay)',
@@ -195,6 +201,8 @@ export const SALARY_LANDING_PAGES: Record<string, SalaryLandingPageData> = {
   'annual-to-monthly-salary-calculator': {
     slug: 'annual-to-monthly-salary-calculator',
     canonicalPath: '/annual-to-monthly-salary-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-10-12',
     metaTitle: 'Annual to Monthly Salary Calculator – Yearly Package to Monthly Gross & Net',
     metaDescription: 'Convert your annual salary package into monthly gross and net take-home pay. Compare job offers and monthly budgets with statutory tax deductions.',
     h1: 'Annual to Monthly Salary Calculator (Yearly Package to Monthly Gross & Net)',
@@ -259,6 +267,8 @@ export const SALARY_LANDING_PAGES: Record<string, SalaryLandingPageData> = {
   'basic-salary-calculator': {
     slug: 'basic-salary-calculator',
     canonicalPath: '/basic-salary-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-10-12',
     metaTitle: 'Basic Salary Calculator – Basic Salary Plus Allowances to Gross & Net',
     metaDescription: 'Calculate basic salary plus housing, transport, and utility allowances. Determine total gross salary and take-home net pay for employment contracts.',
     h1: 'Basic Salary Calculator (Basic Pay Plus Allowances to Gross & Net)',
@@ -323,6 +333,8 @@ export const SALARY_LANDING_PAGES: Record<string, SalaryLandingPageData> = {
   'net-salary-calculator': {
     slug: 'net-salary-calculator',
     canonicalPath: '/net-salary-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-10-12',
     metaTitle: 'Net Salary Calculator – Take-Home Pay Breakdown After Tax & Pension',
     metaDescription: 'Calculate take-home pay after income tax, social security contributions, and pension deductions. Detailed net salary breakdown across annual and monthly pay.',
     h1: 'Net Salary Calculator (Take-Home Pay Breakdown After Tax, Social & Pension)',

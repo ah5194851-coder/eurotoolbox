@@ -60,12 +60,16 @@ export interface PercentageLandingPageData {
   coreGuideText: string[];
   workedExamples: PercentageWorkedExample[];
   faqs: { question: string; answer: string }[];
+  /** Update this date whenever the page content or tax rates change. */
+  lastUpdated?: string;
 }
 
 export const PERCENTAGE_LANDING_PAGES: Record<string, PercentageLandingPageData> = {
   'percentage-increase-calculator': {
     slug: 'percentage-increase-calculator',
     canonicalPath: '/percentage-increase-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     metaTitle: 'Percentage Increase Calculator – Calculate % Growth Online | LoveEasyTool',
     metaDescription: 'Free percentage increase calculator. Calculate growth from an old value to a new value with step-by-step formulas. Instant, private, and client-side.',
     h1: 'Percentage Increase Calculator',
@@ -129,6 +133,8 @@ export const PERCENTAGE_LANDING_PAGES: Record<string, PercentageLandingPageData>
   'percentage-decrease-calculator': {
     slug: 'percentage-decrease-calculator',
     canonicalPath: '/percentage-decrease-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     metaTitle: 'Percentage Decrease Calculator – Calculate % Drop Online | LoveEasyTool',
     metaDescription: 'Free percentage decrease calculator. Easily calculate percentage drops, discounts, losses, and reductions with step-by-step formulas. 100% client-side.',
     h1: 'Percentage Decrease Calculator',
@@ -192,6 +198,8 @@ export const PERCENTAGE_LANDING_PAGES: Record<string, PercentageLandingPageData>
   'percentage-difference-calculator': {
     slug: 'percentage-difference-calculator',
     canonicalPath: '/percentage-difference-calculator',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     metaTitle: 'Percentage Difference Calculator – Compare Two Values | LoveEasyTool',
     metaDescription: 'Free percentage difference calculator. Compare the relative difference between two positive numbers where neither is a baseline. Clear formulas & steps.',
     h1: 'Percentage Difference Calculator',
@@ -255,6 +263,8 @@ export const PERCENTAGE_LANDING_PAGES: Record<string, PercentageLandingPageData>
   'what-is-x-percent-of-y': {
     slug: 'what-is-x-percent-of-y',
     canonicalPath: '/what-is-x-percent-of-y',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     metaTitle: 'What Is X% of Y? Percentage Calculator – Fast & Free | LoveEasyTool',
     metaDescription: 'Find what X percent of Y is with our free online calculator. Step-by-step formulas, solved examples, and instant answers in your browser with zero sign-up.',
     h1: 'What Is X% of Y? Percentage Calculator',
@@ -318,6 +328,8 @@ export const PERCENTAGE_LANDING_PAGES: Record<string, PercentageLandingPageData>
   'how-to-calculate-percentage': {
     slug: 'how-to-calculate-percentage',
     canonicalPath: '/how-to-calculate-percentage',
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     metaTitle: 'How to Calculate Percentage – Complete Guide & Online Tool | LoveEasyTool',
     metaDescription: 'Learn how to calculate percentages with easy step-by-step formulas, phone calculator shortcuts, solved math examples, and an interactive online tool.',
     h1: 'How to Calculate Percentage: The Complete Step-by-Step Guide',

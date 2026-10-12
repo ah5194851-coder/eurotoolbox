@@ -4,10 +4,14 @@ export interface CategoryGuide {
   featuresTitle: string;
   features: { title: string; description: string }[];
   faqs: { question: string; answer: string }[];
+  /** Update this date whenever the page content or tax rates change. */
+  lastUpdated?: string;
 }
 
 export const CATEGORY_GUIDES: Record<string, CategoryGuide> = {
   text: {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     overviewTitle: 'Professional Browser-Based Text Editing and Analysis',
     overviewContent: [
       'LoveEasyTool Text Tools provide a comprehensive suite of utilities designed for copywriters, editors, digital marketers, software developers, and students. Whether analyzing word density for SEO articles, standardizing typographic capitalization across headlines, stripping errant whitespace from scraped databases, or eliminating duplicate lines in large mailing lists, our utilities execute instantly in memory without sending your copy across the network.',
@@ -53,6 +57,8 @@ export const CATEGORY_GUIDES: Record<string, CategoryGuide> = {
   },
 
   numbers: {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     overviewTitle: 'Accurate Mathematical, Financial, and Health Calculators',
     overviewContent: [
       'LoveEasyTool Number Calculators provide instant, dependable mathematical evaluations for daily personal finance, commercial retail accounting, health assessments, and educational problem-solving. From computing complex multi-tier sales discounts to determining exact Value Added Tax (VAT) gross-to-net splits or personal body mass index, our algorithms deliver immediate precision.',
@@ -102,6 +108,8 @@ export const CATEGORY_GUIDES: Record<string, CategoryGuide> = {
   },
 
   files: {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     overviewTitle: 'High-Performance Client-Side Image and File Manipulation',
     overviewContent: [
       'LoveEasyTool File Utilities empower designers, web developers, content creators, and remote workers to compress, resize, crop, and convert graphics directly inside their browser. By leveraging the HTML5 Canvas API and WebAssembly image encoders, we eliminate the need to upload sensitive personal photos, corporate graphics, or product shots to external cloud services.',
@@ -147,6 +155,8 @@ export const CATEGORY_GUIDES: Record<string, CategoryGuide> = {
   },
 
   pdf: {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     overviewTitle: 'Comprehensive In-Browser PDF Document Operations',
     overviewContent: [
       'LoveEasyTool PDF Tools provide secure, lightning-fast document management without costly desktop software licenses or risky cloud uploads. Whether compiling corporate contracts, combining medical records, splitting academic chapters, compressing file sizes for email attachments, or extracting text into editable formats, our browser-native PDF engine completes the task smoothly.',
@@ -196,6 +206,8 @@ export const CATEGORY_GUIDES: Record<string, CategoryGuide> = {
   },
 
   time: {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     overviewTitle: 'Accurate Calendar, Date Difference, and Time Calculations',
     overviewContent: [
       'LoveEasyTool Time Tools make calendar mathematics and date duration planning effortless. Whether calculating the exact business days between two project milestones, determining contractual notice periods, counting down to personal anniversaries, or reconciling work schedules, our date calculators provide instant clarity.',
@@ -237,6 +249,8 @@ export const CATEGORY_GUIDES: Record<string, CategoryGuide> = {
   },
 
   everyday: {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     overviewTitle: 'Essential Everyday Converters for Units, Time Zones, and Currencies',
     overviewContent: [
       'LoveEasyTool Everyday Tools bring together the practical utilities you reach for multiple times a week. From converting metric and imperial measurements for international recipes and engineering specs, to coordinating cross-border meetings across worldwide time zones, our utilities streamline daily decision-making.',
@@ -278,6 +292,8 @@ export const CATEGORY_GUIDES: Record<string, CategoryGuide> = {
   },
 
   work: {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     overviewTitle: 'Career, Employment, and Workplace Productivity Tools',
     overviewContent: [
       'LoveEasyTool Career & Work Tools are built to accelerate your professional journey. From crafting clean, recruiter-approved modern resumes with our free CV builder, to drafting tailored cover letters and calculating take-home pay with our gross-to-net salary estimator, our utilities give job seekers and professionals a decisive edge.',

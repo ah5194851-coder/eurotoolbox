@@ -11,6 +11,8 @@ export interface SalaryCountrySeoData {
   readonly h1: string;
   readonly intro: string;            // 100-150 words high quality intro
   readonly faqList: readonly [string, string][];
+  /** Update this date whenever the page content or tax rates change. */
+  readonly lastUpdated?: string;
 }
 
 export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
@@ -18,6 +20,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "UK",
     slug: "uk",
     canonicalPath: "/tools/salary-calculator/uk",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "United Kingdom",
     flagEmoji: "🇬🇧",
     metaTitle: "UK Salary Calculator 2026/27 – Take-Home Pay & NI (Free)",
@@ -44,6 +48,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "US",
     slug: "united-states",
     canonicalPath: "/tools/salary-calculator/united-states",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "United States",
     flagEmoji: "🇺🇸",
     metaTitle: "US Salary Calculator 2026 – Federal Take-Home Pay & FICA",
@@ -70,6 +76,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "CA",
     slug: "canada",
     canonicalPath: "/tools/salary-calculator/canada",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "Canada",
     flagEmoji: "🇨🇦",
     metaTitle: "Canada Salary Calculator 2026 – Federal Take-Home Pay, CPP & EI",
@@ -96,6 +104,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "AU",
     slug: "australia",
     canonicalPath: "/tools/salary-calculator/australia",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "Australia",
     flagEmoji: "🇦🇺",
     metaTitle: "Australia Salary Calculator 2026–27 – Stage 3 Tax & Take-Home",
@@ -122,6 +132,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "DE",
     slug: "germany",
     canonicalPath: "/tools/salary-calculator/germany",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "Germany",
     flagEmoji: "🇩🇪",
     metaTitle: "Germany Salary Calculator 2026 – Netto Gehalt & Steuern (Free)",
@@ -148,6 +160,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "PL",
     slug: "poland",
     canonicalPath: "/tools/salary-calculator/poland",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "Poland",
     flagEmoji: "🇵🇱",
     metaTitle: "Poland Salary Calculator 2026 – Wynagrodzenie Netto & ZUS (Free)",
@@ -174,6 +188,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "PK",
     slug: "pakistan",
     canonicalPath: "/tools/salary-calculator/pakistan",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "Pakistan",
     flagEmoji: "🇵🇰",
     metaTitle: "Pakistan Salary Calculator FY 2026–27 – FBR Tax on Salary (Free)",
@@ -200,6 +216,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "IN",
     slug: "india",
     canonicalPath: "/tools/salary-calculator/india",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "India",
     flagEmoji: "🇮🇳",
     metaTitle: "India Salary Calculator FY 2026–27 – New Regime 115BAC & In-Hand",
@@ -226,6 +244,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "UAE",
     slug: "uae",
     canonicalPath: "/tools/salary-calculator/uae",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "United Arab Emirates",
     flagEmoji: "🇦🇪",
     metaTitle: "UAE Salary Calculator 2026 – Take-Home Pay & GPSSA (0% Tax)",
@@ -252,6 +272,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "SA",
     slug: "saudi-arabia",
     canonicalPath: "/tools/salary-calculator/saudi-arabia",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "Saudi Arabia",
     flagEmoji: "🇸🇦",
     metaTitle: "Saudi Arabia Salary Calculator 2026 – Net Pay & GOSI (0% Tax)",
@@ -278,6 +300,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "IE",
     slug: "ireland",
     canonicalPath: "/tools/salary-calculator/ireland",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "Ireland",
     flagEmoji: "🇮🇪",
     metaTitle: "Ireland Salary Calculator 2026 – PAYE, USC & PRSI Take-Home Pay",
@@ -304,6 +328,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "NZ",
     slug: "new-zealand",
     canonicalPath: "/tools/salary-calculator/new-zealand",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "New Zealand",
     flagEmoji: "🇳🇿",
     metaTitle: "New Zealand Salary Calculator 2026–27 – PAYE & ACC Take-Home Pay",
@@ -330,6 +356,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "SG",
     slug: "singapore",
     canonicalPath: "/tools/salary-calculator/singapore",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "Singapore",
     flagEmoji: "🇸🇬",
     metaTitle: "Singapore Salary Calculator 2026 – IRAS Tax & CPF Take-Home Pay",
@@ -356,6 +384,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "NL",
     slug: "netherlands",
     canonicalPath: "/tools/salary-calculator/netherlands",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "Netherlands",
     flagEmoji: "🇳🇱",
     metaTitle: "Netherlands Salary Calculator 2026 – Bruto Netto Box 1 (Free)",
@@ -382,6 +412,8 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     countryId: "ZA",
     slug: "south-africa",
     canonicalPath: "/tools/salary-calculator/south-africa",
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: "2026-09-23",
     countryName: "South Africa",
     flagEmoji: "🇿🇦",
     metaTitle: "South Africa Salary Calculator 2026–27 – SARS PAYE & Net Pay",

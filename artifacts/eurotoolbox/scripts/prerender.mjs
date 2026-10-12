@@ -6,7 +6,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const publicDir = resolve(root, 'dist/public');
 const sourcePublicDir = resolve(root, 'public');
 const ssrModule = await import(pathToFileURL(resolve(root, '.prerender/ssr-entry.js')).href);
-const { PRERENDER_ROUTES, SITEMAP_ROUTES, renderRoute, renderHead, absoluteUrl, SITE_URL, tools } = ssrModule;
+const { PRERENDER_ROUTES, SITEMAP_ROUTES, renderRoute, renderHead, absoluteUrl, SITE_URL, tools, getRouteLastUpdated } = ssrModule;
 const template = await readFile(resolve(publicDir, 'index.html'), 'utf8');
 const stylesheets = [...template.matchAll(/<link[^>]+rel="stylesheet"[^>]*>/g)].map(match => match[0]).join('\n    ');
 const scripts = [...template.matchAll(/<script type="module"[^>]+><\/script>/g)].map(match => match[0]).join('\n    ');
@@ -55,60 +55,14 @@ for (const route of PRERENDER_ROUTES) {
 const notFoundBody = renderRoute('/404');
 await writeFile(resolve(publicDir, '404.html'), documentFor('/404', notFoundBody));
 
-import { stat } from 'node:fs/promises';
-
-function getRouteSourceFile(route) {
-  const clean = route === '/' ? '/' : route.replace(/\/+$/, '');
-  if (clean.startsWith('/tools/salary-calculator/') && clean !== '/tools/salary-calculator') {
-    return resolve(root, 'src/data/salary-country-data.ts');
-  }
-  if ([
-    '/monthly-salary-calculator',
-    '/hourly-to-salary-calculator',
-    '/annual-to-monthly-salary-calculator',
-    '/basic-salary-calculator',
-    '/net-salary-calculator'
-  ].includes(clean)) {
-    return resolve(root, 'src/data/salary-landing-data.ts');
-  }
-  if (clean === '/tools/salary-calculator') {
-    return resolve(root, 'src/components/salary-calculator.tsx');
-  }
-  if (clean.endsWith('-vat-calculator')) {
-    return resolve(root, 'src/data/country-vat.ts');
-  }
-  if (clean.startsWith('/tools/')) {
-    const slug = clean.replace(/^\/tools\/|\/$/g, '');
-    return resolve(root, 'src/tool-page.tsx');
-  }
-  if (clean.startsWith('/category/')) {
-    return resolve(root, 'src/data/category-guides.ts');
-  }
-  if (clean === '/about') return resolve(root, 'src/about-page.tsx');
-  if (clean === '/contact') return resolve(root, 'src/contact-page.tsx');
-  if (clean === '/terms') return resolve(root, 'src/terms-page.tsx');
-  if (clean === '/privacy') return resolve(root, 'src/privacy-page.tsx');
-  if (clean === '/books') return resolve(root, 'src/books-page.tsx');
-  return resolve(root, 'src/home-page.tsx');
-}
-
-async function getRouteLastmod(route) {
-  try {
-    const sourcePath = getRouteSourceFile(route);
-    const fileStat = await stat(sourcePath);
-    return fileStat.mtime.toISOString().slice(0, 10);
-  } catch {
-    return today;
-  }
-}
-
 const crawlRoutes = Array.from(new Set(SITEMAP_ROUTES.map(r => r === '/' ? '/' : r.replace(/\/+$/, ''))));
-const routeEntries = await Promise.all(
-  crawlRoutes.map(async (route) => {
-    const lastmod = await getRouteLastmod(route);
+const routeEntries = crawlRoutes.map((route) => {
+  const lastmod = getRouteLastUpdated?.(route);
+  if (lastmod) {
     return `  <url><loc>${absoluteUrl(route)}</loc><lastmod>${lastmod}</lastmod></url>`;
-  })
-);
+  }
+  return `  <url><loc>${absoluteUrl(route)}</loc></url>`;
+});
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${routeEntries.join('\n')}

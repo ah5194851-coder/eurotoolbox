@@ -222,7 +222,7 @@ export function SalaryCalculator({
       `- Daily:   ${sym}${fmt(result.netPayDaily)}`,
       `- Hourly:  ${sym}${fmt(result.netPayHourly)}`,
       `--------------------------------------------------`,
-      `Calculated on LoveEasyTool (loveeasytool.com/tools/salary-calculator/)`,
+      `Calculated on LoveEasyTool (loveeasytool.com/tools/salary-calculator)`,
       `Disclaimer: Estimate only based on ${countryConfig.taxYear} rates.`,
     ].join('\n');
 

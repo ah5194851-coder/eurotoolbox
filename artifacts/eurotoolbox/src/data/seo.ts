@@ -25,10 +25,14 @@ export type ToolSeo = {
   steps: string[];
   features: string[];
   faq: [string, string][];
+  /** Update this date whenever the page content or tax rates change. */
+  lastUpdated?: string;
 };
 
 export const toolSeo: Record<string, ToolSeo> = {
   'word-counter': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Word Counter: Free Word and Character Counter | LoveEasyTool',
     description: 'Count words, characters, sentences, lines and estimated reading time with our free online word counter. All text is analyzed privately in your browser with zero uploads.',
     heading: 'Instant word counting, line metrics, and reading time estimation',
@@ -78,6 +82,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'character-counter': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Character Counter: Letter and Space Counter | LoveEasyTool',
     description: 'Count characters with and without spaces in real time with our free online character counter. Validate exact text limits for social media, ads, and web forms.',
     heading: 'Precise character limit auditing with and without whitespace',
@@ -127,6 +133,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'case-converter': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Case Converter: Upper, Lower and Title Case | LoveEasyTool',
     description: 'Convert text to UPPERCASE, lowercase, Title Case, or Sentence case instantly with our free online case converter. Private in-browser tool with zero sign-up.',
     heading: 'Format letter capitalization across sentences, titles, and data',
@@ -176,6 +184,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'percentage-calculator': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Percentage Calculator: Fast Percentage Tool | LoveEasyTool',
     description: 'Calculate percentage increases, decreases, discounts, and proportions quickly with our free online percentage calculator. Accurate math with zero sign-up.',
     heading: 'Fast mathematical percentage, increase, and proportion solver',
@@ -225,6 +235,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'vat-calculator': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'VAT Calculator: Calculate Gross and Net VAT | LoveEasyTool',
     description: 'Calculate Value Added Tax (VAT) forward and backward with our free online VAT calculator. Add or remove VAT from net or gross prices in seconds.',
     heading: 'Transparent Value Added Tax computation and invoice pricing',
@@ -274,6 +286,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'loan-calculator': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Loan Calculator: Monthly EMI and Interest | LoveEasyTool',
     description: 'Estimate monthly loan payments, total interest costs, and repayment schedules with our free online loan calculator. Simple, private borrowing math.',
     heading: 'Clear monthly loan repayment and total interest estimation',
@@ -323,6 +337,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'bmi-calculator': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'BMI Calculator: Body Mass Index and Weight | LoveEasyTool',
     description: 'Calculate your Body Mass Index (BMI) and check healthy weight ranges with our free online BMI calculator. Fast, private health screening in your browser.',
     heading: 'Scientific Body Mass Index computation and healthy weight ranges',
@@ -372,6 +388,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'image-compressor': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Image Compressor: Reduce File Size Online | LoveEasyTool',
     description: 'Compress JPG, PNG, and WebP images directly in your browser with our free online image compressor. Reduce file size without quality loss or server uploads.',
     heading: 'Client-side HTML5 canvas image compression and optimization',
@@ -421,6 +439,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'merge-pdf': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Merge PDF: Combine PDF Files Online Free | LoveEasyTool',
     description: 'Combine multiple PDF documents into a single organized file with our free online PDF merger. 100% private, client-side PDF binding with no uploads.',
     heading: 'Fast and private browser-based PDF document concatenation',
@@ -470,6 +490,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'cv-builder': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'CV Builder: Free Resume Maker and PDF Export | LoveEasyTool',
     description: 'Build an ATS-friendly professional CV and resume with live preview and clean PDF export. 100% free resume builder with no sign-up or hidden paywalls.',
     heading: 'Professional ATS-compliant resume creation with instant browser export',
@@ -520,6 +542,8 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   /* WEAK TOOLS - HONEST TRANSPARENCY */
   'pdf-to-word': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'PDF Text Extractor: Extract Text from PDF | LoveEasyTool',
     description: 'Extract plain text and paragraphs from searchable PDF documents directly in your browser. Note: Scanned images and complex layouts are extracted as plain text.',
     heading: 'Fast client-side textual extraction from searchable PDF documents',
@@ -569,6 +593,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'jpg-to-pdf': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'JPG to PDF: Convert JPG Images to PDF Online | LoveEasyTool',
     description: 'Format and prepare images for high-resolution PDF export using your browser’s native print engine. No external uploads or cloud rendering required.',
     heading: 'Format photos and scans for clean browser-native PDF export',
@@ -618,6 +644,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'currency-converter': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Currency Converter: Live Exchange Rates | LoveEasyTool',
     description: 'Compare currency conversions using standard transparent reference rates. Please note: Live market forex rates are not fetched; use for quick estimations.',
     heading: 'Instant currency conversion using transparent baseline reference rates',
@@ -667,6 +695,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'compress-pdf': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Compress PDF: In-Browser PDF Optimizer | LoveEasyTool',
     description: 'Optimize and re-compress PDF files locally by stripping duplicate metadata and streams using pdf-lib in your browser. Results vary depending on original structure.',
     heading: 'Client-side PDF stream optimization and metadata cleanup',
@@ -717,6 +747,8 @@ export const toolSeo: Record<string, ToolSeo> = {
 
   /* OTHER TOOLS */
   'text-cleaner': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Text Cleaner: Remove Extra Spaces and Lines | LoveEasyTool',
     description: 'Clean messy text by removing unwanted spaces, extra line breaks, and formatting clutter with our free online text cleaner. 100% private in-browser utility.',
     heading: 'Clean whitespace, collapse blank lines, and tidy messy text',
@@ -745,6 +777,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'duplicate-line-remover': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Duplicate Line Remover: Deduplicate Lists | LoveEasyTool',
     description: 'Remove duplicate lines from lists and text while preserving original ordering with our free online duplicate remover. Fast, client-side, and fully private.',
     heading: 'Remove duplicate lines and clean up lists with order preservation',
@@ -773,6 +807,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'discount-calculator': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Discount Calculator: Sale Price and Savings | LoveEasyTool',
     description: 'Calculate sale prices and total savings from percentage discounts instantly with our free online discount calculator. Fast, simple math with no sign-up.',
     heading: 'Instant sale price calculation and discount savings breakdown',
@@ -801,6 +837,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'age-calculator': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Age Calculator: Calculate Exact Age Online | LoveEasyTool',
     description: 'Calculate your exact age in years, months, and days from your date of birth with our free online age calculator. Instant, accurate date calculations.',
     heading: 'Precise chronological age computation in years, months, and days',
@@ -852,6 +890,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'image-resizer': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Image Resizer: Resize Photo Dimensions Online | LoveEasyTool',
     description: 'Resize image pixel dimensions and aspect ratios online with our free image resizer. Scale photos for web and social media with zero uploads or quality loss.',
     heading: 'High-quality image pixel dimension resizing',
@@ -878,6 +918,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'jpg-to-png': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'JPG to PNG: Convert Images with High Quality | LoveEasyTool',
     description: 'Convert JPG images to high-resolution PNG format in your browser with our free online converter. Fast, private local file conversion with zero cloud uploads.',
     heading: 'Lossless JPG to PNG format conversion in browser',
@@ -904,6 +946,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'png-to-jpg': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'PNG to JPG: Convert Images to Compact JPG | LoveEasyTool',
     description: 'Convert PNG pictures into compact, lightweight JPG files online with our free converter. Reduce image file sizes with zero quality loss and complete privacy.',
     heading: 'Fast PNG to compact JPEG conversion',
@@ -930,6 +974,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'webp-converter': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'WebP Converter: Convert WebP to JPG and PNG | LoveEasyTool',
     description: 'Convert WebP images to universal JPG or PNG formats, or convert photos to next-gen WebP online. Free, fast browser conversion with zero server uploads.',
     heading: 'Next-gen WebP image format conversion and decoding',
@@ -956,6 +1002,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'image-cropper': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Image Cropper: Crop Photos Online Privately | LoveEasyTool',
     description: 'Crop images to custom aspect ratios or square profile dimensions directly in your browser with our free online image cropper. 100% private with no sign-up.',
     heading: 'Interactive client-side image cropping and framing',
@@ -982,6 +1030,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'word-to-pdf': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Word to PDF: Create PDF Documents from Text | LoveEasyTool',
     description: 'Create clean, downloadable PDF documents from text directly in your browser with our free online Word to PDF tool. Zero sign-up, fast, and completely private.',
     heading: 'Browser-based document drafting and instant PDF generation',
@@ -1008,6 +1058,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'split-pdf': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Split PDF: Extract Pages from PDF Online | LoveEasyTool',
     description: 'Extract specific pages or page ranges from PDF files into a new document with our free online PDF splitter. Fast, client-side, and private with zero uploads.',
     heading: 'Extract specific pages and ranges from PDF documents',
@@ -1034,6 +1086,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'pdf-to-jpg': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'PDF to JPG: Render PDF Pages to Images | LoveEasyTool',
     description: 'Render and export PDF document pages into high-resolution JPG images directly in your browser with our free online PDF to JPG tool. 100% private and free.',
     heading: 'High-resolution PDF page rendering into JPG image files',
@@ -1060,6 +1114,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'date-calculator': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Date Calculator: Days Between Dates Online | LoveEasyTool',
     description: 'Calculate exact calendar days between two dates or add and subtract days with our free online date calculator. Instant, accurate calendar math with no sign-up.',
     heading: 'Calendar duration, days between dates, and future date calculator',
@@ -1087,6 +1143,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'unit-converter': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Unit Converter: Length, Weight, Temp Online | LoveEasyTool',
     description: 'Convert between metric and imperial units for length, weight, temperature, and volume with our free online unit converter. Instant, accurate, and 100% free.',
     heading: 'Universal metric and imperial measurement conversion',
@@ -1114,6 +1172,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'time-zone-converter': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Time Zone Converter: Compare World Clocks | LoveEasyTool',
     description: 'Compare time zones across world cities without guesswork with our free online time zone converter. Schedule international meetings effortlessly with no sign-up.',
     heading: 'Cross-city time comparison and international meeting planner',
@@ -1141,6 +1201,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'cover-letter-generator': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-09-23',
     title: 'Cover Letter Generator: Free Letter Drafts | LoveEasyTool',
     description: 'Generate focused, professional cover letters tailored to your job applications with our free online cover letter generator. Fast, free, and no sign-up required.',
     heading: 'Customized professional cover letter drafting in minutes',
@@ -1168,6 +1230,8 @@ export const toolSeo: Record<string, ToolSeo> = {
   },
 
   'salary-calculator': {
+    // Update this date whenever the page content or tax rates change.
+    lastUpdated: '2026-10-12',
     title: 'Salary Calculator – Gross to Net Pay (Free & Instant)',
     description: 'Free salary calculator: convert gross to net pay with tax and deductions per year, month, week and hour. No sign-up, fully private.',
     heading: 'Salary Calculator – Gross to Net Pay',

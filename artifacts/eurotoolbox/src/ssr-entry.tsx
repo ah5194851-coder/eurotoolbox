@@ -16,11 +16,13 @@ import CountryVatPage from './country-vat-page';
 import SalaryLandingPage from './salary-landing-page';
 import SalaryCountryPage from './salary-country-page';
 import { SALARY_COUNTRY_PAGES } from './data/salary-country-data';
-import { categorySlugs, renderHead, absoluteUrl } from './seo';
+import PercentageLandingPage from './percentage-landing-page';
+import { PERCENTAGE_LANDING_PAGES } from './data/percentage-landing-data';
+import { categorySlugs, renderHead, absoluteUrl, getRouteLastUpdated } from './seo';
 import { SITE_URL } from './site-config';
 import { tools } from './App';
 
-export { renderHead, absoluteUrl, SITE_URL, tools };
+export { renderHead, absoluteUrl, SITE_URL, tools, getRouteLastUpdated };
 
 export const COUNTRY_VAT_ROUTES = [
   '/uk-vat-calculator',
@@ -41,6 +43,8 @@ export const SALARY_LANDING_ROUTES = [
   '/net-salary-calculator',
 ];
 
+export const PERCENTAGE_LANDING_ROUTES = Object.values(PERCENTAGE_LANDING_PAGES).map(p => p.canonicalPath);
+
 export const PRERENDER_ROUTES = [
   '/',
   '/about',
@@ -53,6 +57,7 @@ export const PRERENDER_ROUTES = [
   ...COUNTRY_VAT_ROUTES,
   ...SALARY_LANDING_ROUTES,
   ...SALARY_COUNTRY_ROUTES,
+  ...PERCENTAGE_LANDING_ROUTES,
 ];
 export const SITEMAP_ROUTES = [
   '/',
@@ -66,6 +71,7 @@ export const SITEMAP_ROUTES = [
   ...COUNTRY_VAT_ROUTES,
   ...SALARY_LANDING_ROUTES,
   ...SALARY_COUNTRY_ROUTES,
+  ...PERCENTAGE_LANDING_ROUTES,
 ];
 
 export function renderRoute(path: string) {
@@ -114,6 +120,12 @@ export function renderRoute(path: string) {
             <Route path="/basic-salary-calculator/" component={() => <SalaryLandingPage slug="basic-salary-calculator" />} />
             <Route path="/net-salary-calculator" component={() => <SalaryLandingPage slug="net-salary-calculator" />} />
             <Route path="/net-salary-calculator/" component={() => <SalaryLandingPage slug="net-salary-calculator" />} />
+            {Object.values(PERCENTAGE_LANDING_PAGES).map(p => (
+              <Route key={p.slug} path={p.canonicalPath} component={() => <PercentageLandingPage slug={p.slug} />} />
+            ))}
+            {Object.values(PERCENTAGE_LANDING_PAGES).map(p => (
+              <Route key={`${p.slug}-slash`} path={`${p.canonicalPath}/`} component={() => <PercentageLandingPage slug={p.slug} />} />
+            ))}
             <Route path="/category/:category" component={CategoryPage} />
             <Route path="/category/:category/" component={CategoryPage} />
             <Route path="/tools/:tool" component={ToolPage} />
