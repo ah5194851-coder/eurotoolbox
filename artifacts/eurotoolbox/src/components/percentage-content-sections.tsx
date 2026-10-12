@@ -231,11 +231,11 @@ export function PercentageQuickRefTable() {
 
 export function PercentageLinksList() {
   const links = [
-    { name: 'Percentage Increase Calculator', path: '/percentage-increase-calculator/', badge: 'Growth', desc: 'Calculate percentage growth between an old and new amount' },
-    { name: 'Percentage Decrease Calculator', path: '/percentage-decrease-calculator/', badge: 'Reduction', desc: 'Calculate markdown, loss, or percentage reduction from a baseline' },
-    { name: 'Percentage Difference Calculator', path: '/percentage-difference-calculator/', badge: 'Comparison', desc: 'Compare the relative spread between two numbers without a baseline' },
-    { name: 'What Is X% of Y? Calculator', path: '/what-is-x-percent-of-y/', badge: 'Portion', desc: 'Instant calculation of any percentage fraction of a total' },
-    { name: 'How to Calculate Percentage Guide', path: '/how-to-calculate-percentage/', badge: 'Guide', desc: 'Universal step-by-step formulas, shortcuts, and phone methods' },
+    { name: 'Percentage Increase Calculator', path: '/percentage-increase-calculator', badge: 'Growth', desc: 'Calculate percentage growth between an old and new amount' },
+    { name: 'Percentage Decrease Calculator', path: '/percentage-decrease-calculator', badge: 'Reduction', desc: 'Calculate markdown, loss, or percentage reduction from a baseline' },
+    { name: 'Percentage Difference Calculator', path: '/percentage-difference-calculator', badge: 'Comparison', desc: 'Compare the relative spread between two numbers without a baseline' },
+    { name: 'What Is X% of Y? Calculator', path: '/what-is-x-percent-of-y', badge: 'Portion', desc: 'Instant calculation of any percentage fraction of a total' },
+    { name: 'How to Calculate Percentage Guide', path: '/how-to-calculate-percentage', badge: 'Guide', desc: 'Universal step-by-step formulas, shortcuts, and phone methods' },
   ];
 
   return (
@@ -279,15 +279,15 @@ export function PercentageLinksList() {
 
       <div className="mt-6 pt-5 border-t border-border/60 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
         <span className="font-semibold text-foreground">Calculate Payroll & Deductions:</span>
-        <Link href="/tools/salary-calculator/" className="hover:text-primary hover:underline font-medium">
+        <Link href="/tools/salary-calculator" className="hover:text-primary hover:underline font-medium">
           Salary Calculator (Gross to Net Pay)
         </Link>
         <span>·</span>
-        <Link href="/tools/vat-calculator/" className="hover:text-primary hover:underline">
+        <Link href="/tools/vat-calculator" className="hover:text-primary hover:underline">
           VAT Calculator
         </Link>
         <span>·</span>
-        <Link href="/tools/loan-calculator/" className="hover:text-primary hover:underline">
+        <Link href="/tools/loan-calculator" className="hover:text-primary hover:underline">
           Loan Calculator
         </Link>
       </div>

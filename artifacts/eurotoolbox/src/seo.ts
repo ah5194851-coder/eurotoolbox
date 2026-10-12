@@ -25,7 +25,7 @@ export const HOME_SEO: PageSeo = {
 export const BOOKS_SEO: PageSeo = {
   title: 'Books by Ali Hassan | LoveEasyTool',
   description: 'Discover practical books and beginner guides by Ali Hassan on AI, cybersecurity, remote freelancing, personal finance, and high-performance productivity.',
-  canonicalPath: '/books/',
+  canonicalPath: '/books',
   type: 'website',
   keywords: 'books by ali hassan, cybersecurity guide, ai guide, remote work, freelancing, productivity, personal finance, LoveEasyTool',
 };
@@ -33,7 +33,7 @@ export const BOOKS_SEO: PageSeo = {
 export const PRIVACY_SEO: PageSeo = {
   title: 'Privacy Policy: Zero-Upload Local Processing | LoveEasyTool',
   description: 'Read how LoveEasyTool protects your privacy with browser-side processing. Your files, documents, and data never leave your device or reach any server.',
-  canonicalPath: '/privacy/',
+  canonicalPath: '/privacy',
   type: 'article',
   keywords: 'privacy policy, local processing, private tools, zero uploads, LoveEasyTool privacy',
 };
@@ -41,7 +41,7 @@ export const PRIVACY_SEO: PageSeo = {
 export const ABOUT_SEO: PageSeo = {
   title: 'About Us | LoveEasyTool',
   description: 'Learn about LoveEasyTool, founded by Ali Hassan to deliver calm, free, private online tools with zero sign-up and browser-first client-side processing.',
-  canonicalPath: '/about/',
+  canonicalPath: '/about',
   type: 'website',
   keywords: 'about loveeasytool, ali hassan, free online tools, client-side tools, private browser utilities, online tools, free online utilities, calculators',
 };
@@ -49,7 +49,7 @@ export const ABOUT_SEO: PageSeo = {
 export const CONTACT_SEO: PageSeo = {
   title: 'Contact Support & Feedback | LoveEasyTool',
   description: 'Contact the LoveEasyTool team for tool requests, feedback, bug reports, and book inquiries. We respond within 24 to 48 business hours.',
-  canonicalPath: '/contact/',
+  canonicalPath: '/contact',
   type: 'website',
   keywords: 'contact loveeasytool, tool suggestions, bug report, ali hassan support',
 };
@@ -57,7 +57,7 @@ export const CONTACT_SEO: PageSeo = {
 export const TERMS_SEO: PageSeo = {
   title: 'Terms of Service | LoveEasyTool',
   description: 'Read the terms of service for using LoveEasyTool free browser tools, including client-side data ownership and usage guidelines.',
-  canonicalPath: '/terms/',
+  canonicalPath: '/terms',
   type: 'article',
   keywords: 'terms of service, user agreement, free tool usage, LoveEasyTool terms',
 };
@@ -75,7 +75,7 @@ const CATEGORY_COPY: Record<string, { name: string; description: string }> = {
 export const categorySlugs = Object.keys(CATEGORY_COPY);
 
 export function categoryPath(category: string) {
-  return `/category/${category.toLowerCase()}/`;
+  return `/category/${category.toLowerCase()}`;
 }
 
 export function getCategorySeo(slug: string): PageSeo | undefined {
@@ -85,7 +85,7 @@ export function getCategorySeo(slug: string): PageSeo | undefined {
   return {
     title: `${copy.name} - Free Online Utilities | LoveEasyTool`,
     description: copy.description,
-    canonicalPath: `/category/${cleanSlug}/`,
+    canonicalPath: `/category/${cleanSlug}`,
     type: 'website',
     keywords: `${copy.name.toLowerCase()}, free online utilities, browser tools, LoveEasyTool`,
   };
@@ -93,26 +93,26 @@ export function getCategorySeo(slug: string): PageSeo | undefined {
 
 export function getToolPath(slug: string) {
   const cleanSlug = slug.replace(/^\/|\/$/g, '');
-  return `/tools/${cleanSlug}/`;
+  return `/tools/${cleanSlug}`;
 }
 
 export function getPageSeo(path: string): PageSeo {
   const raw = path.split(/[?#]/)[0] || '/';
-  const cleanPath = raw === '/' ? '/' : (raw.endsWith('/') ? raw : `${raw}/`);
+  const cleanPath = raw === '/' ? '/' : raw.replace(/\/+$/, '');
   if (cleanPath === '/') return HOME_SEO;
-  if (cleanPath === '/books/') return BOOKS_SEO;
-  if (cleanPath === '/privacy/') return PRIVACY_SEO;
-  if (cleanPath === '/about/') return ABOUT_SEO;
-  if (cleanPath === '/contact/') return CONTACT_SEO;
-  if (cleanPath === '/terms/') return TERMS_SEO;
-  // Dedicated country salary calculator pages: /tools/salary-calculator/<slug>/
-  const countrySalaryMatch = cleanPath.match(/^\/tools\/salary-calculator\/([^/]+)\/?$/)?.[1];
+  if (cleanPath === '/books') return BOOKS_SEO;
+  if (cleanPath === '/privacy') return PRIVACY_SEO;
+  if (cleanPath === '/about') return ABOUT_SEO;
+  if (cleanPath === '/contact') return CONTACT_SEO;
+  if (cleanPath === '/terms') return TERMS_SEO;
+  // Dedicated country salary calculator pages: /tools/salary-calculator/<slug>
+  const countrySalaryMatch = cleanPath.match(/^\/tools\/salary-calculator\/([^/]+)$/)?.[1];
   if (countrySalaryMatch && SALARY_COUNTRY_PAGES[countrySalaryMatch]) {
     const cpData = SALARY_COUNTRY_PAGES[countrySalaryMatch];
     return {
       title: cpData.metaTitle,
       description: cpData.metaDescription,
-      canonicalPath: cpData.canonicalPath,
+      canonicalPath: cpData.canonicalPath.replace(/\/+$/, ''),
       type: "website",
     };
   }
@@ -123,7 +123,7 @@ export function getPageSeo(path: string): PageSeo {
     return {
       title: cData.metaTitle,
       description: cData.metaDescription,
-      canonicalPath: cData.canonicalPath,
+      canonicalPath: cData.canonicalPath.replace(/\/+$/, ''),
       type: 'website',
       keywords: `${cData.countryName.toLowerCase()} vat calculator, ${cData.taxAbbr.toLowerCase()}, calculate vat, online vat tool, LoveEasyTool`,
     };
@@ -134,14 +134,14 @@ export function getPageSeo(path: string): PageSeo {
     return {
       title: sData.metaTitle,
       description: sData.metaDescription,
-      canonicalPath: sData.canonicalPath,
+      canonicalPath: sData.canonicalPath.replace(/\/+$/, ''),
       type: 'website',
       keywords: undefined,
     };
   }
-  const category = cleanPath.match(/^\/category\/([^/]+)\/?$/)?.[1];
+  const category = cleanPath.match(/^\/category\/([^/]+)$/)?.[1];
   if (category) return getCategorySeo(category) ?? notFoundSeo(cleanPath);
-  const slug = cleanPath.match(/^(?:\/tools|)\/([^/]+)\/?$/)?.[1];
+  const slug = cleanPath.match(/^(?:\/tools|)\/([^/]+)$/)?.[1];
   if (slug && toolSeo[slug]) {
     return {
       ...toolSeo[slug],
@@ -154,17 +154,20 @@ export function getPageSeo(path: string): PageSeo {
 }
 
 export function notFoundSeo(path = '/404'): PageSeo {
+  const clean = path === '/' ? '/' : path.replace(/\/+$/, '');
   return {
     title: 'Page Not Found | LoveEasyTool',
     description: 'The requested LoveEasyTool page could not be found. Explore our free, private online tools for text, numbers, PDFs, and files directly in your browser.',
-    canonicalPath: path.endsWith('/') ? path : `${path}/`,
+    canonicalPath: clean,
     type: 'website',
     noindex: true,
   };
 }
 
 export function absoluteUrl(path: string) {
-  return `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`;
+  if (path === '/' || path === '') return `${SITE_URL}`;
+  const clean = path.replace(/\/+$/, '');
+  return `${SITE_URL}${clean.startsWith('/') ? clean : `/${clean}`}`;
 }
 
 function jsonLd(value: unknown) {
@@ -645,7 +648,7 @@ export function renderHead(path: string) {
     ? 'noindex, follow'
     : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
   const jsonScript = `<script type="application/ld+json">${jsonLd(getJsonLd(path))}</script>`;
-  const isSalaryCalculator = page.canonicalPath === '/tools/salary-calculator/';
+  const isSalaryCalculator = page.canonicalPath === '/tools/salary-calculator' || page.canonicalPath === '/tools/salary-calculator/';
   const keywordsTag = (page.keywords && !isSalaryCalculator) ? `<meta name="keywords" content="${escapeHtml(page.keywords)}" />` : '';
   return [
     `<title>${escapeHtml(page.title)}</title>`,
@@ -710,8 +713,9 @@ export function updateDocumentHead(path: string) {
     'meta[name="twitter:image:alt"]': OG_IMAGE_ALT,
   };
 
-  const isSalaryPage = page.canonicalPath === '/tools/salary-calculator/' ||
-    Object.values(SALARY_LANDING_PAGES).some(p => p.canonicalPath === page.canonicalPath);
+  const isSalaryPage = page.canonicalPath === '/tools/salary-calculator' ||
+    page.canonicalPath === '/tools/salary-calculator/' ||
+    Object.values(SALARY_LANDING_PAGES).some(p => p.canonicalPath.replace(/\/+$/, '') === page.canonicalPath.replace(/\/+$/, ''));
 
   if (isSalaryPage || !page.keywords) {
     delete tags['meta[name="keywords"]'];

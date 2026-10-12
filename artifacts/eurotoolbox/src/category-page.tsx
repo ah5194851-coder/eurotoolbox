@@ -66,7 +66,7 @@ export default function CategoryPage() {
           </div>
           <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {filtered.map(tool => (
-              <Link key={tool.slug} href={`/tools/${tool.slug}/`} className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-md">
+              <Link key={tool.slug} href={`/tools/${tool.slug}`} className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-md">
                 <div className="flex items-start justify-between">
                   <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary/10 text-primary">{tool.icon}</span>
                   <ArrowRight size={17} className="text-muted-foreground transition group-hover:translate-x-1 group-hover:text-primary" />
@@ -149,7 +149,7 @@ export default function CategoryPage() {
             {otherCategories.map(c => (
               <Link
                 key={c.slug}
-                href={`/category/${c.slug}/`}
+                href={`/category/${c.slug}`}
                 className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:border-primary/70 hover:shadow-sm"
               >
                 <div className="flex items-center justify-between">
@@ -175,7 +175,7 @@ export default function CategoryPage() {
             {featuredOtherTools.map(t => (
               <Link
                 key={t.slug}
-                href={`/tools/${t.slug}/`}
+                href={`/tools/${t.slug}`}
                 className="group rounded-xl border border-border bg-card p-4 transition hover:border-primary hover:shadow-2xs"
               >
                 <p className="font-mono-ui text-[10px] uppercase tracking-wider text-accent">{t.category}</p>

@@ -35,9 +35,17 @@ function documentFor(path, body) {
 
 async function writeRoute(path, body) {
   const clean = path.replace(/^\/|\/$/g, '');
-  const output = clean === '' ? resolve(publicDir, 'index.html') : resolve(publicDir, clean, 'index.html');
-  await mkdir(dirname(output), { recursive: true });
-  await writeFile(output, documentFor(path, body));
+  if (clean === '') {
+    await writeFile(resolve(publicDir, 'index.html'), documentFor(path, body));
+    return;
+  }
+  const dirOutput = resolve(publicDir, clean, 'index.html');
+  const fileOutput = resolve(publicDir, `${clean}.html`);
+  await mkdir(dirname(dirOutput), { recursive: true });
+  await mkdir(dirname(fileOutput), { recursive: true });
+  const html = documentFor(path, body);
+  await writeFile(dirOutput, html);
+  await writeFile(fileOutput, html);
 }
 
 for (const route of PRERENDER_ROUTES) {
@@ -50,36 +58,37 @@ await writeFile(resolve(publicDir, '404.html'), documentFor('/404', notFoundBody
 import { stat } from 'node:fs/promises';
 
 function getRouteSourceFile(route) {
-  if (route.startsWith('/tools/salary-calculator/') && route !== '/tools/salary-calculator/') {
+  const clean = route === '/' ? '/' : route.replace(/\/+$/, '');
+  if (clean.startsWith('/tools/salary-calculator/') && clean !== '/tools/salary-calculator') {
     return resolve(root, 'src/data/salary-country-data.ts');
   }
   if ([
-    '/monthly-salary-calculator/',
-    '/hourly-to-salary-calculator/',
-    '/annual-to-monthly-salary-calculator/',
-    '/basic-salary-calculator/',
-    '/net-salary-calculator/'
-  ].includes(route)) {
+    '/monthly-salary-calculator',
+    '/hourly-to-salary-calculator',
+    '/annual-to-monthly-salary-calculator',
+    '/basic-salary-calculator',
+    '/net-salary-calculator'
+  ].includes(clean)) {
     return resolve(root, 'src/data/salary-landing-data.ts');
   }
-  if (route === '/tools/salary-calculator/') {
+  if (clean === '/tools/salary-calculator') {
     return resolve(root, 'src/components/salary-calculator.tsx');
   }
-  if (route.endsWith('-vat-calculator/')) {
+  if (clean.endsWith('-vat-calculator')) {
     return resolve(root, 'src/data/country-vat.ts');
   }
-  if (route.startsWith('/tools/')) {
-    const slug = route.replace(/^\/tools\/|\/$/g, '');
+  if (clean.startsWith('/tools/')) {
+    const slug = clean.replace(/^\/tools\/|\/$/g, '');
     return resolve(root, 'src/tool-page.tsx');
   }
-  if (route.startsWith('/category/')) {
+  if (clean.startsWith('/category/')) {
     return resolve(root, 'src/data/category-guides.ts');
   }
-  if (route === '/about/') return resolve(root, 'src/about-page.tsx');
-  if (route === '/contact/') return resolve(root, 'src/contact-page.tsx');
-  if (route === '/terms/') return resolve(root, 'src/terms-page.tsx');
-  if (route === '/privacy/') return resolve(root, 'src/privacy-page.tsx');
-  if (route === '/books/') return resolve(root, 'src/books-page.tsx');
+  if (clean === '/about') return resolve(root, 'src/about-page.tsx');
+  if (clean === '/contact') return resolve(root, 'src/contact-page.tsx');
+  if (clean === '/terms') return resolve(root, 'src/terms-page.tsx');
+  if (clean === '/privacy') return resolve(root, 'src/privacy-page.tsx');
+  if (clean === '/books') return resolve(root, 'src/books-page.tsx');
   return resolve(root, 'src/home-page.tsx');
 }
 
@@ -93,7 +102,7 @@ async function getRouteLastmod(route) {
   }
 }
 
-const crawlRoutes = SITEMAP_ROUTES;
+const crawlRoutes = Array.from(new Set(SITEMAP_ROUTES.map(r => r === '/' ? '/' : r.replace(/\/+$/, ''))));
 const routeEntries = await Promise.all(
   crawlRoutes.map(async (route) => {
     const lastmod = await getRouteLastmod(route);
@@ -132,20 +141,20 @@ LoveEasyTool (${SITE_URL}) is an open web utility platform created by Ali Hassan
 
 ## Available Tools
 
-${tools.map(tool => `- [${tool.name}](${SITE_URL}/tools/${tool.slug}/): ${tool.description}`).join('\n')}
+${tools.map(tool => `- [${tool.name}](${SITE_URL}/tools/${tool.slug}): ${tool.description}`).join('\n')}
 
 ## Categories & Knowledge Clusters
-- [Text Tools](${SITE_URL}/category/text/): Word counter, character counter, case converter, text cleaner, duplicate line remover
-- [Number Tools](${SITE_URL}/category/numbers/): Percentage calculator, discount calculator, BMI calculator, loan calculator, VAT calculator, age calculator
-- [File Tools](${SITE_URL}/category/files/): Image compressor, image resizer, JPG to PNG, PNG to JPG, WebP converter, image cropper
-- [PDF Tools](${SITE_URL}/category/pdf/): Merge PDF, split PDF, PDF text extractor, Word to PDF, PDF optimizer, PDF to JPG, JPG to PDF helper
-- [Time Tools](${SITE_URL}/category/time/): Date calculator
-- [Everyday Tools](${SITE_URL}/category/everyday/): Unit converter, time-zone converter, currency reference converter
-- [Work Tools](${SITE_URL}/category/work/): Free CV builder, cover-letter generator, salary calculator
-- [International VAT Portals](${SITE_URL}/tools/vat-calculator/): Dedicated country calculators for UK (${SITE_URL}/uk-vat-calculator/), Germany (${SITE_URL}/germany-vat-calculator/), France (${SITE_URL}/france-vat-calculator/), Ireland (${SITE_URL}/ireland-vat-calculator/), UAE (${SITE_URL}/uae-vat-calculator/), and Saudi Arabia (${SITE_URL}/saudi-arabia-vat-calculator/)
-- [Salary & Payroll Portals](${SITE_URL}/tools/salary-calculator/): Dedicated calculators for Monthly Salary (${SITE_URL}/monthly-salary-calculator/), Hourly to Salary (${SITE_URL}/hourly-to-salary-calculator/), Annual to Monthly (${SITE_URL}/annual-to-monthly-salary-calculator/), Basic Salary (${SITE_URL}/basic-salary-calculator/), and Net Take-Home Pay (${SITE_URL}/net-salary-calculator/)
-- [Author & Books](${SITE_URL}/books/): Practical guides by Ali Hassan on AI, cybersecurity, remote work, and freelancing
-- [About Us & Privacy](${SITE_URL}/about/): Zero-upload client-side architecture and platform mission (${SITE_URL}/privacy/)
+- [Text Tools](${SITE_URL}/category/text): Word counter, character counter, case converter, text cleaner, duplicate line remover
+- [Number Tools](${SITE_URL}/category/numbers): Percentage calculator, discount calculator, BMI calculator, loan calculator, VAT calculator, age calculator
+- [File Tools](${SITE_URL}/category/files): Image compressor, image resizer, JPG to PNG, PNG to JPG, WebP converter, image cropper
+- [PDF Tools](${SITE_URL}/category/pdf): Merge PDF, split PDF, PDF text extractor, Word to PDF, PDF optimizer, PDF to JPG, JPG to PDF helper
+- [Time Tools](${SITE_URL}/category/time): Date calculator
+- [Everyday Tools](${SITE_URL}/category/everyday): Unit converter, time-zone converter, currency reference converter
+- [Work Tools](${SITE_URL}/category/work): Free CV builder, cover-letter generator, salary calculator
+- [International VAT Portals](${SITE_URL}/tools/vat-calculator): Dedicated country calculators for UK (${SITE_URL}/uk-vat-calculator), Germany (${SITE_URL}/germany-vat-calculator), France (${SITE_URL}/france-vat-calculator), Ireland (${SITE_URL}/ireland-vat-calculator), UAE (${SITE_URL}/uae-vat-calculator), and Saudi Arabia (${SITE_URL}/saudi-arabia-vat-calculator)
+- [Salary & Payroll Portals](${SITE_URL}/tools/salary-calculator): Dedicated calculators for Monthly Salary (${SITE_URL}/monthly-salary-calculator), Hourly to Salary (${SITE_URL}/hourly-to-salary-calculator), Annual to Monthly (${SITE_URL}/annual-to-monthly-salary-calculator), Basic Salary (${SITE_URL}/basic-salary-calculator), and Net Take-Home Pay (${SITE_URL}/net-salary-calculator)
+- [Author & Books](${SITE_URL}/books): Practical guides by Ali Hassan on AI, cybersecurity, remote work, and freelancing
+- [About Us & Privacy](${SITE_URL}/about): Zero-upload client-side architecture and platform mission (${SITE_URL}/privacy)
 
 ## Core Principles
 - 100% Free: No fees, trials, or hidden paywalls

@@ -46,9 +46,9 @@ export function SalaryCountryPage({ countrySlug }: SalaryCountryPageProps) {
         <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
           <Link href="/" className="hover:text-foreground">Home</Link>
           <span>/</span>
-          <Link href="/category/work/" className="hover:text-foreground">Work</Link>
+          <Link href="/category/work" className="hover:text-foreground">Work</Link>
           <span>/</span>
-          <Link href="/tools/salary-calculator/" className="hover:text-foreground">Salary Calculator</Link>
+          <Link href="/tools/salary-calculator" className="hover:text-foreground">Salary Calculator</Link>
           <span>/</span>
           <span className="text-foreground font-medium">{pageData.countryName}</span>
         </nav>
@@ -147,7 +147,7 @@ export function SalaryCountryPage({ countrySlug }: SalaryCountryPageProps) {
                 Salary Calculators for Other Countries
               </h2>
             </div>
-            <Link href="/tools/salary-calculator/" className="text-xs font-semibold text-primary hover:underline">
+            <Link href="/tools/salary-calculator" className="text-xs font-semibold text-primary hover:underline">
               Universal multi-country calculator →
             </Link>
           </div>

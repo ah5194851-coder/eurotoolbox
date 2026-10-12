@@ -6,7 +6,7 @@ import { updateDocumentHead } from './seo';
 
 export default function AboutPage() {
   useEffect(() => {
-    updateDocumentHead('/about/');
+    updateDocumentHead('/about');
   }, []);
 
   return (
@@ -77,7 +77,7 @@ export default function AboutPage() {
           <section className="rounded-2xl border border-border bg-card p-6 sm:p-8">
             <h2 className="font-display text-2xl font-semibold text-foreground">Our Digital Utility Mission</h2>
             <p className="mt-3 text-base leading-7 text-muted-foreground">
-              Think of LoveEasyTool as an open digital workshop: a place where you can quickly pick up the exact instrument you need—whether you require a fast, single-purpose tool to <Link href="/tools/duplicate-line-remover/" className="font-medium text-foreground underline decoration-border hover:decoration-primary">clean and deduplicate text</Link>, <Link href="/tools/image-cropper/" className="font-medium text-foreground underline decoration-border hover:decoration-primary">crop an image</Link>, or <Link href="/tools/compress-pdf/" className="font-medium text-foreground underline decoration-border hover:decoration-primary">compress a PDF</Link>, or need practical career helpers to <Link href="/tools/cv-builder/" className="font-medium text-foreground underline decoration-border hover:decoration-primary">draft a professional CV</Link> and <Link href="/tools/salary-calculator/" className="font-medium text-foreground underline decoration-border hover:decoration-primary">calculate salary and take-home pay</Link>.
+              Think of LoveEasyTool as an open digital workshop: a place where you can quickly pick up the exact instrument you need—whether you require a fast, single-purpose tool to <Link href="/tools/duplicate-line-remover" className="font-medium text-foreground underline decoration-border hover:decoration-primary">clean and deduplicate text</Link>, <Link href="/tools/image-cropper" className="font-medium text-foreground underline decoration-border hover:decoration-primary">crop an image</Link>, or <Link href="/tools/compress-pdf" className="font-medium text-foreground underline decoration-border hover:decoration-primary">compress a PDF</Link>, or need practical career helpers to <Link href="/tools/cv-builder" className="font-medium text-foreground underline decoration-border hover:decoration-primary">draft a professional CV</Link> and <Link href="/tools/salary-calculator" className="font-medium text-foreground underline decoration-border hover:decoration-primary">calculate salary and take-home pay</Link>.
             </p>
             <p className="mt-4 text-base leading-7 text-muted-foreground">
               Our platform exists to provide uncompromised utility without noise, tracking, or paywalls. Every utility is engineered to execute directly within your browser session so you can accomplish daily tasks securely, efficiently, and with total peace of mind.
@@ -93,20 +93,20 @@ export default function AboutPage() {
               <Link href="/#tools" className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground hover:bg-primary/90">
                 Browse all 31 tools <ArrowRight size={16} />
               </Link>
-              <Link href="/books/" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-3 font-semibold text-foreground hover:border-primary">
+              <Link href="/books" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-3 font-semibold text-foreground hover:border-primary">
                 View books by Ali Hassan
               </Link>
             </div>
             <div className="mt-8 rounded-xl border border-border/80 bg-muted/30 p-5">
               <p className="font-mono-ui text-[11px] font-bold uppercase tracking-wider text-accent">Direct Cabinets</p>
               <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-                <Link href="/category/text/" className="hover:text-primary underline">Text Tools</Link>
-                <Link href="/category/pdf/" className="hover:text-primary underline">PDF Tools</Link>
-                <Link href="/category/files/" className="hover:text-primary underline">File Utilities</Link>
-                <Link href="/category/numbers/" className="hover:text-primary underline">Number Calculators</Link>
-                <Link href="/category/time/" className="hover:text-primary underline">Time Tools</Link>
-                <Link href="/category/everyday/" className="hover:text-primary underline">Everyday Converters</Link>
-                <Link href="/category/work/" className="hover:text-primary underline">Career & Work Tools</Link>
+                <Link href="/category/text" className="hover:text-primary underline">Text Tools</Link>
+                <Link href="/category/pdf" className="hover:text-primary underline">PDF Tools</Link>
+                <Link href="/category/files" className="hover:text-primary underline">File Utilities</Link>
+                <Link href="/category/numbers" className="hover:text-primary underline">Number Calculators</Link>
+                <Link href="/category/time" className="hover:text-primary underline">Time Tools</Link>
+                <Link href="/category/everyday" className="hover:text-primary underline">Everyday Converters</Link>
+                <Link href="/category/work" className="hover:text-primary underline">Career & Work Tools</Link>
               </div>
             </div>
           </section>

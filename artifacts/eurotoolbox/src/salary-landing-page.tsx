@@ -38,9 +38,9 @@ export function SalaryLandingPage({ slug }: SalaryLandingPageProps) {
         <nav aria-label="Breadcrumb" className="mb-9 flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
           <Link href="/" className="hover:text-foreground">Home</Link>
           <span>/</span>
-          <Link href="/category/work/" className="hover:text-foreground">Work</Link>
+          <Link href="/category/work" className="hover:text-foreground">Work</Link>
           <span>/</span>
-          <Link href="/tools/salary-calculator/" className="hover:text-foreground">Salary Calculator</Link>
+          <Link href="/tools/salary-calculator" className="hover:text-foreground">Salary Calculator</Link>
           <span>/</span>
           <span className="text-foreground font-medium">{data.h1}</span>
         </nav>
@@ -204,7 +204,7 @@ export function SalaryLandingPage({ slug }: SalaryLandingPageProps) {
               <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Knowledge Network</p>
               <h2 className="font-display text-xl font-semibold text-foreground">Explore Related Salary & Career Tools</h2>
             </div>
-            <Link href="/tools/salary-calculator/" className="text-xs font-semibold text-primary hover:underline">
+            <Link href="/tools/salary-calculator" className="text-xs font-semibold text-primary hover:underline">
               Universal salary calculator →
             </Link>
           </div>
@@ -236,23 +236,23 @@ export function SalaryLandingPage({ slug }: SalaryLandingPageProps) {
 
           <div className="mt-6 pt-5 border-t border-border/60 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
             <span className="font-semibold text-foreground">Cross-Category Tools:</span>
-            <Link href="/tools/salary-calculator/" className="hover:text-primary hover:underline">
+            <Link href="/tools/salary-calculator" className="hover:text-primary hover:underline">
               Universal Salary Calculator
             </Link>
             <span>·</span>
-            <Link href="/tools/percentage-calculator/" className="hover:text-primary hover:underline">
+            <Link href="/tools/percentage-calculator" className="hover:text-primary hover:underline">
               Percentage Calculator
             </Link>
             <span>·</span>
-            <Link href="/tools/cv-builder/" className="hover:text-primary hover:underline">
+            <Link href="/tools/cv-builder" className="hover:text-primary hover:underline">
               Free CV Builder
             </Link>
             <span>·</span>
-            <Link href="/tools/cover-letter-generator/" className="hover:text-primary hover:underline">
+            <Link href="/tools/cover-letter-generator" className="hover:text-primary hover:underline">
               Cover Letter Generator
             </Link>
             <span>·</span>
-            <Link href="/tools/vat-calculator/" className="hover:text-primary hover:underline">
+            <Link href="/tools/vat-calculator" className="hover:text-primary hover:underline">
               VAT Calculator
             </Link>
           </div>

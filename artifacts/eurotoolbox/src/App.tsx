@@ -81,20 +81,21 @@ export function Shell({ children }: { children: ReactNode }) {
         window.location.replace('https://loveeasytool.com' + pathname + window.location.search + window.location.hash);
         return;
       }
-      // Enforce trailing slash on address bar
-      if (window.location.pathname !== '/' && !window.location.pathname.endsWith('/') && !window.location.pathname.includes('.')) {
-        window.history.replaceState(null, '', window.location.pathname + '/' + window.location.search + window.location.hash);
+      // Clean trailing slash from address bar
+      if (window.location.pathname !== '/' && window.location.pathname.endsWith('/')) {
+        const cleanPath = window.location.pathname.replace(/\/+$/, '');
+        window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
       }
-      // Overlap redirect for image-tools -> image-compressor/
+      // Overlap redirect for image-tools -> image-compressor
       if (window.location.pathname === '/tools/image-tools' || window.location.pathname === '/tools/image-tools/' || window.location.pathname === '/image-tools' || window.location.pathname === '/image-tools/') {
-        window.location.replace('/tools/image-compressor/');
+        window.location.replace('/tools/image-compressor');
         return;
       }
     }
   }, []);
   const matching = useMemo(() => search.length > 1 ? tools.filter(t => t.name.toLowerCase().includes(search.toLowerCase())).slice(0, 5) : [], [search]);
   const go = (path: string) => { 
-    const finalPath = path.endsWith('/') ? path : `${path}/`;
+    const finalPath = path === '/' ? '/' : path.replace(/\/+$/, '');
     setLocation(finalPath); 
     setSearch(''); 
     setMenuOpen(false); 
@@ -106,15 +107,15 @@ export function Shell({ children }: { children: ReactNode }) {
         <div className="relative ml-auto hidden w-full max-w-[320px] md:block">
           <Search size={17} className="absolute left-3 top-3 text-muted-foreground" />
           <input data-testid="input-tool-search" aria-label="Search tools" value={search} onChange={e => setSearch(e.target.value)} placeholder="Find a tool..." className="w-full rounded-full border border-border bg-card py-2.5 pl-9 pr-4 text-sm outline-none focus:border-primary" />
-          {matching.length > 0 && <div className="absolute left-0 right-0 top-12 rounded-xl border border-border bg-card p-1.5 shadow-lg">{matching.map(t => <button data-testid={`button-search-${t.slug}`} key={t.slug} onClick={() => go(`/tools/${t.slug}/`)} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm hover:bg-muted"><span className="text-primary">{t.icon}</span>{t.name}</button>)}</div>}
+          {matching.length > 0 && <div className="absolute left-0 right-0 top-12 rounded-xl border border-border bg-card p-1.5 shadow-lg">{matching.map(t => <button data-testid={`button-search-${t.slug}`} key={t.slug} onClick={() => go(`/tools/${t.slug}`)} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm hover:bg-muted"><span className="text-primary">{t.icon}</span>{t.name}</button>)}</div>}
         </div>
         <nav className="hidden items-center gap-5 text-sm font-semibold md:flex">
           <Link href="/#tools" data-testid="link-browse-tools" className="text-muted-foreground transition hover:text-foreground">Browse tools</Link>
-          <Link href="/category/pdf/" data-testid="link-nav-pdf" className="text-muted-foreground transition hover:text-foreground">PDF tools</Link>
-          <Link href="/category/text/" data-testid="link-nav-text" className="text-muted-foreground transition hover:text-foreground">Text tools</Link>
-          <Link href="/tools/cv-builder/" data-testid="link-cv-builder" className="text-muted-foreground transition hover:text-foreground">CV builder</Link>
-          <Link href="/books/" data-testid="link-books" className="text-muted-foreground transition hover:text-foreground">Books</Link>
-          <Link href="/about/" data-testid="link-about" className="text-muted-foreground transition hover:text-foreground">About</Link>
+          <Link href="/category/pdf" data-testid="link-nav-pdf" className="text-muted-foreground transition hover:text-foreground">PDF tools</Link>
+          <Link href="/category/text" data-testid="link-nav-text" className="text-muted-foreground transition hover:text-foreground">Text tools</Link>
+          <Link href="/tools/cv-builder" data-testid="link-cv-builder" className="text-muted-foreground transition hover:text-foreground">CV builder</Link>
+          <Link href="/books" data-testid="link-books" className="text-muted-foreground transition hover:text-foreground">Books</Link>
+          <Link href="/about" data-testid="link-about" className="text-muted-foreground transition hover:text-foreground">About</Link>
         </nav>
         <button data-testid="button-mobile-menu" aria-label="Open menu" onClick={() => setMenuOpen(!menuOpen)} className="rounded-lg p-2 hover:bg-muted md:hidden">{menuOpen ? <X size={21} /> : <Menu size={21} />}</button>
       </div>
@@ -127,7 +128,7 @@ export function Shell({ children }: { children: ReactNode }) {
           {matching.length > 0 ? (
             <div className="grid gap-1 mb-4">
               {matching.map(t => (
-                <button data-testid={`button-mobile-${t.slug}`} key={t.slug} onClick={() => go(`/tools/${t.slug}/`)} className="flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-muted">
+                <button data-testid={`button-mobile-${t.slug}`} key={t.slug} onClick={() => go(`/tools/${t.slug}`)} className="flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-muted">
                   {t.icon}{t.name}
                 </button>
               ))}
@@ -136,20 +137,20 @@ export function Shell({ children }: { children: ReactNode }) {
           <div className="border-t border-border/60 pt-3">
             <p className="mb-2 font-mono-ui text-[10px] uppercase tracking-wider text-muted-foreground">Categories</p>
             <div className="grid grid-cols-2 gap-2 mb-4 text-sm font-medium">
-              <Link href="/category/text/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Text Tools</Link>
-              <Link href="/category/numbers/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Number Tools</Link>
-              <Link href="/category/files/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">File Tools</Link>
-              <Link href="/category/pdf/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">PDF Tools</Link>
-              <Link href="/category/time/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Time Tools</Link>
-              <Link href="/category/everyday/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Everyday Tools</Link>
-              <Link href="/category/work/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Work Tools</Link>
-              <Link href="/tools/cv-builder/" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">CV Builder</Link>
+              <Link href="/category/text" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Text Tools</Link>
+              <Link href="/category/numbers" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Number Tools</Link>
+              <Link href="/category/files" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">File Tools</Link>
+              <Link href="/category/pdf" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">PDF Tools</Link>
+              <Link href="/category/time" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Time Tools</Link>
+              <Link href="/category/everyday" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Everyday Tools</Link>
+              <Link href="/category/work" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">Work Tools</Link>
+              <Link href="/tools/cv-builder" onClick={() => setMenuOpen(false)} className="rounded-md p-2 hover:bg-muted text-muted-foreground hover:text-foreground">CV Builder</Link>
             </div>
             <div className="flex gap-4 border-t border-border/60 pt-3 text-sm text-muted-foreground">
-              <Link href="/books/" onClick={() => setMenuOpen(false)} className="hover:text-foreground">Books</Link>
-              <Link href="/about/" onClick={() => setMenuOpen(false)} className="hover:text-foreground">About</Link>
-              <Link href="/contact/" onClick={() => setMenuOpen(false)} className="hover:text-foreground">Contact</Link>
-              <Link href="/privacy/" onClick={() => setMenuOpen(false)} className="hover:text-foreground">Privacy</Link>
+              <Link href="/books" onClick={() => setMenuOpen(false)} className="hover:text-foreground">Books</Link>
+              <Link href="/about" onClick={() => setMenuOpen(false)} className="hover:text-foreground">About</Link>
+              <Link href="/contact" onClick={() => setMenuOpen(false)} className="hover:text-foreground">Contact</Link>
+              <Link href="/privacy" onClick={() => setMenuOpen(false)} className="hover:text-foreground">Privacy</Link>
             </div>
           </div>
         </div>
@@ -184,13 +185,13 @@ export function Shell({ children }: { children: ReactNode }) {
           <div>
             <p className="font-mono-ui text-[11px] font-bold uppercase tracking-[.18em] text-accent">Tool Cabinets</p>
             <ul className="mt-4 grid gap-2.5 text-sm text-muted-foreground">
-              <li><Link href="/category/text/" className="hover:text-foreground hover:underline">Text Tools</Link></li>
-              <li><Link href="/category/numbers/" className="hover:text-foreground hover:underline">Number Calculators</Link></li>
-              <li><Link href="/category/files/" className="hover:text-foreground hover:underline">File & Image Utilities</Link></li>
-              <li><Link href="/category/pdf/" className="hover:text-foreground hover:underline">PDF Tools</Link></li>
-              <li><Link href="/category/time/" className="hover:text-foreground hover:underline">Time & Date Tools</Link></li>
-              <li><Link href="/category/everyday/" className="hover:text-foreground hover:underline">Everyday Converters</Link></li>
-              <li><Link href="/category/work/" className="hover:text-foreground hover:underline">Career & Work Tools</Link></li>
+              <li><Link href="/category/text" className="hover:text-foreground hover:underline">Text Tools</Link></li>
+              <li><Link href="/category/numbers" className="hover:text-foreground hover:underline">Number Calculators</Link></li>
+              <li><Link href="/category/files" className="hover:text-foreground hover:underline">File & Image Utilities</Link></li>
+              <li><Link href="/category/pdf" className="hover:text-foreground hover:underline">PDF Tools</Link></li>
+              <li><Link href="/category/time" className="hover:text-foreground hover:underline">Time & Date Tools</Link></li>
+              <li><Link href="/category/everyday" className="hover:text-foreground hover:underline">Everyday Converters</Link></li>
+              <li><Link href="/category/work" className="hover:text-foreground hover:underline">Career & Work Tools</Link></li>
               <li><Link href="/#tools" className="font-semibold text-primary hover:underline">Browse All 31 Tools →</Link></li>
             </ul>
           </div>
@@ -198,44 +199,44 @@ export function Shell({ children }: { children: ReactNode }) {
           <div>
             <p className="font-mono-ui text-[11px] font-bold uppercase tracking-[.18em] text-accent">PDF & File Tools</p>
             <ul className="mt-4 grid gap-2.5 text-sm text-muted-foreground">
-              <li><Link href="/tools/merge-pdf/" className="hover:text-foreground hover:underline">Merge PDF</Link></li>
-              <li><Link href="/tools/split-pdf/" className="hover:text-foreground hover:underline">Split PDF</Link></li>
-              <li><Link href="/tools/compress-pdf/" className="hover:text-foreground hover:underline">PDF Optimizer</Link></li>
-              <li><Link href="/tools/pdf-to-word/" className="hover:text-foreground hover:underline">PDF Text Extractor</Link></li>
-              <li><Link href="/tools/word-to-pdf/" className="hover:text-foreground hover:underline">Word to PDF</Link></li>
-              <li><Link href="/tools/pdf-to-jpg/" className="hover:text-foreground hover:underline">PDF to JPG</Link></li>
-              <li><Link href="/tools/image-compressor/" className="hover:text-foreground hover:underline">Image Compressor</Link></li>
-              <li><Link href="/tools/image-resizer/" className="hover:text-foreground hover:underline">Image Resizer</Link></li>
-              <li><Link href="/tools/webp-converter/" className="hover:text-foreground hover:underline">WebP Converter</Link></li>
+              <li><Link href="/tools/merge-pdf" className="hover:text-foreground hover:underline">Merge PDF</Link></li>
+              <li><Link href="/tools/split-pdf" className="hover:text-foreground hover:underline">Split PDF</Link></li>
+              <li><Link href="/tools/compress-pdf" className="hover:text-foreground hover:underline">PDF Optimizer</Link></li>
+              <li><Link href="/tools/pdf-to-word" className="hover:text-foreground hover:underline">PDF Text Extractor</Link></li>
+              <li><Link href="/tools/word-to-pdf" className="hover:text-foreground hover:underline">Word to PDF</Link></li>
+              <li><Link href="/tools/pdf-to-jpg" className="hover:text-foreground hover:underline">PDF to JPG</Link></li>
+              <li><Link href="/tools/image-compressor" className="hover:text-foreground hover:underline">Image Compressor</Link></li>
+              <li><Link href="/tools/image-resizer" className="hover:text-foreground hover:underline">Image Resizer</Link></li>
+              <li><Link href="/tools/webp-converter" className="hover:text-foreground hover:underline">WebP Converter</Link></li>
             </ul>
           </div>
 
           <div>
             <p className="font-mono-ui text-[11px] font-bold uppercase tracking-[.18em] text-accent">Text & Calculators</p>
             <ul className="mt-4 grid gap-2.5 text-sm text-muted-foreground">
-              <li><Link href="/tools/word-counter/" className="hover:text-foreground hover:underline">Word Counter</Link></li>
-              <li><Link href="/tools/character-counter/" className="hover:text-foreground hover:underline">Character Counter</Link></li>
-              <li><Link href="/tools/case-converter/" className="hover:text-foreground hover:underline">Case Converter</Link></li>
-              <li><Link href="/tools/duplicate-line-remover/" className="hover:text-foreground hover:underline">Duplicate Line Remover</Link></li>
-              <li><Link href="/tools/percentage-calculator/" className="hover:text-foreground hover:underline">Percentage Calculator</Link></li>
-              <li><Link href="/tools/vat-calculator/" className="hover:text-foreground hover:underline">VAT Calculator</Link></li>
-              <li><Link href="/tools/bmi-calculator/" className="hover:text-foreground hover:underline">BMI Calculator</Link></li>
-              <li><Link href="/tools/loan-calculator/" className="hover:text-foreground hover:underline">Loan Calculator</Link></li>
-              <li><Link href="/tools/cv-builder/" className="hover:text-foreground hover:underline">Free CV Builder</Link></li>
+              <li><Link href="/tools/word-counter" className="hover:text-foreground hover:underline">Word Counter</Link></li>
+              <li><Link href="/tools/character-counter" className="hover:text-foreground hover:underline">Character Counter</Link></li>
+              <li><Link href="/tools/case-converter" className="hover:text-foreground hover:underline">Case Converter</Link></li>
+              <li><Link href="/tools/duplicate-line-remover" className="hover:text-foreground hover:underline">Duplicate Line Remover</Link></li>
+              <li><Link href="/tools/percentage-calculator" className="hover:text-foreground hover:underline">Percentage Calculator</Link></li>
+              <li><Link href="/tools/vat-calculator" className="hover:text-foreground hover:underline">VAT Calculator</Link></li>
+              <li><Link href="/tools/bmi-calculator" className="hover:text-foreground hover:underline">BMI Calculator</Link></li>
+              <li><Link href="/tools/loan-calculator" className="hover:text-foreground hover:underline">Loan Calculator</Link></li>
+              <li><Link href="/tools/cv-builder" className="hover:text-foreground hover:underline">Free CV Builder</Link></li>
             </ul>
           </div>
 
           <div>
             <p className="font-mono-ui text-[11px] font-bold uppercase tracking-[.18em] text-accent">Platform & Author</p>
             <ul className="mt-4 grid gap-2.5 text-sm text-muted-foreground">
-              <li><Link href="/about/" className="hover:text-foreground hover:underline">About LoveEasyTool</Link></li>
-              <li><Link href="/books/" className="hover:text-foreground hover:underline">Books by Ali Hassan</Link></li>
-              <li><Link href="/contact/" className="hover:text-foreground hover:underline">Contact & Support</Link></li>
-              <li><Link href="/privacy/" className="hover:text-foreground hover:underline">Privacy Policy</Link></li>
-              <li><Link href="/terms/" className="hover:text-foreground hover:underline">Terms of Service</Link></li>
-              <li><Link href="/tools/salary-calculator/" className="hover:text-foreground hover:underline">Salary Calculator</Link></li>
-              <li><Link href="/tools/date-calculator/" className="hover:text-foreground hover:underline">Date Calculator</Link></li>
-              <li><Link href="/tools/unit-converter/" className="hover:text-foreground hover:underline">Unit Converter</Link></li>
+              <li><Link href="/about" className="hover:text-foreground hover:underline">About LoveEasyTool</Link></li>
+              <li><Link href="/books" className="hover:text-foreground hover:underline">Books by Ali Hassan</Link></li>
+              <li><Link href="/contact" className="hover:text-foreground hover:underline">Contact & Support</Link></li>
+              <li><Link href="/privacy" className="hover:text-foreground hover:underline">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="hover:text-foreground hover:underline">Terms of Service</Link></li>
+              <li><Link href="/tools/salary-calculator" className="hover:text-foreground hover:underline">Salary Calculator</Link></li>
+              <li><Link href="/tools/date-calculator" className="hover:text-foreground hover:underline">Date Calculator</Link></li>
+              <li><Link href="/tools/unit-converter" className="hover:text-foreground hover:underline">Unit Converter</Link></li>
             </ul>
           </div>
         </div>
@@ -247,27 +248,27 @@ export function Shell({ children }: { children: ReactNode }) {
               <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">International Tax Tools</p>
               <h3 className="font-display text-base font-semibold text-foreground">VAT Calculators by Country</h3>
             </div>
-            <Link href="/tools/vat-calculator/" className="text-xs font-semibold text-primary hover:underline">
+            <Link href="/tools/vat-calculator" className="text-xs font-semibold text-primary hover:underline">
               Universal VAT calculator →
             </Link>
           </div>
           <div className="mt-4 flex flex-wrap gap-2 text-xs">
-            <Link href="/uk-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+            <Link href="/uk-vat-calculator" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
               <span className="mr-1.5">🇬🇧</span><span className="font-semibold text-foreground">UK VAT</span> <span className="text-muted-foreground font-mono-ui">(20%)</span>
             </Link>
-            <Link href="/germany-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+            <Link href="/germany-vat-calculator" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
               <span className="mr-1.5">🇩🇪</span><span className="font-semibold text-foreground">Germany MwSt</span> <span className="text-muted-foreground font-mono-ui">(19%)</span>
             </Link>
-            <Link href="/france-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+            <Link href="/france-vat-calculator" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
               <span className="mr-1.5">🇫🇷</span><span className="font-semibold text-foreground">France TVA</span> <span className="text-muted-foreground font-mono-ui">(20%)</span>
             </Link>
-            <Link href="/ireland-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+            <Link href="/ireland-vat-calculator" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
               <span className="mr-1.5">🇮🇪</span><span className="font-semibold text-foreground">Ireland VAT</span> <span className="text-muted-foreground font-mono-ui">(23%)</span>
             </Link>
-            <Link href="/uae-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+            <Link href="/uae-vat-calculator" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
               <span className="mr-1.5">🇦🇪</span><span className="font-semibold text-foreground">UAE VAT</span> <span className="text-muted-foreground font-mono-ui">(5%)</span>
             </Link>
-            <Link href="/saudi-arabia-vat-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+            <Link href="/saudi-arabia-vat-calculator" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
               <span className="mr-1.5">🇸🇦</span><span className="font-semibold text-foreground">Saudi Arabia VAT</span> <span className="text-muted-foreground font-mono-ui">(15%)</span>
             </Link>
           </div>
@@ -280,73 +281,73 @@ export function Shell({ children }: { children: ReactNode }) {
               <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Career & Payroll Tools</p>
               <h3 className="font-display text-base font-semibold text-foreground">Salary Calculators & Take-Home Tools</h3>
             </div>
-            <Link href="/tools/salary-calculator/" className="text-xs font-semibold text-primary hover:underline">
+            <Link href="/tools/salary-calculator" className="text-xs font-semibold text-primary hover:underline">
               Universal salary calculator →
             </Link>
           </div>
           <div className="mt-4 flex flex-wrap gap-2 text-xs">
-            <Link href="/monthly-salary-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+            <Link href="/monthly-salary-calculator" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
               <span className="font-semibold text-foreground">Monthly Salary</span> <span className="text-muted-foreground font-mono-ui">(Gross to Net)</span>
             </Link>
-            <Link href="/hourly-to-salary-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+            <Link href="/hourly-to-salary-calculator" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
               <span className="font-semibold text-foreground">Hourly to Salary</span> <span className="text-muted-foreground font-mono-ui">(Converter)</span>
             </Link>
-            <Link href="/annual-to-monthly-salary-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+            <Link href="/annual-to-monthly-salary-calculator" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
               <span className="font-semibold text-foreground">Annual to Monthly</span> <span className="text-muted-foreground font-mono-ui">(Pay Breakdown)</span>
             </Link>
-            <Link href="/basic-salary-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+            <Link href="/basic-salary-calculator" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
               <span className="font-semibold text-foreground">Basic Salary</span> <span className="text-muted-foreground font-mono-ui">(Allowances & Net)</span>
             </Link>
-            <Link href="/net-salary-calculator/" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
+            <Link href="/net-salary-calculator" className="rounded-lg border border-border bg-card px-3 py-1.5 hover:border-primary transition">
               <span className="font-semibold text-foreground">Net Salary</span> <span className="text-muted-foreground font-mono-ui">(Take-Home Pay)</span>
             </Link>
           </div>
 
           {/* Dedicated Country Salary Calculators with Flag Emojis */}
           <div className="mt-4 flex flex-wrap gap-2 text-xs">
-            <Link href="/tools/salary-calculator/uk/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/uk" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇬🇧</span><span className="font-medium text-foreground">UK Salary</span>
             </Link>
-            <Link href="/tools/salary-calculator/united-states/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/united-states" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇺🇸</span><span className="font-medium text-foreground">US Salary</span>
             </Link>
-            <Link href="/tools/salary-calculator/canada/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/canada" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇨🇦</span><span className="font-medium text-foreground">Canada</span>
             </Link>
-            <Link href="/tools/salary-calculator/australia/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/australia" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇦🇺</span><span className="font-medium text-foreground">Australia</span>
             </Link>
-            <Link href="/tools/salary-calculator/germany/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/germany" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇩🇪</span><span className="font-medium text-foreground">Germany</span>
             </Link>
-            <Link href="/tools/salary-calculator/poland/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/poland" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇵🇱</span><span className="font-medium text-foreground">Poland</span>
             </Link>
-            <Link href="/tools/salary-calculator/pakistan/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/pakistan" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇵🇰</span><span className="font-medium text-foreground">Pakistan</span>
             </Link>
-            <Link href="/tools/salary-calculator/india/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/india" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇮🇳</span><span className="font-medium text-foreground">India</span>
             </Link>
-            <Link href="/tools/salary-calculator/uae/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/uae" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇦🇪</span><span className="font-medium text-foreground">UAE</span>
             </Link>
-            <Link href="/tools/salary-calculator/saudi-arabia/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/saudi-arabia" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇸🇦</span><span className="font-medium text-foreground">Saudi Arabia</span>
             </Link>
-            <Link href="/tools/salary-calculator/ireland/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/ireland" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇮🇪</span><span className="font-medium text-foreground">Ireland</span>
             </Link>
-            <Link href="/tools/salary-calculator/new-zealand/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/new-zealand" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇳🇿</span><span className="font-medium text-foreground">New Zealand</span>
             </Link>
-            <Link href="/tools/salary-calculator/singapore/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/singapore" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇸🇬</span><span className="font-medium text-foreground">Singapore</span>
             </Link>
-            <Link href="/tools/salary-calculator/netherlands/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/netherlands" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇳🇱</span><span className="font-medium text-foreground">Netherlands</span>
             </Link>
-            <Link href="/tools/salary-calculator/south-africa/" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
+            <Link href="/tools/salary-calculator/south-africa" className="rounded-lg border border-border bg-card px-2.5 py-1 hover:border-primary transition inline-flex items-center gap-1.5">
               <span>🇿🇦</span><span className="font-medium text-foreground">South Africa</span>
             </Link>
           </div>
@@ -365,7 +366,7 @@ export function Shell({ children }: { children: ReactNode }) {
           </div>
           <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-muted-foreground sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
             {tools.map(t => (
-              <Link key={t.slug} href={`/tools/${t.slug}/`} className="hover:text-primary hover:underline truncate">
+              <Link key={t.slug} href={`/tools/${t.slug}`} className="hover:text-primary hover:underline truncate">
                 {t.name}
               </Link>
             ))}
@@ -376,11 +377,11 @@ export function Shell({ children }: { children: ReactNode }) {
           <p>© {new Date().getFullYear()} LoveEasyTool · Made for the open web by Ali Hassan</p>
           <div className="flex flex-wrap items-center gap-6">
             <Link href="/" className="hover:text-foreground">Home</Link>
-            <Link href="/about/" className="hover:text-foreground">About</Link>
-            <Link href="/books/" className="hover:text-foreground">Books</Link>
-            <Link href="/privacy/" className="hover:text-foreground">Privacy</Link>
-            <Link href="/terms/" className="hover:text-foreground">Terms</Link>
-            <Link href="/contact/" className="hover:text-foreground">Contact</Link>
+            <Link href="/about" className="hover:text-foreground">About</Link>
+            <Link href="/books" className="hover:text-foreground">Books</Link>
+            <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
+            <Link href="/terms" className="hover:text-foreground">Terms</Link>
+            <Link href="/contact" className="hover:text-foreground">Contact</Link>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { type SupportedCountryCode } from "./tax-config";
 export interface SalaryCountrySeoData {
   readonly countryId: SupportedCountryCode;
   readonly slug: string;             // e.g. "uk", "pakistan", "india", "united-states"
-  readonly canonicalPath: string;    // e.g. "/tools/salary-calculator/uk/"
+  readonly canonicalPath: string;    // e.g. "/tools/salary-calculator/uk"
   readonly countryName: string;
   readonly flagEmoji: string;
   readonly metaTitle: string;
@@ -17,7 +17,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   uk: {
     countryId: "UK",
     slug: "uk",
-    canonicalPath: "/tools/salary-calculator/uk/",
+    canonicalPath: "/tools/salary-calculator/uk",
     countryName: "United Kingdom",
     flagEmoji: "🇬🇧",
     metaTitle: "UK Salary Calculator 2026/27 – Take-Home Pay & NI (Free)",
@@ -43,7 +43,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   "united-states": {
     countryId: "US",
     slug: "united-states",
-    canonicalPath: "/tools/salary-calculator/united-states/",
+    canonicalPath: "/tools/salary-calculator/united-states",
     countryName: "United States",
     flagEmoji: "🇺🇸",
     metaTitle: "US Salary Calculator 2026 – Federal Take-Home Pay & FICA",
@@ -69,7 +69,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   canada: {
     countryId: "CA",
     slug: "canada",
-    canonicalPath: "/tools/salary-calculator/canada/",
+    canonicalPath: "/tools/salary-calculator/canada",
     countryName: "Canada",
     flagEmoji: "🇨🇦",
     metaTitle: "Canada Salary Calculator 2026 – Federal Take-Home Pay, CPP & EI",
@@ -95,7 +95,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   australia: {
     countryId: "AU",
     slug: "australia",
-    canonicalPath: "/tools/salary-calculator/australia/",
+    canonicalPath: "/tools/salary-calculator/australia",
     countryName: "Australia",
     flagEmoji: "🇦🇺",
     metaTitle: "Australia Salary Calculator 2026–27 – Stage 3 Tax & Take-Home",
@@ -121,7 +121,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   germany: {
     countryId: "DE",
     slug: "germany",
-    canonicalPath: "/tools/salary-calculator/germany/",
+    canonicalPath: "/tools/salary-calculator/germany",
     countryName: "Germany",
     flagEmoji: "🇩🇪",
     metaTitle: "Germany Salary Calculator 2026 – Netto Gehalt & Steuern (Free)",
@@ -147,7 +147,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   poland: {
     countryId: "PL",
     slug: "poland",
-    canonicalPath: "/tools/salary-calculator/poland/",
+    canonicalPath: "/tools/salary-calculator/poland",
     countryName: "Poland",
     flagEmoji: "🇵🇱",
     metaTitle: "Poland Salary Calculator 2026 – Wynagrodzenie Netto & ZUS (Free)",
@@ -173,7 +173,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   pakistan: {
     countryId: "PK",
     slug: "pakistan",
-    canonicalPath: "/tools/salary-calculator/pakistan/",
+    canonicalPath: "/tools/salary-calculator/pakistan",
     countryName: "Pakistan",
     flagEmoji: "🇵🇰",
     metaTitle: "Pakistan Salary Calculator FY 2026–27 – FBR Tax on Salary (Free)",
@@ -199,7 +199,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   india: {
     countryId: "IN",
     slug: "india",
-    canonicalPath: "/tools/salary-calculator/india/",
+    canonicalPath: "/tools/salary-calculator/india",
     countryName: "India",
     flagEmoji: "🇮🇳",
     metaTitle: "India Salary Calculator FY 2026–27 – New Regime 115BAC & In-Hand",
@@ -225,7 +225,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   uae: {
     countryId: "UAE",
     slug: "uae",
-    canonicalPath: "/tools/salary-calculator/uae/",
+    canonicalPath: "/tools/salary-calculator/uae",
     countryName: "United Arab Emirates",
     flagEmoji: "🇦🇪",
     metaTitle: "UAE Salary Calculator 2026 – Take-Home Pay & GPSSA (0% Tax)",
@@ -251,7 +251,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   "saudi-arabia": {
     countryId: "SA",
     slug: "saudi-arabia",
-    canonicalPath: "/tools/salary-calculator/saudi-arabia/",
+    canonicalPath: "/tools/salary-calculator/saudi-arabia",
     countryName: "Saudi Arabia",
     flagEmoji: "🇸🇦",
     metaTitle: "Saudi Arabia Salary Calculator 2026 – Net Pay & GOSI (0% Tax)",
@@ -277,7 +277,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   ireland: {
     countryId: "IE",
     slug: "ireland",
-    canonicalPath: "/tools/salary-calculator/ireland/",
+    canonicalPath: "/tools/salary-calculator/ireland",
     countryName: "Ireland",
     flagEmoji: "🇮🇪",
     metaTitle: "Ireland Salary Calculator 2026 – PAYE, USC & PRSI Take-Home Pay",
@@ -303,7 +303,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   "new-zealand": {
     countryId: "NZ",
     slug: "new-zealand",
-    canonicalPath: "/tools/salary-calculator/new-zealand/",
+    canonicalPath: "/tools/salary-calculator/new-zealand",
     countryName: "New Zealand",
     flagEmoji: "🇳🇿",
     metaTitle: "New Zealand Salary Calculator 2026–27 – PAYE & ACC Take-Home Pay",
@@ -329,7 +329,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   singapore: {
     countryId: "SG",
     slug: "singapore",
-    canonicalPath: "/tools/salary-calculator/singapore/",
+    canonicalPath: "/tools/salary-calculator/singapore",
     countryName: "Singapore",
     flagEmoji: "🇸🇬",
     metaTitle: "Singapore Salary Calculator 2026 – IRAS Tax & CPF Take-Home Pay",
@@ -355,7 +355,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   netherlands: {
     countryId: "NL",
     slug: "netherlands",
-    canonicalPath: "/tools/salary-calculator/netherlands/",
+    canonicalPath: "/tools/salary-calculator/netherlands",
     countryName: "Netherlands",
     flagEmoji: "🇳🇱",
     metaTitle: "Netherlands Salary Calculator 2026 – Bruto Netto Box 1 (Free)",
@@ -381,7 +381,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
   "south-africa": {
     countryId: "ZA",
     slug: "south-africa",
-    canonicalPath: "/tools/salary-calculator/south-africa/",
+    canonicalPath: "/tools/salary-calculator/south-africa",
     countryName: "South Africa",
     flagEmoji: "🇿🇦",
     metaTitle: "South Africa Salary Calculator 2026–27 – SARS PAYE & Net Pay",

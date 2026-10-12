@@ -517,31 +517,31 @@ export function RelatedCalculatorsBlock() {
   const related = [
     {
       title: 'Percentage Calculator',
-      path: '/tools/percentage-calculator/',
+      path: '/tools/percentage-calculator',
       desc: 'Calculate proportions, percentage increases, pay raises, and fractions quickly.',
       badge: 'Numbers',
     },
     {
       title: 'VAT Calculator',
-      path: '/tools/vat-calculator/',
+      path: '/tools/vat-calculator',
       desc: 'Add or remove statutory value-added tax from gross and net invoices.',
       badge: 'Tax',
     },
     {
       title: 'Loan Calculator',
-      path: '/tools/loan-calculator/',
+      path: '/tools/loan-calculator',
       desc: 'Estimate monthly amortization payments, interest charges, and mortgage costs.',
       badge: 'Finance',
     },
     {
       title: 'Discount Calculator',
-      path: '/tools/discount-calculator/',
+      path: '/tools/discount-calculator',
       desc: 'Determine net sale prices, percentage markdowns, and total shopping savings.',
       badge: 'Shopping',
     },
     {
       title: 'Free CV Builder',
-      path: '/tools/cv-builder/',
+      path: '/tools/cv-builder',
       desc: 'Create an ATS-friendly, professional resume with live print-to-PDF export.',
       badge: 'Career',
     },

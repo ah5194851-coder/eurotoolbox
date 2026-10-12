@@ -33,7 +33,7 @@ export function VatRatesTable() {
                 <td className="py-3.5 px-4 font-semibold text-foreground">
                   {p.landingSlug ? (
                     <Link
-                      href={`/${p.landingSlug}/`}
+                      href={`/${p.landingSlug}`}
                       className="text-primary hover:underline inline-flex items-center gap-1.5"
                     >
                       {p.name}
@@ -165,12 +165,12 @@ export function VatWorkedExamples() {
 
 export function CountryVatLinksList() {
   const countryLinks = [
-    { flag: '🇬🇧', name: 'UK VAT Calculator', path: '/uk-vat-calculator/', rate: '20% VAT', desc: 'HMRC standard and reduced tax rates in GBP (£)' },
-    { flag: '🇩🇪', name: 'Germany MwSt Calculator', path: '/germany-vat-calculator/', rate: '19% MwSt', desc: 'Mehrwertsteuer & USt standard rates in EUR (€)' },
-    { flag: '🇫🇷', name: 'France TVA Calculator', path: '/france-vat-calculator/', rate: '20% TVA', desc: 'Taxe sur la valeur ajoutée rates in EUR (€)' },
-    { flag: '🇮🇪', name: 'Ireland VAT Calculator', path: '/ireland-vat-calculator/', rate: '23% VAT', desc: 'Irish Revenue standard and reduced rates in EUR (€)' },
-    { flag: '🇦🇪', name: 'UAE VAT Calculator', path: '/uae-vat-calculator/', rate: '5% VAT', desc: 'Federal Tax Authority standard rate in AED' },
-    { flag: '🇸🇦', name: 'Saudi Arabia VAT Calculator', path: '/saudi-arabia-vat-calculator/', rate: '15% VAT', desc: 'ZATCA standard rate in Saudi Riyals (SAR)' },
+    { flag: '🇬🇧', name: 'UK VAT Calculator', path: '/uk-vat-calculator', rate: '20% VAT', desc: 'HMRC standard and reduced tax rates in GBP (£)' },
+    { flag: '🇩🇪', name: 'Germany MwSt Calculator', path: '/germany-vat-calculator', rate: '19% MwSt', desc: 'Mehrwertsteuer & USt standard rates in EUR (€)' },
+    { flag: '🇫🇷', name: 'France TVA Calculator', path: '/france-vat-calculator', rate: '20% TVA', desc: 'Taxe sur la valeur ajoutée rates in EUR (€)' },
+    { flag: '🇮🇪', name: 'Ireland VAT Calculator', path: '/ireland-vat-calculator', rate: '23% VAT', desc: 'Irish Revenue standard and reduced rates in EUR (€)' },
+    { flag: '🇦🇪', name: 'UAE VAT Calculator', path: '/uae-vat-calculator', rate: '5% VAT', desc: 'Federal Tax Authority standard rate in AED' },
+    { flag: '🇸🇦', name: 'Saudi Arabia VAT Calculator', path: '/saudi-arabia-vat-calculator', rate: '15% VAT', desc: 'ZATCA standard rate in Saudi Riyals (SAR)' },
   ];
 
   return (
@@ -215,15 +215,15 @@ export function CountryVatLinksList() {
 
       <div className="mt-6 pt-5 border-t border-border/60 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
         <span className="font-semibold text-foreground">Related Compensation & Tax Tools:</span>
-        <Link href="/tools/salary-calculator/" className="hover:text-primary hover:underline font-medium">
+        <Link href="/tools/salary-calculator" className="hover:text-primary hover:underline font-medium">
           Salary Calculator (Gross to Net Pay)
         </Link>
         <span>·</span>
-        <Link href="/tools/percentage-calculator/" className="hover:text-primary hover:underline">
+        <Link href="/tools/percentage-calculator" className="hover:text-primary hover:underline">
           Percentage Calculator
         </Link>
         <span>·</span>
-        <Link href="/tools/loan-calculator/" className="hover:text-primary hover:underline">
+        <Link href="/tools/loan-calculator" className="hover:text-primary hover:underline">
           Loan Calculator
         </Link>
       </div>

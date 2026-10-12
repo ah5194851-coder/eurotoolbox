@@ -205,7 +205,7 @@ export interface CountryVatPageData {
 export const COUNTRY_VAT_PAGES: Record<string, CountryVatPageData> = {
   'uk-vat-calculator': {
     slug: 'uk-vat-calculator',
-    canonicalPath: '/uk-vat-calculator/',
+    canonicalPath: '/uk-vat-calculator',
     countryName: 'United Kingdom',
     taxName: 'Value Added Tax',
     taxAbbr: 'VAT',
@@ -274,7 +274,7 @@ export const COUNTRY_VAT_PAGES: Record<string, CountryVatPageData> = {
 
   'germany-vat-calculator': {
     slug: 'germany-vat-calculator',
-    canonicalPath: '/germany-vat-calculator/',
+    canonicalPath: '/germany-vat-calculator',
     countryName: 'Germany',
     taxName: 'Mehrwertsteuer (MwSt) / Umsatzsteuer (USt)',
     taxAbbr: 'MwSt',
@@ -343,7 +343,7 @@ export const COUNTRY_VAT_PAGES: Record<string, CountryVatPageData> = {
 
   'france-vat-calculator': {
     slug: 'france-vat-calculator',
-    canonicalPath: '/france-vat-calculator/',
+    canonicalPath: '/france-vat-calculator',
     countryName: 'France',
     taxName: 'Taxe sur la valeur ajoutée (TVA)',
     taxAbbr: 'TVA',
@@ -412,7 +412,7 @@ export const COUNTRY_VAT_PAGES: Record<string, CountryVatPageData> = {
 
   'ireland-vat-calculator': {
     slug: 'ireland-vat-calculator',
-    canonicalPath: '/ireland-vat-calculator/',
+    canonicalPath: '/ireland-vat-calculator',
     countryName: 'Ireland',
     taxName: 'Value Added Tax',
     taxAbbr: 'VAT',
@@ -481,7 +481,7 @@ export const COUNTRY_VAT_PAGES: Record<string, CountryVatPageData> = {
 
   'uae-vat-calculator': {
     slug: 'uae-vat-calculator',
-    canonicalPath: '/uae-vat-calculator/',
+    canonicalPath: '/uae-vat-calculator',
     countryName: 'United Arab Emirates',
     taxName: 'Value Added Tax',
     taxAbbr: 'VAT',
@@ -550,7 +550,7 @@ export const COUNTRY_VAT_PAGES: Record<string, CountryVatPageData> = {
 
   'saudi-arabia-vat-calculator': {
     slug: 'saudi-arabia-vat-calculator',
-    canonicalPath: '/saudi-arabia-vat-calculator/',
+    canonicalPath: '/saudi-arabia-vat-calculator',
     countryName: 'Saudi Arabia',
     taxName: 'Value Added Tax',
     taxAbbr: 'VAT',

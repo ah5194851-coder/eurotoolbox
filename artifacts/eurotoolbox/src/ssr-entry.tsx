@@ -23,46 +23,46 @@ import { tools } from './App';
 export { renderHead, absoluteUrl, SITE_URL, tools };
 
 export const COUNTRY_VAT_ROUTES = [
-  '/uk-vat-calculator/',
-  '/germany-vat-calculator/',
-  '/france-vat-calculator/',
-  '/ireland-vat-calculator/',
-  '/uae-vat-calculator/',
-  '/saudi-arabia-vat-calculator/',
+  '/uk-vat-calculator',
+  '/germany-vat-calculator',
+  '/france-vat-calculator',
+  '/ireland-vat-calculator',
+  '/uae-vat-calculator',
+  '/saudi-arabia-vat-calculator',
 ];
 
 export const SALARY_COUNTRY_ROUTES = Object.values(SALARY_COUNTRY_PAGES).map(p => p.canonicalPath);
 
 export const SALARY_LANDING_ROUTES = [
-  '/monthly-salary-calculator/',
-  '/hourly-to-salary-calculator/',
-  '/annual-to-monthly-salary-calculator/',
-  '/basic-salary-calculator/',
-  '/net-salary-calculator/',
+  '/monthly-salary-calculator',
+  '/hourly-to-salary-calculator',
+  '/annual-to-monthly-salary-calculator',
+  '/basic-salary-calculator',
+  '/net-salary-calculator',
 ];
 
 export const PRERENDER_ROUTES = [
   '/',
-  '/about/',
-  '/contact/',
-  '/terms/',
-  '/privacy/',
-  '/books/',
-  ...categorySlugs.map(slug => `/category/${slug}/`),
-  ...tools.map(tool => `/tools/${tool.slug}/`),
+  '/about',
+  '/contact',
+  '/terms',
+  '/privacy',
+  '/books',
+  ...categorySlugs.map(slug => `/category/${slug}`),
+  ...tools.map(tool => `/tools/${tool.slug}`),
   ...COUNTRY_VAT_ROUTES,
   ...SALARY_LANDING_ROUTES,
   ...SALARY_COUNTRY_ROUTES,
 ];
 export const SITEMAP_ROUTES = [
   '/',
-  '/about/',
-  '/contact/',
-  '/terms/',
-  '/privacy/',
-  '/books/',
-  ...categorySlugs.map(slug => `/category/${slug}/`),
-  ...tools.map(tool => `/tools/${tool.slug}/`),
+  '/about',
+  '/contact',
+  '/terms',
+  '/privacy',
+  '/books',
+  ...categorySlugs.map(slug => `/category/${slug}`),
+  ...tools.map(tool => `/tools/${tool.slug}`),
   ...COUNTRY_VAT_ROUTES,
   ...SALARY_LANDING_ROUTES,
   ...SALARY_COUNTRY_ROUTES,
@@ -100,6 +100,9 @@ export function renderRoute(path: string) {
             <Route path="/saudi-arabia-vat-calculator/" component={() => <CountryVatPage countrySlug="saudi-arabia-vat-calculator" />} />
             {Object.values(SALARY_COUNTRY_PAGES).map(c => (
               <Route key={c.slug} path={c.canonicalPath} component={() => <SalaryCountryPage countrySlug={c.slug} />} />
+            ))}
+            {Object.values(SALARY_COUNTRY_PAGES).map(c => (
+              <Route key={`${c.slug}-slash`} path={`${c.canonicalPath}/`} component={() => <SalaryCountryPage countrySlug={c.slug} />} />
             ))}
             <Route path="/monthly-salary-calculator" component={() => <SalaryLandingPage slug="monthly-salary-calculator" />} />
             <Route path="/monthly-salary-calculator/" component={() => <SalaryLandingPage slug="monthly-salary-calculator" />} />

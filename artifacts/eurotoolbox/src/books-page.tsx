@@ -22,7 +22,7 @@ const books = [
 
 export default function BooksPage() {
   useEffect(() => {
-    updateDocumentHead('/books/');
+    updateDocumentHead('/books');
   }, []);
   return <Shell><main className="mx-auto max-w-[1360px] px-5 py-12 lg:px-10 lg:py-20">
     <div className="max-w-2xl">
@@ -67,7 +67,7 @@ export default function BooksPage() {
         ].map(t => (
           <Link
             key={t.slug}
-            href={`/tools/${t.slug}/`}
+            href={`/tools/${t.slug}`}
             className="group rounded-xl border border-border/80 bg-background/60 p-4 transition hover:border-primary hover:shadow-2xs"
           >
             <p className="font-mono-ui text-[10px] uppercase tracking-wider text-accent">{t.cat}</p>

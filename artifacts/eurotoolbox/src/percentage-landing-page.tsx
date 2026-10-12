@@ -49,9 +49,9 @@ export function PercentageLandingPage({ slug }: PercentageLandingPageProps) {
         <nav aria-label="Breadcrumb" className="mb-9 flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
           <Link href="/" className="hover:text-foreground">Home</Link>
           <span>/</span>
-          <Link href="/category/numbers/" className="hover:text-foreground">Numbers</Link>
+          <Link href="/category/numbers" className="hover:text-foreground">Numbers</Link>
           <span>/</span>
-          <Link href="/tools/percentage-calculator/" className="hover:text-foreground">Percentage Calculator</Link>
+          <Link href="/tools/percentage-calculator" className="hover:text-foreground">Percentage Calculator</Link>
           <span>/</span>
           <span className="text-foreground font-medium">{data.h1}</span>
         </nav>
@@ -197,7 +197,7 @@ export function PercentageLandingPage({ slug }: PercentageLandingPageProps) {
               <p className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-accent">Related Calculations</p>
               <h3 className="font-display text-xl font-semibold text-foreground">Other Percentage Calculators</h3>
             </div>
-            <Link href="/tools/percentage-calculator/" className="text-xs font-semibold text-primary hover:underline">
+            <Link href="/tools/percentage-calculator" className="text-xs font-semibold text-primary hover:underline">
               Main All-in-One Percentage Calculator →
             </Link>
           </div>
@@ -233,7 +233,7 @@ export function PercentageLandingPage({ slug }: PercentageLandingPageProps) {
           </p>
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
             <Link
-              href="/tools/discount-calculator/"
+              href="/tools/discount-calculator"
               className="rounded-xl border border-border bg-card p-4 hover:border-primary transition group"
             >
               <div className="flex items-center gap-2 text-primary font-semibold text-sm">
@@ -242,7 +242,7 @@ export function PercentageLandingPage({ slug }: PercentageLandingPageProps) {
               <p className="mt-1 text-xs text-muted-foreground">Calculate sale prices, percentage discounts, and retail savings.</p>
             </Link>
             <Link
-              href="/tools/vat-calculator/"
+              href="/tools/vat-calculator"
               className="rounded-xl border border-border bg-card p-4 hover:border-primary transition group"
             >
               <div className="flex items-center gap-2 text-primary font-semibold text-sm">
@@ -251,7 +251,7 @@ export function PercentageLandingPage({ slug }: PercentageLandingPageProps) {
               <p className="mt-1 text-xs text-muted-foreground">Add or remove Value Added Tax across UK, EU, UAE and global brackets.</p>
             </Link>
             <Link
-              href="/tools/salary-calculator/"
+              href="/tools/salary-calculator"
               className="rounded-xl border border-border bg-card p-4 hover:border-primary transition group"
             >
               <div className="flex items-center gap-2 text-primary font-semibold text-sm">
