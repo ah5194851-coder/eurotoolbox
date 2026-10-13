@@ -803,6 +803,15 @@ export function updateDocumentHead(path: string) {
   script.type = 'application/ld+json';
   script.text = jsonLd(getJsonLd(path));
   document.head.appendChild(script);
+
+  // Ensure Google AdSense verification script is present in <head>
+  if (!document.head.querySelector('script[src*="pagead2.googlesyndication.com"]')) {
+    const adsScript = document.createElement('script');
+    adsScript.async = true;
+    adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2678039503427231';
+    adsScript.crossOrigin = 'anonymous';
+    document.head.appendChild(adsScript);
+  }
 }
 
 function escapeHtml(value: string) {

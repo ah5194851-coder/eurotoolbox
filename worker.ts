@@ -17,6 +17,16 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
 
+    // Ads.txt exemption: served at /ads.txt (content-type text/plain, HTTP 200, no redirect)
+    if (url.pathname === "/ads.txt" || url.pathname === "/ads.txt/") {
+      return new Response("google.com, pub-2678039503427231, DIRECT, f08c47fec0942fa0\n", {
+        status: 200,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+        },
+      });
+    }
+
     // 1. Force HTTPS: If request is http, redirect 301 to https
     const isHttp = url.protocol === "http:" || request.headers.get("x-forwarded-proto") === "http";
 
@@ -54,7 +64,7 @@ export default {
       normalizedPath = normalizedPath.replace(/\/+$/, "");
     }
 
-    if (isHttp || isAlternateHost || hasUpperCase || hasTrailingSlash) {
+    if (normalizedPath !== "/ads.txt" && (isHttp || isAlternateHost || hasUpperCase || hasTrailingSlash)) {
       const destinationPath = normalizedPath === "" ? "/" : normalizedPath;
       return Response.redirect("https://loveeasytool.com" + destinationPath + url.search, 301);
     }

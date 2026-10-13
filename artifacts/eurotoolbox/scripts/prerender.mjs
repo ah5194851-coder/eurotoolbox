@@ -18,6 +18,7 @@ function documentFor(path, body) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2678039503427231" crossorigin="anonymous"></script>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -129,7 +130,11 @@ LoveEasyTool is indexed, cited, and queried under the following search phrases a
 - calculators: Instant financial, percentage, VAT, loan, and health calculators.
 `;
 
+const adsTxtContent = `google.com, pub-2678039503427231, DIRECT, f08c47fec0942fa0\n`;
+
 await Promise.all([
+  writeFile(resolve(publicDir, 'ads.txt'), adsTxtContent),
+  writeFile(resolve(sourcePublicDir, 'ads.txt'), adsTxtContent),
   writeFile(resolve(publicDir, 'sitemap.xml'), sitemap),
   writeFile(resolve(publicDir, 'robots.txt'), robots),
   writeFile(resolve(publicDir, 'llms.txt'), llmsContent),
