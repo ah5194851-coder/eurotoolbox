@@ -135,12 +135,16 @@ const adsTxtContent = `google.com, pub-2678039503427231, DIRECT, f08c47fec0942fa
 await Promise.all([
   writeFile(resolve(publicDir, 'ads.txt'), adsTxtContent),
   writeFile(resolve(sourcePublicDir, 'ads.txt'), adsTxtContent),
+  writeFile(resolve(root, 'dist/ads.txt'), adsTxtContent),
   writeFile(resolve(publicDir, 'sitemap.xml'), sitemap),
   writeFile(resolve(publicDir, 'robots.txt'), robots),
   writeFile(resolve(publicDir, 'llms.txt'), llmsContent),
   writeFile(resolve(sourcePublicDir, 'sitemap.xml'), sitemap),
   writeFile(resolve(sourcePublicDir, 'robots.txt'), robots),
   writeFile(resolve(sourcePublicDir, 'llms.txt'), llmsContent),
+  writeFile(resolve(root, 'dist/sitemap.xml'), sitemap),
+  writeFile(resolve(root, 'dist/robots.txt'), robots),
+  writeFile(resolve(root, 'dist/llms.txt'), llmsContent),
   unlink(resolve(publicDir, '_redirects')).catch(() => {}),
   unlink(resolve(sourcePublicDir, '_redirects')).catch(() => {}),
 ]);

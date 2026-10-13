@@ -17,13 +17,54 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
 
-    // Ads.txt exemption: served at /ads.txt (content-type text/plain, HTTP 200, no redirect)
+    // Static text & metadata assets: served directly from static assets (HTTP 200) BEFORE any redirect, SPA fallback, or 404 handling
     if (url.pathname === "/ads.txt" || url.pathname === "/ads.txt/") {
-      return new Response("google.com, pub-2678039503427231, DIRECT, f08c47fec0942fa0\n", {
+      const adsUrl = new URL(request.url);
+      adsUrl.pathname = "/ads.txt";
+      let resp = await env.ASSETS.fetch(new Request(adsUrl.toString(), request));
+      if (resp.status !== 200) {
+        resp = new Response("google.com, pub-2678039503427231, DIRECT, f08c47fec0942fa0\n", {
+          status: 200,
+        });
+      }
+      const headers = new Headers(resp.headers);
+      headers.set("Content-Type", "text/plain; charset=utf-8");
+      headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+      headers.set("X-Content-Type-Options", "nosniff");
+      headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+      return new Response(resp.body, {
         status: 200,
-        headers: {
-          "Content-Type": "text/plain; charset=utf-8",
-        },
+        headers,
+      });
+    }
+
+    if (url.pathname === "/robots.txt" || url.pathname === "/robots.txt/") {
+      const robotsUrl = new URL(request.url);
+      robotsUrl.pathname = "/robots.txt";
+      const resp = await env.ASSETS.fetch(new Request(robotsUrl.toString(), request));
+      const headers = new Headers(resp.headers);
+      headers.set("Content-Type", "text/plain; charset=utf-8");
+      headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+      headers.set("X-Content-Type-Options", "nosniff");
+      headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+      return new Response(resp.body, {
+        status: resp.status,
+        headers,
+      });
+    }
+
+    if (url.pathname === "/sitemap.xml" || url.pathname === "/sitemap.xml/") {
+      const sitemapUrl = new URL(request.url);
+      sitemapUrl.pathname = "/sitemap.xml";
+      const resp = await env.ASSETS.fetch(new Request(sitemapUrl.toString(), request));
+      const headers = new Headers(resp.headers);
+      headers.set("Content-Type", "application/xml; charset=utf-8");
+      headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+      headers.set("X-Content-Type-Options", "nosniff");
+      headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+      return new Response(resp.body, {
+        status: resp.status,
+        headers,
       });
     }
 
@@ -64,7 +105,9 @@ export default {
       normalizedPath = normalizedPath.replace(/\/+$/, "");
     }
 
-    if (normalizedPath !== "/ads.txt" && (isHttp || isAlternateHost || hasUpperCase || hasTrailingSlash)) {
+    const isDirectAsset = normalizedPath === "/ads.txt" || normalizedPath === "/robots.txt" || normalizedPath === "/sitemap.xml";
+
+    if (!isDirectAsset && (isHttp || isAlternateHost || hasUpperCase || hasTrailingSlash)) {
       const destinationPath = normalizedPath === "" ? "/" : normalizedPath;
       return Response.redirect("https://loveeasytool.com" + destinationPath + url.search, 301);
     }
