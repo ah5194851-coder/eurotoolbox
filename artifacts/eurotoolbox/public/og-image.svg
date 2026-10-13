@@ -1,15 +1,45 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="630" fill="#F4F0E8"/>
-  <circle cx="1080" cy="100" r="260" fill="#F9D34F" opacity=".65"/>
-  <circle cx="80" cy="560" r="220" fill="#B7E8DA" opacity=".8"/>
-  <rect x="76" y="76" width="1048" height="478" rx="34" fill="#FFFFFF" stroke="#DAD6CD" stroke-width="3"/>
-  <rect x="126" y="126" width="78" height="78" rx="20" fill="#F9D34F"/>
-  <g transform="translate(144, 144) scale(1.75)" stroke="#181A20" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/>
-    <circle cx="16.5" cy="7.5" r=".5" fill="#181A20"/>
+  <!-- Subtle textured background -->
+  <rect width="1200" height="630" fill="#F8FAFC"/>
+  <circle cx="1120" cy="90" r="300" fill="#F9D34F" fill-opacity="0.22"/>
+  <circle cx="90" cy="560" r="260" fill="#3B82F6" fill-opacity="0.10"/>
+
+  <!-- Main Card -->
+  <rect x="54" y="50" width="1092" height="530" rx="32" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2.5"/>
+
+  <!-- Logo and Header Row -->
+  <g transform="translate(110, 105)">
+    <!-- Yellow Key Squircle -->
+    <rect width="84" height="84" rx="24" fill="#F9D34F"/>
+    <g transform="translate(18, 18) scale(2)" stroke="#181A20" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/>
+      <circle cx="16.5" cy="7.5" r=".5" fill="#181A20"/>
+    </g>
+
+    <!-- Brand Header -->
+    <text x="106" y="42" fill="#0F172A" font-family="Liberation Sans, system-ui, sans-serif" font-size="38" font-weight="800">LoveEasyTool</text>
+    <text x="108" y="70" fill="#64748B" font-family="Liberation Sans, system-ui, sans-serif" font-size="16" font-weight="600" letter-spacing="1.5">EVERYDAY DIGITAL UTILITY CABINET</text>
   </g>
-  <text x="238" y="180" fill="#181A20" font-family="Arial, sans-serif" font-size="38" font-weight="700">LoveEasyTool</text>
-  <text x="126" y="340" fill="#181A20" font-family="Arial, sans-serif" font-size="72" font-weight="700">Small tools.</text>
-  <text x="126" y="425" fill="#1A365D" font-family="Arial, sans-serif" font-size="72" font-weight="700">Clearer days.</text>
-  <text x="128" y="492" fill="#5B606B" font-family="Arial, sans-serif" font-size="25">Free browser tools · No sign-up · Files stay private</text>
+
+  <!-- Primary Headline requested by user: LoveEasyTool - Free Online Tools, No Sign-Up -->
+  <text x="110" y="278" fill="#0F172A" font-family="Liberation Sans, system-ui, sans-serif" font-size="44" font-weight="800" letter-spacing="-0.5px">LoveEasyTool - Free Online Tools, No Sign-Up</text>
+
+  <!-- Descriptive subhead -->
+  <text x="110" y="335" fill="#1E3A8A" font-family="Liberation Sans, system-ui, sans-serif" font-size="28" font-weight="700">Small tools. Clearer days. 100% Client-Side Privacy.</text>
+  <text x="110" y="375" fill="#475569" font-family="Liberation Sans, system-ui, sans-serif" font-size="20" font-weight="500">PDF, image compressor, salary calculators, VAT &amp; text utilities in your browser.</text>
+
+  <!-- Value Proposition Pills -->
+  <g transform="translate(110, 422)">
+    <rect x="0" y="0" width="220" height="42" rx="21" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+    <text x="24" y="27" fill="#334155" font-family="Liberation Sans, system-ui, sans-serif" font-size="16" font-weight="600">🔒 100% Private</text>
+
+    <rect x="238" y="0" width="240" height="42" rx="21" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+    <text x="262" y="27" fill="#334155" font-family="Liberation Sans, system-ui, sans-serif" font-size="16" font-weight="600">⚡ Zero File Uploads</text>
+
+    <rect x="496" y="0" width="240" height="42" rx="21" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1.5"/>
+    <text x="520" y="27" fill="#92400E" font-family="Liberation Sans, system-ui, sans-serif" font-size="16" font-weight="600">✨ No Sign-Up Required</text>
+  </g>
+
+  <!-- URL footer -->
+  <text x="112" y="525" fill="#94A3B8" font-family="Liberation Sans, system-ui, sans-serif" font-size="18" font-weight="600">loveeasytool.com</text>
 </svg>
