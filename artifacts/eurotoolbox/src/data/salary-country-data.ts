@@ -21,7 +21,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     slug: "uk",
     canonicalPath: "/tools/salary-calculator/uk",
     // Update this date whenever the page content or tax rates change.
-    lastUpdated: "2026-09-23",
+    lastUpdated: "2026-10-12",
     countryName: "United Kingdom",
     flagEmoji: "🇬🇧",
     metaTitle: "UK Salary Calculator 2026/27 – Take-Home Pay & NI (Free)",
@@ -31,7 +31,7 @@ export const SALARY_COUNTRY_PAGES: Record<string, SalaryCountrySeoData> = {
     faqList: [
       [
         "What is the UK Personal Allowance for 2026/27?",
-        "The standard UK Personal Allowance remains at £12,570 through April 2028. Earnings up to this threshold are completely tax-free for most residents. For individuals earning over £100,000, the Personal Allowance reduces by £1 for every £2 of income above £100,000, reaching zero at £125,140.",
+        "The standard UK Personal Allowance remains at £12,570 (frozen until April 2031). Earnings up to this threshold are completely tax-free for most residents. For individuals earning over £100,000, the Personal Allowance reduces by £1 for every £2 of income above £100,000, reaching zero at £125,140.",
       ],
       [
         "What are the employee National Insurance rates for 2026/27?",

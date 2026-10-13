@@ -195,7 +195,7 @@ export const COUNTRIES_CONFIG: Record<SupportedCountryCode, CountryTaxConfig> = 
     socialContributionName: 'National Insurance (Class 1)',
     commonSalaries: [25000, 35000, 45000, 60000, 80000, 120000],
     notes:
-      'Personal Allowance is £12,570 (statutorily frozen through April 2028). Tapers by £1 for every £2 earned above £100,000, reaching zero at £125,140. Employee National Insurance (Class 1) is 8% between £12,570 and £50,270, and 2% above £50,270. Estimated using published statutory rates, tax year 2026/27. Always confirm with the official source.',
+      'Personal Allowance is £12,570 (frozen until April 2031). Tapers by £1 for every £2 earned above £100,000, reaching zero at £125,140. Employee National Insurance (Class 1) is 8% between £12,570 and £50,270, and 2% above £50,270. Estimated using published statutory rates, tax year 2026/27. Always confirm with the official source.',
   },
 
   US: {
@@ -841,13 +841,16 @@ export function calculateSalaryBreakdown(
       }
       const taxable = Math.max(0, validGross - allowance);
       if (taxable > 0) {
-        const basicBand = Math.min(taxable, 50270 - 12570); // up to £37,700
+        // Basic rate band: first £37,700 of taxable income at 20%
+        const basicBand = Math.min(taxable, 37700);
         tax += basicBand * 0.20;
         if (taxable > 37700) {
-          const higherBand = Math.min(taxable - 37700, 125140 - 50270); // up to £74,870
+          // Higher rate band: taxable income between £37,700 and £125,140 (band of £87,440) at 40%
+          const higherBand = Math.min(taxable - 37700, 125140 - 37700);
           tax += higherBand * 0.40;
-          if (taxable > 37700 + 74870) {
-            const addlBand = taxable - (37700 + 74870);
+          if (taxable > 125140) {
+            // Additional rate band: taxable income over £125,140 at 45%
+            const addlBand = taxable - 125140;
             tax += addlBand * 0.45;
           }
         }
