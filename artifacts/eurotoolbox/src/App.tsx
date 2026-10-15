@@ -1,4 +1,4 @@
-import { lazy, Suspense, type ReactNode, useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
@@ -398,8 +398,54 @@ function Router() {
   return <ErrorBoundary><Suspense fallback={<RouteLoading />}><Switch><Route path="/" component={LazyHomePage} /><Route path="/about" component={LazyAboutPage} /><Route path="/about/" component={LazyAboutPage} /><Route path="/contact" component={LazyContactPage} /><Route path="/contact/" component={LazyContactPage} /><Route path="/terms" component={LazyTermsPage} /><Route path="/terms/" component={LazyTermsPage} /><Route path="/privacy" component={LazyPrivacyPage} /><Route path="/privacy/" component={LazyPrivacyPage} /><Route path="/books" component={LazyBooksPage} /><Route path="/books/" component={LazyBooksPage} /><Route path="/uk-vat-calculator" component={() => <LazyCountryVatPage countrySlug="uk-vat-calculator" />} /><Route path="/uk-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="uk-vat-calculator" />} /><Route path="/germany-vat-calculator" component={() => <LazyCountryVatPage countrySlug="germany-vat-calculator" />} /><Route path="/germany-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="germany-vat-calculator" />} /><Route path="/france-vat-calculator" component={() => <LazyCountryVatPage countrySlug="france-vat-calculator" />} /><Route path="/france-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="france-vat-calculator" />} /><Route path="/ireland-vat-calculator" component={() => <LazyCountryVatPage countrySlug="ireland-vat-calculator" />} /><Route path="/ireland-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="ireland-vat-calculator" />} /><Route path="/uae-vat-calculator" component={() => <LazyCountryVatPage countrySlug="uae-vat-calculator" />} /><Route path="/uae-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="uae-vat-calculator" />} /><Route path="/saudi-arabia-vat-calculator" component={() => <LazyCountryVatPage countrySlug="saudi-arabia-vat-calculator" />} /><Route path="/saudi-arabia-vat-calculator/" component={() => <LazyCountryVatPage countrySlug="saudi-arabia-vat-calculator" />} /><Route path="/monthly-salary-calculator" component={() => <LazySalaryLandingPage slug="monthly-salary-calculator" />} /><Route path="/monthly-salary-calculator/" component={() => <LazySalaryLandingPage slug="monthly-salary-calculator" />} /><Route path="/hourly-to-salary-calculator" component={() => <LazySalaryLandingPage slug="hourly-to-salary-calculator" />} /><Route path="/hourly-to-salary-calculator/" component={() => <LazySalaryLandingPage slug="hourly-to-salary-calculator" />} /><Route path="/annual-to-monthly-salary-calculator" component={() => <LazySalaryLandingPage slug="annual-to-monthly-salary-calculator" />} /><Route path="/annual-to-monthly-salary-calculator/" component={() => <LazySalaryLandingPage slug="annual-to-monthly-salary-calculator" />} /><Route path="/basic-salary-calculator" component={() => <LazySalaryLandingPage slug="basic-salary-calculator" />} /><Route path="/basic-salary-calculator/" component={() => <LazySalaryLandingPage slug="basic-salary-calculator" />} /><Route path="/net-salary-calculator" component={() => <LazySalaryLandingPage slug="net-salary-calculator" />} /><Route path="/net-salary-calculator/" component={() => <LazySalaryLandingPage slug="net-salary-calculator" />} /><Route path="/percentage-increase-calculator" component={() => <LazyPercentageLandingPage slug="percentage-increase-calculator" />} /><Route path="/percentage-increase-calculator/" component={() => <LazyPercentageLandingPage slug="percentage-increase-calculator" />} /><Route path="/percentage-decrease-calculator" component={() => <LazyPercentageLandingPage slug="percentage-decrease-calculator" />} /><Route path="/percentage-decrease-calculator/" component={() => <LazyPercentageLandingPage slug="percentage-decrease-calculator" />} /><Route path="/percentage-difference-calculator" component={() => <LazyPercentageLandingPage slug="percentage-difference-calculator" />} /><Route path="/percentage-difference-calculator/" component={() => <LazyPercentageLandingPage slug="percentage-difference-calculator" />} /><Route path="/what-is-x-percent-of-y" component={() => <LazyPercentageLandingPage slug="what-is-x-percent-of-y" />} /><Route path="/what-is-x-percent-of-y/" component={() => <LazyPercentageLandingPage slug="what-is-x-percent-of-y" />} /><Route path="/how-to-calculate-percentage" component={() => <LazyPercentageLandingPage slug="how-to-calculate-percentage" />} /><Route path="/how-to-calculate-percentage/" component={() => <LazyPercentageLandingPage slug="how-to-calculate-percentage" />} /><Route path="/tools/salary-calculator/:country" component={({ params }: any) => <LazySalaryCountryPage countrySlug={params.country} />} /><Route path="/tools/salary-calculator/:country/" component={({ params }: any) => <LazySalaryCountryPage countrySlug={params.country} />} /><Route path="/category/:category" component={LazyCategoryPage} /><Route path="/category/:category/" component={LazyCategoryPage} /><Route path="/tools/:tool" component={LazyToolPage} /><Route path="/tools/:tool/" component={LazyToolPage} /><Route path="/:tool" component={LazyToolPage} /><Route path="/:tool/" component={LazyToolPage} /><Route component={NotFound} /></Switch></Suspense></ErrorBoundary>;
 }
 
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+function PageViewTracker() {
+  const [location] = useLocation();
+  const prevLocationRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    // Initial mount is already tracked by gtag('config', 'G-MHENSQS8XZ') in the HTML head
+    if (prevLocationRef.current === null) {
+      prevLocationRef.current = location;
+      return;
+    }
+
+    if (prevLocationRef.current !== location) {
+      prevLocationRef.current = location;
+      const timer = setTimeout(() => {
+        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+          window.gtag('event', 'page_view', {
+            page_title: document.title,
+            page_location: window.location.href,
+            page_path: location,
+          });
+        }
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [location]);
+
+  return null;
+}
+
 function App() {
-  return <QueryClientProvider client={queryClient}><TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><Router /></WouterRouter><Toaster /></TooltipProvider></QueryClientProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+          <PageViewTracker />
+          <Router />
+        </WouterRouter>
+        <Toaster />
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
 }
 
 export default App;
