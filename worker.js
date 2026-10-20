@@ -11,7 +11,32 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // Ads.txt exemption: served at /ads.txt (content-type text/plain, HTTP 200, no redirect)
+    // 0. Static assets under /assets/ (Vite bundled JS, CSS, fonts, web workers):
+    // CRITICAL: Must be served directly by env.ASSETS without case-normalization, trailing slash redirects,
+    // or HTML fallbacks. Vite hashes contain uppercase characters (e.g. index-KMud9tmI.css); lowercasing them breaks the asset.
+    if (url.pathname.startsWith("/assets/")) {
+      const resp = await env.ASSETS.fetch(request);
+      if (resp.status === 200) {
+        const headers = new Headers(resp.headers);
+        headers.set("Cache-Control", "public, max-age=31536000, immutable");
+        headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+        headers.set("X-Content-Type-Options", "nosniff");
+        return new Response(resp.body, {
+          status: 200,
+          headers,
+        });
+      }
+      // If a hashed asset is missing, return 404 text/plain. NEVER fall back to 404.html (which is text/html),
+      // because returning HTML for a .css or .js asset triggers MIME type errors in browsers.
+      return new Response("Asset not found", {
+        status: 404,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "no-cache, no-store",
+        },
+      });
+    }
+
     // Static text & metadata assets: served directly from static assets (HTTP 200) BEFORE any redirect, SPA fallback, or 404 handling
     if (url.pathname === "/ads.txt" || url.pathname === "/ads.txt/") {
       const adsUrl = new URL(request.url);
@@ -69,6 +94,26 @@ export default {
     // 2. Alternate hostnames check (redirect alternate hostnames and www to primary apex domain)
     const isAlternateHost = url.hostname === "eurotoolbox.ah5194851.workers.dev" || url.hostname === "www.loveeasytool.com";
 
+    // Static root files (e.g. /favicon.ico, /logo.png, /og-image.png, /llms.txt, /apple-touch-icon.png):
+    // Must preserve exact file casing and not undergo route normalization.
+    const lastSlashIdx = url.pathname.lastIndexOf("/");
+    const filename = lastSlashIdx !== -1 ? url.pathname.slice(lastSlashIdx + 1) : url.pathname;
+    const isFile = filename.includes(".") && !filename.endsWith(".html");
+
+    if (isFile) {
+      if (isHttp || isAlternateHost) {
+        return Response.redirect("https://loveeasytool.com" + url.pathname + url.search, 301);
+      }
+      const fileResp = await env.ASSETS.fetch(request);
+      const headers = new Headers(fileResp.headers);
+      headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+      headers.set("X-Content-Type-Options", "nosniff");
+      return new Response(fileResp.body, {
+        status: fileResp.status,
+        headers,
+      });
+    }
+
     // 3. Deprecated / renamed tool paths -> redirect 301 to canonical non-trailing slash URL
     if (
       url.pathname === "/tools/image-tools" ||
@@ -85,7 +130,7 @@ export default {
       return Response.redirect("https://loveeasytool.com/tools/" + rawClean + url.search, 301);
     }
 
-    // 5. Case normalization & Trailing slash enforcement:
+    // 5. Case normalization & Trailing slash enforcement for PAGE routes:
     // Strip trailing slashes on all non-root paths and 301 redirect
     let normalizedPath = url.pathname;
     const hasUpperCase = /[A-Z]/.test(normalizedPath);
@@ -93,22 +138,18 @@ export default {
       normalizedPath = normalizedPath.toLowerCase();
     }
 
-    const isFile = normalizedPath.includes(".");
     const hasTrailingSlash = normalizedPath !== "/" && normalizedPath.endsWith("/");
-
     if (hasTrailingSlash) {
       normalizedPath = normalizedPath.replace(/\/+$/, "");
     }
 
-    const isDirectAsset = normalizedPath === "/ads.txt" || normalizedPath === "/robots.txt" || normalizedPath === "/sitemap.xml";
-
-    if (!isDirectAsset && (isHttp || isAlternateHost || hasUpperCase || hasTrailingSlash)) {
+    if (isHttp || isAlternateHost || hasUpperCase || hasTrailingSlash) {
       const destinationPath = normalizedPath === "" ? "/" : normalizedPath;
       return Response.redirect("https://loveeasytool.com" + destinationPath + url.search, 301);
     }
 
     // 6. Serve static asset: for clean page paths without file extension, attempt serving .html asset first
-    if (!isFile && normalizedPath !== "/") {
+    if (normalizedPath !== "/") {
       const htmlUrl = new URL(request.url);
       htmlUrl.pathname = normalizedPath + ".html";
       const htmlResp = await env.ASSETS.fetch(new Request(htmlUrl.toString(), request));

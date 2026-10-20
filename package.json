@@ -10,8 +10,8 @@
     "scripts"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=@workspace/loveeasytool",
-    "build": "npm run build --workspace=@workspace/loveeasytool",
+    "dev": "npm run --prefix artifacts/eurotoolbox dev",
+    "build": "npm run --prefix artifacts/eurotoolbox build",
     "lint": "npm run typecheck",
     "typecheck": "tsc -b"
   },

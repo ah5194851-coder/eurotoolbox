@@ -7,7 +7,7 @@ export default defineConfig(({ command }) => {
   const isBuild = command === 'build';
   const rawPort = process.env.PORT ?? (isBuild ? '4173' : '3000');
   const port = Number(rawPort) || 3000;
-  const basePath = process.env.BASE_PATH ?? '/';
+  const basePath = process.env.BASE_PATH || '/';
 
   return {
     base: basePath,
