@@ -151,7 +151,8 @@ await Promise.all([
   writeFile(resolve(sourcePublicDir, 'llms.txt'), llmsContent),
   writeFile(resolve(root, 'dist/sitemap.xml'), sitemap),
   writeFile(resolve(root, 'dist/robots.txt'), robots),
-  writeFile(resolve(root, 'dist/llms.txt'), llmsContent),
+  writeFile(resolve(publicDir, 'google305a78e6dc369e42.html'), 'google-site-verification: google305a78e6dc369e42.html\n'),
+  writeFile(resolve(sourcePublicDir, 'google305a78e6dc369e42.html'), 'google-site-verification: google305a78e6dc369e42.html\n'),
   unlink(resolve(publicDir, '_redirects')).catch(() => {}),
   unlink(resolve(sourcePublicDir, '_redirects')).catch(() => {}),
 ]);

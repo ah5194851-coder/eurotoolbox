@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, Search, ShieldCheck, Zap, HelpCircle, CheckCircle2, Lock, Cpu, Sparkles, FileText, Calculator, Image as ImageIcon, FileCode } from 'lucide-react';
+import { ArrowRight, Search, ShieldCheck, Zap, HelpCircle, CheckCircle2, Lock, Cpu, Sparkles, FileText, Calculator, Image as ImageIcon, FileCode, X } from 'lucide-react';
 import { Link } from 'wouter';
 import { categories, Shell, tools } from './App';
 import { updateDocumentHead } from './seo';
@@ -12,14 +12,92 @@ export default function Home() {
     const matchesCategory = active === 'All tools' || t.category === active || (active === 'Numbers' && t.slug === 'salary-calculator');
     if (!matchesCategory) return false;
     if (!query) return true;
-    if (t.name.toLowerCase().includes(query) || t.description.toLowerCase().includes(query)) return true;
-    if (query.includes('tool') || query.includes('utility') || query.includes('calculator') || query.includes('converter')) return true;
-    return false;
+    const qWords = query.split(/\s+/).filter(Boolean);
+    const searchable = `${t.name} ${t.description} ${t.category} ${t.slug}`.toLowerCase();
+    return qWords.every(word => searchable.includes(word));
   });
+
+  const popularSearches = [
+    'Word counter',
+    'VAT calculator',
+    'Merge PDF',
+    'Salary calculator',
+    'Image compressor',
+    'Case converter',
+    'Loan calculator'
+  ];
+
   useEffect(() => { updateDocumentHead('/'); }, []);
   return <Shell><main>
     <section className="paper-grid overflow-hidden border-b border-border"><div className="mx-auto grid max-w-[1360px] gap-10 px-5 pb-20 pt-16 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:px-10 lg:pb-28 lg:pt-24">
-      <div className="animate-rise"><p className="mb-5 flex items-center gap-2 font-mono-ui text-[11px] font-bold uppercase tracking-[.2em] text-accent"><span className="h-2 w-2 rounded-full bg-accent" />Open toolbox · no sign-up</p><h1 className="max-w-3xl font-display text-5xl font-semibold leading-[.98] tracking-[-.045em] text-foreground sm:text-6xl lg:text-[76px]">Free Online Tools.<br /><span className="text-primary">Fast, Private & Simple.</span></h1><p className="mt-3 font-display text-xl font-semibold text-primary sm:text-2xl">Everyday calculators, PDF utilities, image converters, and text formatters.</p><p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">LoveEasyTool is a free online tools platform providing fast, private browser utilities across seven categories: <Link href="/category/text" className="font-medium text-foreground underline decoration-border hover:decoration-primary">Text tools</Link>, <Link href="/category/numbers" className="font-medium text-foreground underline decoration-border hover:decoration-primary">Number calculators</Link>, <Link href="/category/files" className="font-medium text-foreground underline decoration-border hover:decoration-primary">File utilities</Link>, <Link href="/category/pdf" className="font-medium text-foreground underline decoration-border hover:decoration-primary">PDF tools</Link>, <Link href="/category/time" className="font-medium text-foreground underline decoration-border hover:decoration-primary">Time calculators</Link>, <Link href="/category/everyday" className="font-medium text-foreground underline decoration-border hover:decoration-primary">Everyday converters</Link>, and <Link href="/category/work" className="font-medium text-foreground underline decoration-border hover:decoration-primary">Work tools</Link>. Everything runs client-side in your browser with zero sign-up, no subscriptions, and complete data privacy.</p><div className="mt-8 flex flex-wrap gap-3"><a href="#tools" data-testid="link-explore-tools" className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5">Explore the toolbox <ArrowRight size={17} /></a><a href="#privacy" data-testid="link-privacy-promise" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-3 font-semibold hover:border-primary"><ShieldCheck size={17} className="text-accent" />Privacy first</a></div></div>
+      <div className="animate-rise">
+        <p className="mb-5 flex items-center gap-2 font-mono-ui text-[11px] font-bold uppercase tracking-[.2em] text-accent">
+          <span className="h-2 w-2 rounded-full bg-accent" />Open toolbox · no sign-up
+        </p>
+        <h1 className="max-w-3xl font-display text-5xl font-semibold leading-[.98] tracking-[-.045em] text-foreground sm:text-6xl lg:text-[76px]">
+          Free Online Tools.<br /><span className="text-primary">Fast, Private & Simple.</span>
+        </h1>
+        <p className="mt-3 font-display text-xl font-semibold text-primary sm:text-2xl">
+          Everyday calculators, PDF utilities, image converters, and text formatters.
+        </p>
+        <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+          LoveEasyTool is a free online tools platform providing fast, private browser utilities across seven categories: <Link href="/category/text" className="font-medium text-foreground underline decoration-border hover:decoration-primary">Text tools</Link>, <Link href="/category/numbers" className="font-medium text-foreground underline decoration-border hover:decoration-primary">Number calculators</Link>, <Link href="/category/files" className="font-medium text-foreground underline decoration-border hover:decoration-primary">File utilities</Link>, <Link href="/category/pdf" className="font-medium text-foreground underline decoration-border hover:decoration-primary">PDF tools</Link>, <Link href="/category/time" className="font-medium text-foreground underline decoration-border hover:decoration-primary">Time calculators</Link>, <Link href="/category/everyday" className="font-medium text-foreground underline decoration-border hover:decoration-primary">Everyday converters</Link>, and <Link href="/category/work" className="font-medium text-foreground underline decoration-border hover:decoration-primary">Work tools</Link>. Everything runs client-side in your browser with zero sign-up, no subscriptions, and complete data privacy.
+        </p>
+
+        {/* Hero Search & Tool Finder */}
+        <div className="mt-7 max-w-xl">
+          <div className="relative">
+            <Search size={18} className="absolute left-4 top-3.5 text-muted-foreground" />
+            <input
+              data-testid="input-hero-search"
+              aria-label="Search all tools and calculators"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search 31 free tools (e.g. PDF merge, VAT, word counter)..."
+              className="w-full rounded-xl border-2 border-border bg-card py-3 pl-11 pr-10 text-base shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+            />
+            {search && (
+              <button
+                aria-label="Clear search"
+                onClick={() => setSearch('')}
+                className="absolute right-3 top-3.5 rounded-full p-0.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </div>
+          <div className="mt-3 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+            <span className="font-medium">Quick find:</span>
+            {popularSearches.map(term => (
+              <button
+                key={term}
+                onClick={() => {
+                  setSearch(term);
+                  setActive('All tools');
+                  document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="rounded-full border border-border/80 bg-background/80 px-2.5 py-1 text-[11px] font-medium text-foreground/80 transition hover:border-primary hover:bg-card hover:text-primary"
+              >
+                {term}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <a href="#tools" data-testid="link-explore-tools" className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5">
+            Explore the toolbox <ArrowRight size={17} />
+          </a>
+          <a href="#privacy" data-testid="link-privacy-promise" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-3 font-semibold hover:border-primary">
+            <ShieldCheck size={17} className="text-accent" />Privacy first
+          </a>
+          {search && (
+            <span className="text-xs font-semibold text-primary">
+              Showing {filtered.length} {filtered.length === 1 ? 'tool' : 'tools'} matching &quot;{search}&quot;
+            </span>
+          )}
+        </div>
+      </div>
       <div className="relative mx-auto w-full max-w-[520px] animate-rise [animation-delay:120ms]"><div className="absolute -right-5 -top-5 h-24 w-24 rounded-full bg-secondary/60 blur-2xl" /><div className="relative rounded-[24px] border border-border bg-card p-3 shadow-xl rotate-[1deg]"><div className="rounded-[17px] bg-primary p-6 text-primary-foreground"><div className="flex items-center justify-between"><span className="font-mono-ui text-[10px] uppercase tracking-[.2em] opacity-70">LET / TOOL / 001</span><Zap size={18} className="text-secondary" /></div><div className="mt-16 font-display text-4xl font-semibold tracking-tight">Your digital<br />utility cabinet.</div><div className="mt-16 flex items-end justify-between"><span className="text-sm opacity-75">{tools.length} tools ready to use</span><span className="grid h-12 w-12 place-items-center rounded-full bg-secondary text-secondary-foreground"><ArrowRight /></span></div></div></div><div className="absolute -bottom-5 -left-5 rounded-xl border border-border bg-secondary px-4 py-3 shadow-md"><p className="font-mono-ui text-[10px] uppercase tracking-wider">local processing</p><p className="mt-1 text-sm font-bold">Your files stay yours.</p></div></div>
     </div></section>
     <section className="border-b border-border bg-muted/25 py-14">
@@ -59,10 +137,85 @@ export default function Home() {
       </div>
     </section>
 
-    <section id="tools" className="mx-auto max-w-[1360px] px-5 py-16 lg:px-10 lg:py-24"><div className="flex flex-col justify-between gap-6 md:flex-row md:items-end"><div><p className="font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">The cabinet</p><h2 className="mt-2 font-display text-4xl font-semibold tracking-tight">Open a drawer.</h2><p className="mt-3 max-w-xl text-muted-foreground">Everything runs in your browser where it can. No accounts. No busywork.</p></div><div className="relative w-full md:max-w-[290px]"><Search size={16} className="absolute left-3 top-3 text-muted-foreground" /><input data-testid="input-home-search" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search all tools" className="w-full rounded-lg border border-input bg-card py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary" /></div></div>
-      <div className="mt-9 flex gap-2 overflow-x-auto pb-2">{categories.map(c => <button data-testid={`button-category-${c.toLowerCase().replace(' ', '-')}`} key={c} onClick={() => setActive(c)} className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${active === c ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-secondary hover:text-secondary-foreground'}`}>{c}</button>)}</div>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{filtered.map((tool, i) => <Link key={tool.slug} href={`/tools/${tool.slug}`} data-testid={`card-tool-${tool.slug}`} className="group animate-rise rounded-xl border border-border bg-card p-5 transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-md" style={{ animationDelay: `${i * 35}ms` }}><div className="flex items-start justify-between"><span className={`grid h-10 w-10 place-items-center rounded-lg ${tool.color === 'yellow' ? 'bg-secondary text-secondary-foreground' : tool.color === 'teal' ? 'bg-accent/15 text-accent' : tool.color === 'coral' ? 'bg-destructive/10 text-destructive' : 'bg-primary/10 text-primary'}`}>{tool.icon}</span><ArrowRight size={17} className="text-muted-foreground transition group-hover:translate-x-1 group-hover:text-primary" /></div><p className="mt-5 font-mono-ui text-[10px] uppercase tracking-[.14em] text-muted-foreground">{tool.category}</p><h3 className="mt-1.5 font-display text-xl font-semibold">{tool.name}</h3><p className="mt-1.5 text-sm leading-6 text-muted-foreground">{tool.description}</p></Link>)}</div>
-      {filtered.length === 0 && <div className="rounded-2xl border border-dashed border-border py-16 text-center"><Search className="mx-auto text-muted-foreground" /><p className="mt-3 font-semibold">No tools match that search.</p><button onClick={() => setSearch('')} className="mt-2 text-sm text-primary underline">Clear search</button></div>}
+    <section id="tools" className="mx-auto max-w-[1360px] px-5 py-16 lg:px-10 lg:py-24">
+      <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div>
+          <p className="font-mono-ui text-[11px] uppercase tracking-[.18em] text-accent">The cabinet</p>
+          <h2 className="mt-2 font-display text-4xl font-semibold tracking-tight">Open a drawer.</h2>
+          <p className="mt-3 max-w-xl text-muted-foreground">Everything runs in your browser where it can. No accounts. No busywork.</p>
+        </div>
+        <div className="relative w-full md:max-w-[340px]">
+          <Search size={16} className="absolute left-3 top-3 text-muted-foreground" />
+          <input
+            data-testid="input-home-search"
+            aria-label="Filter tools"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search all 31 tools..."
+            className="w-full rounded-lg border border-input bg-card py-2.5 pl-9 pr-9 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+          />
+          {search && (
+            <button
+              aria-label="Clear filter"
+              onClick={() => setSearch('')}
+              className="absolute right-2.5 top-2.5 rounded-full p-0.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+            >
+              <X size={15} />
+            </button>
+          )}
+        </div>
+      </div>
+      <div className="mt-9 flex items-center justify-between gap-4">
+        <div className="flex gap-2 overflow-x-auto pb-2">
+          {categories.map(c => (
+            <button
+              data-testid={`button-category-${c.toLowerCase().replace(' ', '-')}`}
+              key={c}
+              onClick={() => setActive(c)}
+              className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${active === c ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-secondary hover:text-secondary-foreground'}`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+        <span className="hidden whitespace-nowrap text-xs font-mono-ui text-muted-foreground sm:inline">
+          {filtered.length} {filtered.length === 1 ? 'tool' : 'tools'}
+        </span>
+      </div>
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {filtered.map((tool, i) => (
+          <Link
+            key={tool.slug}
+            href={`/tools/${tool.slug}`}
+            data-testid={`card-tool-${tool.slug}`}
+            className="group animate-rise rounded-xl border border-border bg-card p-5 transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-md"
+            style={{ animationDelay: `${i * 35}ms` }}
+          >
+            <div className="flex items-start justify-between">
+              <span className={`grid h-10 w-10 place-items-center rounded-lg ${tool.color === 'yellow' ? 'bg-secondary text-secondary-foreground' : tool.color === 'teal' ? 'bg-accent/15 text-accent' : tool.color === 'coral' ? 'bg-destructive/10 text-destructive' : 'bg-primary/10 text-primary'}`}>
+                {tool.icon}
+              </span>
+              <ArrowRight size={17} className="text-muted-foreground transition group-hover:translate-x-1 group-hover:text-primary" />
+            </div>
+            <p className="mt-5 font-mono-ui text-[10px] uppercase tracking-[.14em] text-muted-foreground">{tool.category}</p>
+            <h3 className="mt-1.5 font-display text-xl font-semibold">{tool.name}</h3>
+            <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{tool.description}</p>
+          </Link>
+        ))}
+      </div>
+      {filtered.length === 0 && (
+        <div className="rounded-2xl border border-dashed border-border py-16 text-center">
+          <Search className="mx-auto text-muted-foreground" size={28} />
+          <p className="mt-3 font-semibold text-lg">No tools match &quot;{search}&quot;</p>
+          <p className="mt-1 text-sm text-muted-foreground">Try searching for keywords like &quot;pdf&quot;, &quot;vat&quot;, &quot;salary&quot;, or &quot;word&quot;.</p>
+          <button
+            onClick={() => { setSearch(''); setActive('All tools'); }}
+            className="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+          >
+            Reset search
+          </button>
+        </div>
+      )}
     </section>
     <section id="privacy" className="bg-primary text-primary-foreground"><div className="mx-auto grid max-w-[1360px] gap-8 px-5 py-14 lg:grid-cols-[.8fr_1.2fr] lg:px-10"><div><p className="font-mono-ui text-[11px] uppercase tracking-[.18em] text-secondary">The quiet promise</p><h2 className="mt-3 max-w-lg font-display text-4xl font-semibold leading-tight">A utility box should not ask for your life story.</h2></div><div className="grid gap-5 sm:grid-cols-3">{[['01', 'Browser-first', 'Text, numbers and most image work happen on this device.'], ['02', 'No fake live data', 'When a service needs the internet, we say so plainly.'], ['03', 'Easy to leave', 'Download your result, print it, and close the tab.']].map(([n, t, d]) => <div key={n} className="border-t border-primary-foreground/20 pt-4"><span className="font-mono-ui text-xs text-secondary">{n}</span><h3 className="mt-7 font-display text-xl">{t}</h3><p className="mt-2 text-sm leading-6 text-primary-foreground/70">{d}</p></div>)}</div></div></section>
     <section className="mx-auto max-w-[1360px] px-5 py-16 lg:px-10 lg:py-24">
