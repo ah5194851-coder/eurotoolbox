@@ -92,7 +92,7 @@ export default function BlogPhpCheckUpdate() {
               The global web infrastructure runs overwhelmingly on PHP—powering over 75% of content management systems including WordPress, Drupal, Joomla, and Magento (Adobe Commerce). When an unauthenticated Remote Code Execution (RCE) flaw strikes the core interpreter, the blast radius is instantaneous.
             </p>
             <p className="mt-3 text-base leading-7 text-muted-foreground">
-              Following the disclosure of <strong>CVE-2026-109618</strong> and <strong>CVE-2026-109619</strong> on October 21, several national cybersecurity authorities and government digital departments across Europe, North America, and Asia took public-facing portals offline as a protective isolation shield while server fleets were audited and patched. Because the vulnerability allows threat actors to craft malicious HTTP request headers or parameter payloads that corrupt interpreter memory buffers before authentication layers execute, proactive patching is mandatory for every webmaster and system administrator.
+              Following the disclosure of <strong>CVE-2026-109618</strong> and <strong>CVE-2026-109619</strong> on October 21, 2026, several national cybersecurity authorities and government digital departments across Europe, North America, and Asia took public-facing portals offline as a protective precaution while server fleets were audited and patched. Because these two critical vulnerabilities carry a near-maximum CVSS 9.2 score and enable unauthenticated remote code execution, proactive patching is mandatory for every webmaster and system administrator.
             </p>
             <p className="mt-3 text-base leading-7 text-muted-foreground">
               Official patches and release notes are published directly at the{' '}
@@ -295,6 +295,22 @@ sudo systemctl reload nginx`}
             </div>
           </section>
 
+          {/* Section: Unsupported & End-of-Life Versions */}
+          <section className="mt-12 border-t border-border pt-10">
+            <h2 className="flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              <AlertTriangle className="text-amber-500" size={24} />
+              Out-of-Support Versions (PHP 5, 6, 7, and Older 8.x): Migration Required
+            </h2>
+            <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-500/5 p-5 text-sm leading-relaxed text-muted-foreground">
+              <p>
+                It is critical to note that PHP versions that are out of support—including <strong>PHP 5.x</strong>, <strong>PHP 6</strong> (unreleased), <strong>PHP 7.0 through 7.4</strong>, and older unsupported 8.x releases such as <strong>PHP 8.0</strong>—did not receive official upstream security patches in the October 21, 2026 release cycle.
+              </p>
+              <p className="mt-3">
+                For these End-of-Life branches, there is no single point update or minor package patch available. Sites running these obsolete releases require a <strong>full migration to a currently supported release branch (PHP 8.1, 8.2, or 8.3)</strong>. Before updating production environments, audit your application code and third-party plugins for deprecated syntax, verify database extension compatibility, and test all critical workflows on a staging server.
+              </p>
+            </div>
+          </section>
+
           {/* Section 3: CMS Specific Notes */}
           <section className="mt-12 border-t border-border pt-10">
             <h2 className="flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
@@ -349,9 +365,9 @@ sudo systemctl reload nginx`}
                   <ShieldAlert size={20} />
                 </div>
                 <div>
-                  <h3 className="font-display text-base font-semibold text-foreground">1. Deploy Managed WAF Virtual Patching</h3>
+                  <h3 className="font-display text-base font-semibold text-foreground">1. Place Application Behind an Edge Proxy or Firewall</h3>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    Route DNS through a Web Application Firewall (Cloudflare, AWS WAF, Sucuri, Fastly). Cloudflare and enterprise WAF vendors push managed rules to inspect incoming HTTP payloads and drop exploit signatures targeted at CVE-2026-109618 and CVE-2026-109619 at the network edge before traffic reaches your origin server.
+                    Routing traffic through an edge reverse proxy or Web Application Firewall provides an initial defensive perimeter for your origin server while package updates are scheduled and tested. However, edge filtering is a temporary shield and does not eliminate the requirement to install the official PHP 21 Oct 2026 patches.
                   </p>
                 </div>
               </div>
@@ -418,7 +434,7 @@ sudo systemctl reload nginx`}
                   Is Your Website Affected by the October 2026 Vulnerabilities?
                 </h3>
                 <p className="mt-1 text-sm text-muted-foreground max-w-xl">
-                  Run through our 5-point vulnerability triage checklist to verify your web server exposure, WAF coverage, and process integrity.
+                  Run through our 5-point vulnerability triage checklist to verify your web server exposure, runtime environment, and update status.
                 </p>
               </div>
               <Link 
