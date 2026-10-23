@@ -6,6 +6,7 @@ import { SALARY_LANDING_PAGES } from './data/salary-landing-data';
 import { SALARY_COUNTRY_PAGES } from './data/salary-country-data';
 import { PERCENTAGE_LANDING_PAGES } from './data/percentage-landing-data';
 import { CATEGORY_GUIDES } from './data/category-guides';
+import { BLOG_ARTICLES } from './data/blog-data';
 
 export type PageSeo = {
   title: string;
@@ -107,6 +108,18 @@ export function getPageSeo(path: string): PageSeo {
   if (cleanPath === '/about') return ABOUT_SEO;
   if (cleanPath === '/contact') return CONTACT_SEO;
   if (cleanPath === '/terms') return TERMS_SEO;
+
+  const blogMatch = cleanPath.match(/^\/blog\/([^/]+)$/)?.[1];
+  if (blogMatch && BLOG_ARTICLES[blogMatch]) {
+    const bData = BLOG_ARTICLES[blogMatch];
+    return {
+      title: bData.title,
+      description: bData.metaDescription,
+      canonicalPath: bData.canonicalPath,
+      type: 'article',
+      keywords: bData.keywords,
+    };
+  }
   // Dedicated country salary calculator pages: /tools/salary-calculator/<slug>
   const countrySalaryMatch = cleanPath.match(/^\/tools\/salary-calculator\/([^/]+)$/)?.[1];
   if (countrySalaryMatch && SALARY_COUNTRY_PAGES[countrySalaryMatch]) {
@@ -168,6 +181,11 @@ export function getPageSeo(path: string): PageSeo {
 
 export function getRouteLastUpdated(route: string): string | undefined {
   const clean = route === '/' ? '/' : route.replace(/\/+$/, '');
+
+  const blogMatch = clean.match(/^\/blog\/([^/]+)$/)?.[1];
+  if (blogMatch && BLOG_ARTICLES[blogMatch]) {
+    return BLOG_ARTICLES[blogMatch].dateModified;
+  }
 
   // 1. Dedicated country salary calculator pages: /tools/salary-calculator/<slug>
   const countrySalaryMatch = clean.match(/^\/tools\/salary-calculator\/([^/]+)$/)?.[1];
@@ -673,6 +691,69 @@ export function getJsonLd(path: string): Record<string, unknown> {
             { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
             { '@type': 'ListItem', position: 2, name: 'Books', item: canonical },
           ],
+        },
+        organizationEntity,
+      ],
+    };
+  }
+
+  // 6. Blog articles
+  const blogMatch = cleanPath.match(/^\/blog\/([^/]+)$/)?.[1];
+  if (blogMatch && BLOG_ARTICLES[blogMatch]) {
+    const bData = BLOG_ARTICLES[blogMatch];
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': `${canonical}#webpage`,
+          url: canonical,
+          name: bData.title,
+          description: bData.metaDescription,
+          inLanguage: 'en',
+          isPartOf: {
+            '@id': absoluteUrl('/#website'),
+          },
+        },
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${canonical}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+            { '@type': 'ListItem', position: 2, name: 'Security Advisory', item: absoluteUrl('/') },
+            { '@type': 'ListItem', position: 3, name: bData.title, item: canonical },
+          ],
+        },
+        {
+          '@type': 'Article',
+          '@id': `${canonical}#article`,
+          isPartOf: {
+            '@id': `${canonical}#webpage`,
+          },
+          headline: bData.title,
+          description: bData.metaDescription,
+          datePublished: bData.datePublished,
+          dateModified: bData.dateModified,
+          mainEntityOfPage: canonical,
+          author: {
+            '@type': 'Person',
+            name: bData.author,
+            url: absoluteUrl('/about'),
+          },
+          publisher: organizationEntity,
+          image: OG_IMAGE_URL,
+        },
+        {
+          '@type': 'FAQPage',
+          '@id': `${canonical}#faq`,
+          mainEntity: bData.faq.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: item.answer,
+            },
+          })),
         },
         organizationEntity,
       ],

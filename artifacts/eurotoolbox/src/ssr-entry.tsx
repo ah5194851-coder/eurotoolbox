@@ -18,6 +18,8 @@ import SalaryCountryPage from './salary-country-page';
 import { SALARY_COUNTRY_PAGES } from './data/salary-country-data';
 import PercentageLandingPage from './percentage-landing-page';
 import { PERCENTAGE_LANDING_PAGES } from './data/percentage-landing-data';
+import BlogPhpCheckUpdate from './blog-php-check-update';
+import BlogPhpVulnerabilityChecklist from './blog-php-vulnerability-checklist';
 import { categorySlugs, renderHead, absoluteUrl, getRouteLastUpdated } from './seo';
 import { SITE_URL } from './site-config';
 import { tools } from './App';
@@ -45,6 +47,11 @@ export const SALARY_LANDING_ROUTES = [
 
 export const PERCENTAGE_LANDING_ROUTES = Object.values(PERCENTAGE_LANDING_PAGES).map(p => p.canonicalPath);
 
+export const BLOG_ROUTES = [
+  '/blog/how-to-check-php-version-and-update',
+  '/blog/is-my-website-affected-by-php-vulnerability',
+];
+
 export const PRERENDER_ROUTES = [
   '/',
   '/about',
@@ -58,6 +65,7 @@ export const PRERENDER_ROUTES = [
   ...SALARY_LANDING_ROUTES,
   ...SALARY_COUNTRY_ROUTES,
   ...PERCENTAGE_LANDING_ROUTES,
+  ...BLOG_ROUTES,
 ];
 export const SITEMAP_ROUTES = [
   '/',
@@ -72,6 +80,7 @@ export const SITEMAP_ROUTES = [
   ...SALARY_LANDING_ROUTES,
   ...SALARY_COUNTRY_ROUTES,
   ...PERCENTAGE_LANDING_ROUTES,
+  ...BLOG_ROUTES,
 ];
 
 export function renderRoute(path: string) {
@@ -92,6 +101,10 @@ export function renderRoute(path: string) {
             <Route path="/privacy/" component={PrivacyPage} />
             <Route path="/books" component={BooksPage} />
             <Route path="/books/" component={BooksPage} />
+            <Route path="/blog/how-to-check-php-version-and-update" component={BlogPhpCheckUpdate} />
+            <Route path="/blog/how-to-check-php-version-and-update/" component={BlogPhpCheckUpdate} />
+            <Route path="/blog/is-my-website-affected-by-php-vulnerability" component={BlogPhpVulnerabilityChecklist} />
+            <Route path="/blog/is-my-website-affected-by-php-vulnerability/" component={BlogPhpVulnerabilityChecklist} />
             <Route path="/uk-vat-calculator" component={() => <CountryVatPage countrySlug="uk-vat-calculator" />} />
             <Route path="/uk-vat-calculator/" component={() => <CountryVatPage countrySlug="uk-vat-calculator" />} />
             <Route path="/germany-vat-calculator" component={() => <CountryVatPage countrySlug="germany-vat-calculator" />} />
