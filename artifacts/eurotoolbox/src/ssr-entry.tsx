@@ -20,6 +20,7 @@ import PercentageLandingPage from './percentage-landing-page';
 import { PERCENTAGE_LANDING_PAGES } from './data/percentage-landing-data';
 import BlogPhpCheckUpdate from './blog-php-check-update';
 import BlogPhpVulnerabilityChecklist from './blog-php-vulnerability-checklist';
+import PhpVulnerabilityCheckerPage from './php-vulnerability-checker-page';
 import { categorySlugs, renderHead, absoluteUrl, getRouteLastUpdated } from './seo';
 import { SITE_URL } from './site-config';
 import { tools } from './App';
@@ -105,6 +106,8 @@ export function renderRoute(path: string) {
             <Route path="/blog/how-to-check-php-version-and-update/" component={BlogPhpCheckUpdate} />
             <Route path="/blog/is-my-website-affected-by-php-vulnerability" component={BlogPhpVulnerabilityChecklist} />
             <Route path="/blog/is-my-website-affected-by-php-vulnerability/" component={BlogPhpVulnerabilityChecklist} />
+            <Route path="/tools/php-vulnerability-checker" component={PhpVulnerabilityCheckerPage} />
+            <Route path="/tools/php-vulnerability-checker/" component={PhpVulnerabilityCheckerPage} />
             <Route path="/uk-vat-calculator" component={() => <CountryVatPage countrySlug="uk-vat-calculator" />} />
             <Route path="/uk-vat-calculator/" component={() => <CountryVatPage countrySlug="uk-vat-calculator" />} />
             <Route path="/germany-vat-calculator" component={() => <CountryVatPage countrySlug="germany-vat-calculator" />} />

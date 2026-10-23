@@ -1274,4 +1274,56 @@ export const toolSeo: Record<string, ToolSeo> = {
       ['Which countries are currently supported by this tool?', `The calculator provides built-in progressive tax and social contribution rules estimated from published statutory rates for 15 countries: ${VERIFIED_COUNTRY_IDS.map(id => COUNTRIES_CONFIG[id].name).join(', ')}. Additionally, an "Any other country (custom)" mode with a searchable world currency selector allows users from any jurisdiction worldwide to enter their own flat percentage or progressive tax bands. Results are estimated using published statutory rates; always confirm with the official source.`],
     ],
   },
+  'php-vulnerability-checker': {
+    lastUpdated: '2026-10-23',
+    title: 'PHP Vulnerability Checker: Free Security Indicator Tool | LoveEasyTool',
+    description: 'Check your website for passive indicators of PHP version exposure and outdated releases following the October 2026 emergency CVEs (CVE-2026-109618 & CVE-2026-109619).',
+    heading: 'Passive PHP Version & Vulnerability Indicator Checker',
+    intro: 'A safe, passive diagnostic tool to check if your public HTTP response headers, session cookies, or CMS generator meta tags leak PHP version details or point to unpatched releases.',
+    answerSummary: 'LoveEasyTool PHP Vulnerability Checker is a free passive inspection utility designed to help website owners identify whether their public web endpoints leak PHP software fingerprints or outdated version headers following the October 21, 2026 emergency security updates (CVE-2026-109618 and CVE-2026-109619, CVSS 9.2). It performs a single standard HTTP GET request with a clear User-Agent, never executes exploits, probes, or brute-force requests, and categorizes findings into three strict non-definitive states. It never declares a website "safe", as internal backported patches and hardened server configurations require direct host confirmation.',
+    facts: {
+      pricing: '100% Free (no subscriptions or credit cards)',
+      authRequired: 'None (no account, email, or login needed)',
+      executionEnvironment: 'Protected serverless backend with strict SSRF filtering and rate limiting',
+      dataPrivacy: 'No target data is logged or stored; passive inspections run on-demand only',
+      supportedFormatsAndLimits: 'Public HTTP/HTTPS web endpoints on standard ports 80/443; 10 checks per hour per IP',
+    },
+    longDescription: 'On October 21, 2026, the PHP development team released critical emergency updates addressing two severe unauthenticated remote code execution vulnerabilities (CVE-2026-109618 and CVE-2026-109619) with CVSS v4.0 scores of 9.2. Because numerous web applications and CMS platforms like WordPress, Drupal, Joomla, and Magento run on PHP, administrators must confirm whether their environments are up to date. LoveEasyTool provides this passive indicator scanner to inspect external HTTP responses for X-Powered-By headers, Server module banners, PHPSESSID cookies, and CMS generator tags without intrusive exploitation. Results provide immediate remediation instructions, version baselines (PHP 8.3.13, 8.2.25, and 8.1.30), and guidance on verifying the true underlying binary via SSH ("php -v") or hosting administration panels.',
+    useCases: [
+      {
+        title: 'Rapid Indicator Verification for Site Owners',
+        description: 'Quickly check if your domain or client sites broadcast outdated PHP version strings in public response headers.',
+      },
+      {
+        title: 'Information Disclosure Auditing',
+        description: 'Verify whether header hardening practices (such as expose_php = Off) are correctly applied to reduce server footprint.',
+      },
+      {
+        title: 'Emergency Patch Guidance',
+        description: 'Review official fixed releases and safe upgrade pathways for active branches and unpatched End-of-Life versions.',
+      },
+    ],
+    steps: [
+      'Enter your public website domain or URL (e.g., example.com) into the checker input.',
+      'Click "Check Website Indicators" to initiate a single passive GET inspection.',
+      'Review the categorized result state, detected headers, and CMS generator indicators.',
+      'Consult the provided SSH commands (php -v) and hosting guide links to confirm your true binary version.',
+    ],
+    features: [
+      'Strictly passive inspection (single standard HTTP GET, no exploit payloads or brute force)',
+      'Built-in SSRF protection blocking internal, loopback, private, and cloud metadata ranges',
+      'Accurate patch comparison against official October 21, 2026 emergency security releases',
+      'Detailed inspection breakdown showing X-Powered-By, Server, Cookie, and Meta Generator headers',
+      'Educational guidance and direct links to comprehensive safe upgrade tutorials',
+    ],
+    faq: [
+      ['Does this tool perform a penetration test or vulnerability scan?', 'No. This tool performs only a passive inspection of public HTTP headers, cookies, and HTML meta tags. It sends a single standard GET request with an identified User-Agent. It never attempts exploits, sends attack payloads, or tests server inputs.'],
+      ['Why does the tool never say my website is "safe"?', 'No passive external tool can confirm complete safety. Servers frequently disable expose_php or run backported security patches through Linux distributions (such as Ubuntu, Debian, or RHEL) where the version string does not change. Only you or your hosting provider can confirm the true binary version via SSH or control panels.'],
+      ['What were the October 21, 2026 PHP vulnerabilities?', 'On October 21, 2026, the PHP team released emergency security fixes for CVE-2026-109618 and CVE-2026-109619. These critical flaws carry a CVSS v4.0 score of 9.2 and could allow unauthenticated remote code execution on vulnerable configurations.'],
+      ['Which PHP versions contain the official security fix?', 'The official emergency patches released upstream by php.net are PHP 8.3.13 (for 8.3 branch), PHP 8.2.25 (for 8.2 branch), and PHP 8.1.30 (for 8.1 branch). PHP 8.0 and all 7.x branches are End-of-Life and received no upstream patch.'],
+      ['What should I do if my site shows "Possibly affected"?', 'Immediately contact your hosting provider or system administrator. If you manage your own server, log in via SSH and run "php -v" to verify your exact version, then update your packages using apt, dnf, or your host\'s PHP selector tool.'],
+      ['Why does the tool show "PHP detected, version hidden"?', 'This means your website displays indicators of running PHP (such as a PHPSESSID session cookie or a WordPress meta tag), but your server correctly suppresses the exact version number in headers. You should check your hosting control panel or run "php -v" via SSH to confirm your installed version.'],
+      ['Is there a rate limit on checks?', 'Yes. To protect target websites and server resources, checks are rate-limited to 10 per hour per IP address.'],
+    ],
+  },
 };
