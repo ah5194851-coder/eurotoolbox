@@ -79,5 +79,37 @@ export const BLOG_ARTICLES: Record<string, BlogArticleMeta> = {
         answer: 'Official security announcements, changelogs, and source tarballs are published directly on the official PHP website at https://www.php.net.'
       }
     ]
+  },
+  'salary-calculator-guide': {
+    slug: 'salary-calculator-guide',
+    canonicalPath: '/blog/salary-calculator-guide',
+    title: 'Salary Calculator Guide: How to Work Out Your Gross-to-Net Take-Home Pay',
+    metaDescription: 'Learn how a salary calculator works out your take-home pay: gross vs net pay, tax and social contributions, monthly, hourly and annual conversions, and country-by-country differences — with a free calculator for 15 countries.',
+    keywords: 'salary calculator, gross to net salary, take home pay calculator, net salary calculator, monthly salary calculator, hourly to salary, annual salary calculator',
+    datePublished: '2026-10-24',
+    dateModified: '2026-10-24',
+    author: 'Ali Hassan',
+    faq: [
+      {
+        question: 'How is take-home pay calculated?',
+        answer: 'Take-home pay is your gross salary minus income tax, social security or national insurance contributions, and any pension or other statutory deductions that apply in your country. A salary calculator applies the published rates for your country to your gross figure and shows the remaining net amount per month and per year.'
+      },
+      {
+        question: 'Is the salary calculator result exact?',
+        answer: 'It is an estimate based on published statutory rates. Your actual payslip can differ because of employer-specific pension schemes, student loan repayments, bonuses, overtime and local rules. Use the result for comparing offers and planning, and check your official payslip for the final figure.'
+      },
+      {
+        question: 'What is the difference between gross and net salary?',
+        answer: 'Gross salary is the full amount in your contract before any deductions. Net salary, or take-home pay, is what remains after income tax and social contributions are taken out. The gap between them is often a fifth or more of the gross figure.'
+      },
+      {
+        question: 'How do I convert an hourly rate to an annual salary?',
+        answer: 'Multiply your hourly rate by the hours you work each week, then multiply by 52 weeks. For example, an hourly rate times 40 hours a week times 52 weeks gives the annual equivalent before deductions.'
+      },
+      {
+        question: 'Which countries does the LoveEasyTool salary calculator support?',
+        answer: 'It supports 15 countries including the UK, United States, Canada, Australia, Germany, Poland, Pakistan, India, UAE, Saudi Arabia, Ireland, New Zealand, Singapore, Netherlands and South Africa, plus a custom mode for any other country.'
+      }
+    ]
   }
 };
